@@ -903,10 +903,10 @@ class SimulatedAnnealing {
     lecturers;
     classes;
     checker;
-    initialTemperature = 100000;
+    initialTemperature = 1000000000000;
     minTemperature = 0.1;
     coolingRate = 0.995;
-    maxIterations = 50000;
+    maxIterations = 500000;
     hardConstraintWeight = 10000;
     softConstraintWeights = {
         preferredTime: 10,

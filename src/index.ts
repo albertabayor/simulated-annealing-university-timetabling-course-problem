@@ -1062,10 +1062,10 @@ class SimulatedAnnealing {
   private classes: ClassRequirement[];
   private checker: ConstraintChecker;
 
-  private initialTemperature = 100000;
+  private initialTemperature = 1000000000000;
   private minTemperature = 0.1;
   private coolingRate = 0.995;
-  private maxIterations = 50000;
+  private maxIterations = 500000;
 
   private hardConstraintWeight = 10000;
   private softConstraintWeights = {
