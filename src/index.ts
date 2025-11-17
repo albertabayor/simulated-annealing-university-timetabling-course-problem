@@ -297,17 +297,38 @@ function getPrayerTimeOverlap(startTime: string, sks: number, day: string): numb
 
   let totalPrayerTime = 0;
 
-  // Check Dzuhur (11:40-12:30) - 50 minutes
+  /**
+   * Check Dzuhur (11:40-12:30) - 50 minutes
+   * example:
+   * start: 11:00 (660), end: 12:30 (750) => overlap
+   * start: 12:00 (720), end: 13:00 (780) => overlap
+   * start: 10:00 (600), end: 11:30 (690) => no overlap
+   * start: 12:40 (760), end: 13:30 (810) => no overlap
+   */
   if (startMinutes < PRAYER_TIMES.DZUHUR.end && endMinutes > PRAYER_TIMES.DZUHUR.start) {
     totalPrayerTime += PRAYER_TIMES.DZUHUR.duration;
   }
 
-  // Check Ashar (15:00-15:30) - 30 minutes
+  /**
+   * Check Ashar (15:00-15:30) - 30 minutes
+   * example:
+   * start: 14:30 (870), end: 15:30 (930) => overlap
+   * start: 15:10 (910), end: 16:00 (960) => overlap
+   * start: 13:00 (780), end: 14:50 (890) => no overlap
+   * start: 15:40 (940), end: 16:30 (990) => no overlap
+   */
   if (startMinutes < PRAYER_TIMES.ASHAR.end && endMinutes > PRAYER_TIMES.ASHAR.start) {
     totalPrayerTime += PRAYER_TIMES.ASHAR.duration;
   }
 
-  // Check Maghrib (18:00-18:30) - 30 minutes
+  /**
+   * Check Maghrib (18:00-18:30) - 30 minutes
+   * example:
+   * start: 17:30 (1050), end: 18:30 (1110) => overlap
+   * start: 18:10 (1090), end: 19:00 (1140) => overlap
+   * start: 16:00 (960), end: 17:50 (1070) => no overlap
+   * start: 18:40 (1120), end: 19:30 (1170) => no overlap
+   */
   if (startMinutes < PRAYER_TIMES.MAGHRIB.end && endMinutes > PRAYER_TIMES.MAGHRIB.start) {
     totalPrayerTime += PRAYER_TIMES.MAGHRIB.duration;
   }
@@ -1054,7 +1075,7 @@ class ConstraintChecker {
 
       /**
        * Cek jarak antara kelas yang sedang diperiksa (entry) dengan kelas yang sudah (existing) ada
-       * Jika jarak antara entry end time dengan existing start time lebih kecil dari minGap, update minGap
+       * Jika jarak antara entry enned time dengan existing start time lebih kecil dari minGap, update minGap
        * example:
        * existing: 14:00-15:40 (dengan durasi +prayer)
        * entry: 12:30-13:20 (dengan durasi +prayer)
@@ -1097,11 +1118,29 @@ class ConstraintChecker {
   checkPrayerTimeOverlap(entry: ScheduleEntry): number {
     const prayerTime = getPrayerTimeOverlap(entry.timeSlot.startTime, entry.sks, entry.timeSlot.day);
 
+    /**
+     * If there is no overlap with prayer time, return perfect score (1)
+     * that happens when timeslot is outside prayer time or break time ranges
+     */
     if (prayerTime === 0) {
       return 1; // Perfect, no overlap
     }
 
-    // Penalty based on how much prayer time is overlapped
+    /**
+     * Calculate score based on overlap duration
+     * The more the overlap, the lower the score
+     * Minimum score is capped at 0.5 to avoid too harsh penalty
+     * example:
+     * overlap 0 mins -> score 1 (Max(0.5, 1 - 0 / 100) = 1)
+     * overlap 20 mins -> score 0.8 (Max(0.5, 1 - 20 / 100) = 0.8)
+     * overlap 40 mins -> score 0.6 (Max(0.5, 1 - 40 / 100) = 0.6)
+     * overlap 50 mins -> score 0.5 (Max(0.5, 1 - 50 / 100) = 0.5)
+     * for the category terms:
+     * 0 mins overlap: Excellent (1)
+     * 1-20 mins overlap: Good (0.8)
+     * 21-40 mins overlap: Fair (0.6)
+     * 41+ mins overlap: Poor (0.5) and so on
+     */
     const score = Math.max(0.5, 1 - prayerTime / 100);
 
     this.addViolation({
