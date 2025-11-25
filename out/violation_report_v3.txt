@@ -1,0 +1,96 @@
+==========================================
+CONSTRAINT VIOLATION REPORT V3
+With Swap Operator & Reheating
+==========================================
+
+📊 SUMMARY:
+   Total Hard Violations: 138
+   Total Soft Violations: 122
+
+📊 OVERFLOW STATISTICS:
+   Non-lab classes using lab rooms: 0
+   Percentage: 0.00%
+
+📋 VIOLATIONS BY TYPE:
+   SC5: Prayer Time Overlap: 122
+   HC5: Prodi Conflict: 123
+   HC9: Saturday Restriction: 1
+   HC6: Research Day: 12
+   HC7: Max Daily Periods: 1
+   HC1: Lecturer Conflict: 1
+
+🚫 HARD CONSTRAINT VIOLATIONS:
+   • AB13A103 (Ekonomi untuk Bisnis)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class AB13A103 at the same time on Wednesday
+
+   • MG13PB03 (Pengantar Bisnis dan Korporasi)
+     HC9: Saturday Restriction: Only Magister Manajemen allowed on Saturday, but class is from MANAJEMEN
+
+   • MG13PM03 (Pengantar Manajemen)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class AB13A103 at the same time on Wednesday
+
+   • AB13A503 (Akuntansi Dasar)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13PM03 at the same time on Tuesday
+
+   • MG13MP13 (Manajamen Pemasaran)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13PM03 at the same time on Tuesday
+
+   • MG13MK13 (Manajemen Keuangan)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13PB03 at the same time on Friday
+
+   • MG13MS13 (Manajemen Sumber Daya Manusia)
+     HC6: Research Day: Lecturer MDI has research day on Thursday, Friday
+
+   • MG13MO03 (Manajemen Operasi)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13MS13 at the same time on Wednesday
+
+   • AB13A402 (Lingkungan, Sosial, dan Tata Kelola)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13MO03 at the same time on Monday
+
+   • GS13IL02 (Bahasa Indonesia)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class AB13A103 at the same time on Wednesday
+
+   • MG13PD13 (Pemasaran Digital)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13BK02 at the same time on Tuesday
+
+   • MG13PD13 (Pemasaran Digital)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13MK13 at the same time on Monday
+
+   • MG13PD13 (Pemasaran Digital)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13MO03 at the same time on Monday
+
+   • MG13PD13 (Pemasaran Digital)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class GS13EL03 at the same time on Friday
+
+   • MG13PD13 (Pemasaran Digital)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class AB13A103 at the same time on Wednesday
+
+   • MG13MS23 (Manajemen Strategi)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13MS13 at the same time on Wednesday
+
+   • MG13MS23 (Manajemen Strategi)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class AB13A103 at the same time on Wednesday
+
+   • MG13MS23 (Manajemen Strategi)
+     HC6: Research Day: Lecturer MMK has research day on Wednesday, Thursday, Friday
+
+   • MG13AD13 (Analitik Data)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13MP13 at the same time on Friday
+
+   • MG13KP13 (Kepemimpinan)
+     HC5: Prodi Conflict: Same program (MANAJEMEN) has class MG13PM03 at the same time on Tuesday
+
+   ... and 118 more
+
+⚠️  SOFT CONSTRAINT VIOLATIONS (Sample):
+   • MM23CF03: Class overlaps with 50 minutes of prayer time
+   • MM23OS03: Class overlaps with 50 minutes of prayer time
+   • MM23CS03: Class overlaps with 30 minutes of prayer time
+   • MM23PM03: Class overlaps with 30 minutes of prayer time
+   • AB13A103: Class overlaps with 50 minutes of prayer time
+   • AB13A103: Class overlaps with 50 minutes of prayer time
+   • MG13PB03: Class overlaps with 50 minutes of prayer time
+   • MG13MP13: Class overlaps with 50 minutes of prayer time
+   • MG13MK13: Class overlaps with 50 minutes of prayer time
+   • MG13MS13: Class overlaps with 30 minutes of prayer time
+   ... and 112 more

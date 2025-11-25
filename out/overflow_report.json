@@ -1,90 +1,18 @@
 {
   "summary": {
-    "totalOverflowClasses": 9,
+    "totalOverflowClasses": 1,
     "totalScheduledClasses": 346,
-    "overflowPercentage": "2.60%"
+    "overflowPercentage": "0.29%"
   },
   "overflowClasses": [
     {
-      "classId": "MG13MS13",
-      "className": "Manajemen Sumber Daya Manusia",
-      "prodi": "MANAJEMEN",
-      "room": "CM-LabVirtual",
-      "day": "Monday",
-      "startTime": "15:30",
-      "participants": 45
-    },
-    {
-      "classId": "MG12FB53",
-      "className": "Manajemen Bisnis Keluarga (Family Business)",
-      "prodi": "MANAJEMEN",
-      "room": "CM-Lab3",
-      "day": "Tuesday",
-      "startTime": "12:30",
-      "participants": 34
-    },
-    {
-      "classId": "EM13ED03",
-      "className": "Menggambar Teknik",
-      "prodi": "Manajemen Rekayasa",
-      "room": "CM-207",
-      "day": "Monday",
-      "startTime": "17:10",
-      "participants": 10
-    },
-    {
-      "classId": "ET13SC13",
-      "className": "Manajemen Rantai Pasok",
-      "prodi": "Manajemen Rekayasa",
+      "classId": "LE12AJ53",
+      "className": "Manajemen Resiko dan Kinerja",
+      "prodi": "TEKNIK LOGISTIK",
       "room": "CM-207",
       "day": "Wednesday",
-      "startTime": "08:20",
+      "startTime": "12:30",
       "participants": 40
-    },
-    {
-      "classId": "IF13MN13",
-      "className": "Metode Numerik",
-      "prodi": "INFORMATIKA",
-      "room": "CM-207",
-      "day": "Wednesday",
-      "startTime": "12:30",
-      "participants": 37
-    },
-    {
-      "classId": "IS13ST03",
-      "className": "Pengantar Sistem & Teknologi Informasi",
-      "prodi": "SISTEM INFORMASI",
-      "room": "CM-206",
-      "day": "Tuesday",
-      "startTime": "10:50",
-      "participants": 45
-    },
-    {
-      "classId": "IS13SO02",
-      "className": "Pengantar Sistem Operasi",
-      "prodi": "SISTEM INFORMASI",
-      "room": "CM-LabVirtual",
-      "day": "Friday",
-      "startTime": "15:30",
-      "participants": 45
-    },
-    {
-      "classId": "VD13SM03",
-      "className": "Seminar dan Metodologi Penelitian",
-      "prodi": "DESAIN KOMUNIKASI VISUAL",
-      "room": "CM-Lab3",
-      "day": "Monday",
-      "startTime": "09:10",
-      "participants": 45
-    },
-    {
-      "classId": "VD13HC03",
-      "className": "Digital Heritage Conservation",
-      "prodi": "DESAIN KOMUNIKASI VISUAL",
-      "room": "CM-207",
-      "day": "Tuesday",
-      "startTime": "14:10",
-      "participants": 45
     }
   ]
 }
