@@ -4,26 +4,34 @@ With Swap Operator & Reheating
 ==========================================
 
 📊 SUMMARY:
-   Total Hard Violations: 0
-   Total Soft Violations: 111
+   Total Hard Violations: 2
+   Total Soft Violations: 107
 
 📊 OVERFLOW STATISTICS:
    Non-lab classes using lab rooms: 0
    Percentage: 0.00%
 
 📋 VIOLATIONS BY TYPE:
-   SC5: Prayer Time Overlap: 82
-   SC8: Research Day: 29
+   SC5: Prayer Time Overlap: 75
+   SC8: Research Day: 32
+   HC7: Max Daily Periods: 2
+
+🚫 HARD CONSTRAINT VIOLATIONS:
+   • CE12CP03 (Proses Industri Kimia)
+     HC7: Max Daily Periods: Lecturer CWR exceeds max daily periods (8) on Monday
+
+   • IS13PL33 (Pengembangan Perangkat Lunak)
+     HC7: Max Daily Periods: Lecturer ADF exceeds max daily periods (8) on Friday
 
 ⚠️  SOFT CONSTRAINT VIOLATIONS (Sample):
-   • MM23SC03: Class overlaps with 50 minutes of prayer time
-   • MM23CS03: Class overlaps with 50 minutes of prayer time
-   • MM23AB03: Class overlaps with 30 minutes of prayer time
-   • MM23SE03: Class overlaps with 30 minutes of prayer time
+   • MM23SM03: Class overlaps with 50 minutes of prayer time
+   • MM23CF03: Class overlaps with 30 minutes of prayer time
+   • AB13A103: Class overlaps with 50 minutes of prayer time
    • MG13PB03: Class overlaps with 30 minutes of prayer time
    • MG13PB03: Class overlaps with 30 minutes of prayer time
+   • MG13PM03: Lecturer HDC has research day on Wednesday
    • MG13PM03: Class overlaps with 50 minutes of prayer time
    • AB13A503: Class overlaps with 50 minutes of prayer time
    • AB13A503: Lecturer ADL has research day on Wednesday
    • MG13MB03: Class overlaps with 30 minutes of prayer time
-   ... and 101 more
+   ... and 97 more

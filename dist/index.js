@@ -109,7 +109,7 @@ const NON_LAB_ROOMS = [
 const EXCLUSIVE_ROOMS = {
     "G5-LabAudioVisual": {
         courses: ["Fotografi Dasar"],
-        prodi: "DKV",
+        prodi: "DESAIN KOMUNIKASI VISUAL", // Changed from "DKV" to match actual prodi name in data
     },
 };
 const TIME_SLOTS_PAGI = [];
@@ -276,15 +276,23 @@ function isRoomAvailable(schedule, room, timeSlot, sks) {
 }
 function getAvailableRooms(allRooms, schedule, classReq, timeSlot, participants, needsLab, courseName, prodi) {
     const sks = classReq.SKS || 3;
-    // Priority 1: Exclusive room
+    // Priority 1: Exclusive room - STRICT ENFORCEMENT
+    // If this course MUST use an exclusive room, ONLY return that room (or empty if not available)
     for (const [roomCode, config] of Object.entries(EXCLUSIVE_ROOMS)) {
-        if (canUseExclusiveRoom(roomCode, courseName, prodi)) {
+        // Check if this course matches the exclusive room requirement
+        const courseMatch = config.courses.some((c) => courseName.toLowerCase().includes(c.toLowerCase()));
+        const prodiMatch = !config.prodi || prodi.toLowerCase().includes(config.prodi.toLowerCase());
+        if (courseMatch && prodiMatch) {
+            // This course MUST use this exclusive room - don't allow fallback to other rooms
             const room = allRooms.find((r) => r.Code === roomCode);
             if (room && room.Capacity >= participants) {
                 if (isRoomAvailable(schedule, roomCode, timeSlot, sks)) {
-                    return [roomCode];
+                    return [roomCode]; // Return the exclusive room if available
                 }
             }
+            // IMPORTANT: Return empty array if exclusive room is required but not available
+            // This prevents the course from using other rooms
+            return [];
         }
     }
     let roomCodes = [];
@@ -1142,15 +1150,29 @@ class SimulatedAnnealing {
         }
         else {
             // Change room
-            const classReq = this.classes.find((c) => c.Kode_Matakuliah === entry.classId);
-            if (!classReq)
-                return solution;
-            const scheduleWithoutCurrent = newSchedule.filter((_, idx) => idx !== randomIndex);
-            const roomCodes = getAvailableRooms(this.rooms, scheduleWithoutCurrent, classReq, entry.timeSlot, entry.participants, entry.needsLab, entry.className, entry.prodi);
-            if (roomCodes.length > 0) {
-                const newRoom = roomCodes[Math.floor(Math.random() * roomCodes.length)];
-                entry.room = newRoom;
-                entry.isOverflowToLab = !entry.needsLab && LAB_ROOMS.includes(newRoom);
+            // IMPORTANT: Check if this class requires an exclusive room
+            // If it does, DO NOT change the room!
+            let requiresExclusiveRoom = false;
+            for (const [roomCode, config] of Object.entries(EXCLUSIVE_ROOMS)) {
+                const courseMatch = config.courses.some((c) => entry.className.toLowerCase().includes(c.toLowerCase()));
+                const prodiMatch = !config.prodi || entry.prodi.toLowerCase().includes(config.prodi.toLowerCase());
+                if (courseMatch && prodiMatch) {
+                    requiresExclusiveRoom = true;
+                    break;
+                }
+            }
+            // Only change room if NOT exclusive room class
+            if (!requiresExclusiveRoom) {
+                const classReq = this.classes.find((c) => c.Kode_Matakuliah === entry.classId);
+                if (!classReq)
+                    return solution;
+                const scheduleWithoutCurrent = newSchedule.filter((_, idx) => idx !== randomIndex);
+                const roomCodes = getAvailableRooms(this.rooms, scheduleWithoutCurrent, classReq, entry.timeSlot, entry.participants, entry.needsLab, entry.className, entry.prodi);
+                if (roomCodes.length > 0) {
+                    const newRoom = roomCodes[Math.floor(Math.random() * roomCodes.length)];
+                    entry.room = newRoom;
+                    entry.isOverflowToLab = !entry.needsLab && LAB_ROOMS.includes(newRoom);
+                }
             }
         }
         const fitness = this.calculateFitness(newSchedule);
@@ -1178,6 +1200,24 @@ class SimulatedAnnealing {
         }
         const entry1 = newSchedule[idx1];
         const entry2 = newSchedule[idx2];
+        // IMPORTANT: Check if either class requires an exclusive room
+        // If either does, DO NOT swap rooms!
+        let entry1RequiresExclusiveRoom = false;
+        let entry2RequiresExclusiveRoom = false;
+        for (const [roomCode, config] of Object.entries(EXCLUSIVE_ROOMS)) {
+            const entry1Match = config.courses.some((c) => entry1.className.toLowerCase().includes(c.toLowerCase()));
+            const entry1ProdiMatch = !config.prodi || entry1.prodi.toLowerCase().includes(config.prodi.toLowerCase());
+            if (entry1Match && entry1ProdiMatch) {
+                entry1RequiresExclusiveRoom = true;
+            }
+            const entry2Match = config.courses.some((c) => entry2.className.toLowerCase().includes(c.toLowerCase()));
+            const entry2ProdiMatch = !config.prodi || entry2.prodi.toLowerCase().includes(config.prodi.toLowerCase());
+            if (entry2Match && entry2ProdiMatch) {
+                entry2RequiresExclusiveRoom = true;
+            }
+        }
+        // Determine if we can swap rooms
+        const canSwapRooms = !entry1RequiresExclusiveRoom && !entry2RequiresExclusiveRoom;
         // Swap strategy: pilih apa yang akan ditukar
         const swapType = Math.random();
         if (swapType < 0.33) {
@@ -1192,30 +1232,47 @@ class SimulatedAnnealing {
             entry2.prayerTimeAdded = calc2.prayerTimeAdded;
         }
         else if (swapType < 0.66) {
-            // SWAP ROOM ONLY
-            const tempRoom = entry1.room;
-            entry1.room = entry2.room;
-            entry2.room = tempRoom;
-            // Update overflow flags
-            entry1.isOverflowToLab = !entry1.needsLab && LAB_ROOMS.includes(entry1.room);
-            entry2.isOverflowToLab = !entry2.needsLab && LAB_ROOMS.includes(entry2.room);
+            // SWAP ROOM ONLY - only if both classes can swap rooms
+            if (canSwapRooms) {
+                const tempRoom = entry1.room;
+                entry1.room = entry2.room;
+                entry2.room = tempRoom;
+                // Update overflow flags
+                entry1.isOverflowToLab = !entry1.needsLab && LAB_ROOMS.includes(entry1.room);
+                entry2.isOverflowToLab = !entry2.needsLab && LAB_ROOMS.includes(entry2.room);
+            }
+            // If can't swap rooms, just swap timeslots instead
+            else {
+                const tempTimeSlot = { ...entry1.timeSlot };
+                entry1.timeSlot = { ...entry2.timeSlot };
+                entry2.timeSlot = tempTimeSlot;
+                // Recalculate prayer times
+                const calc1 = calculateEndTime(entry1.timeSlot.startTime, entry1.sks, entry1.timeSlot.day);
+                entry1.prayerTimeAdded = calc1.prayerTimeAdded;
+                const calc2 = calculateEndTime(entry2.timeSlot.startTime, entry2.sks, entry2.timeSlot.day);
+                entry2.prayerTimeAdded = calc2.prayerTimeAdded;
+            }
         }
         else {
             // SWAP BOTH TIMESLOT AND ROOM (complete swap)
             const tempTimeSlot = { ...entry1.timeSlot };
-            const tempRoom = entry1.room;
+            // Always swap timeslots
             entry1.timeSlot = { ...entry2.timeSlot };
-            entry1.room = entry2.room;
             entry2.timeSlot = tempTimeSlot;
-            entry2.room = tempRoom;
             // Recalculate prayer times
             const calc1 = calculateEndTime(entry1.timeSlot.startTime, entry1.sks, entry1.timeSlot.day);
             entry1.prayerTimeAdded = calc1.prayerTimeAdded;
             const calc2 = calculateEndTime(entry2.timeSlot.startTime, entry2.sks, entry2.timeSlot.day);
             entry2.prayerTimeAdded = calc2.prayerTimeAdded;
-            // Update overflow flags
-            entry1.isOverflowToLab = !entry1.needsLab && LAB_ROOMS.includes(entry1.room);
-            entry2.isOverflowToLab = !entry2.needsLab && LAB_ROOMS.includes(entry2.room);
+            // Only swap rooms if both classes can swap rooms
+            if (canSwapRooms) {
+                const tempRoom = entry1.room;
+                entry1.room = entry2.room;
+                entry2.room = tempRoom;
+                // Update overflow flags
+                entry1.isOverflowToLab = !entry1.needsLab && LAB_ROOMS.includes(entry1.room);
+                entry2.isOverflowToLab = !entry2.needsLab && LAB_ROOMS.includes(entry2.room);
+            }
         }
         const fitness = this.calculateFitness(newSchedule);
         return {

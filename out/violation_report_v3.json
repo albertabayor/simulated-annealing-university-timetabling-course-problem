@@ -1,9 +1,34 @@
 {
-  "hardConstraintViolations": [],
+  "hardConstraintViolations": [
+    {
+      "classId": "CE12CP03",
+      "className": "Proses Industri Kimia",
+      "constraintType": "HC7: Max Daily Periods",
+      "reason": "Lecturer CWR exceeds max daily periods (8) on Monday",
+      "severity": "hard",
+      "details": {
+        "lecturer": "CWR",
+        "periods": 9,
+        "max": 8
+      }
+    },
+    {
+      "classId": "IS13PL33",
+      "className": "Pengembangan Perangkat Lunak",
+      "constraintType": "HC7: Max Daily Periods",
+      "reason": "Lecturer ADF exceeds max daily periods (8) on Friday",
+      "severity": "hard",
+      "details": {
+        "lecturer": "ADF",
+        "periods": 9,
+        "max": 8
+      }
+    }
+  ],
   "softConstraintViolations": [
     {
-      "classId": "MM23SC03",
-      "className": "Startup and corporate entrepreneurship",
+      "classId": "MM23SM03",
+      "className": "Strategic Marketing Management",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
@@ -12,33 +37,23 @@
       }
     },
     {
-      "classId": "MM23CS03",
-      "className": "Corporate Strategic Management",
+      "classId": "MM23CF03",
+      "className": "Corporate Finance",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 30 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "AB13A103",
+      "className": "Ekonomi untuk Bisnis",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
       "details": {
         "prayerTimeMinutes": 50
-      }
-    },
-    {
-      "classId": "MM23AB03",
-      "className": "Agile and Disruptive Business Strategy",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "MM23SE03",
-      "className": "Sustainability and Enviromental Management",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
       }
     },
     {
@@ -59,6 +74,17 @@
       "severity": "soft",
       "details": {
         "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "MG13PM03",
+      "className": "Pengantar Manajemen",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer HDC has research day on Wednesday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "HDC",
+        "researchDay": "Wednesday"
       }
     },
     {
@@ -115,6 +141,17 @@
     {
       "classId": "MG13MP13",
       "className": "Manajamen Pemasaran",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer RRI has research day on Thursday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "RRI",
+        "researchDay": "Thursday"
+      }
+    },
+    {
+      "classId": "MG13MP13",
+      "className": "Manajamen Pemasaran",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
@@ -166,10 +203,10 @@
       "classId": "AB13A503",
       "className": "Akuntansi Dasar",
       "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
+      "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 50
+        "prayerTimeMinutes": 30
       }
     },
     {
@@ -213,6 +250,27 @@
       }
     },
     {
+      "classId": "AC131313",
+      "className": "Akuntansi Keuangan Menengah 1",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer ADL has research day on Wednesday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "ADL",
+        "researchDay": "Wednesday"
+      }
+    },
+    {
+      "classId": "AC132013",
+      "className": "Akuntansi Keuangan Menengah 2",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 30 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 30
+      }
+    },
+    {
       "classId": "AB13A713",
       "className": "Manajemen Operasional",
       "constraintType": "SC5: Prayer Time Overlap",
@@ -220,16 +278,6 @@
       "severity": "soft",
       "details": {
         "prayerTimeMinutes": 50
-      }
-    },
-    {
-      "classId": "AB13A803",
-      "className": "Manajemen Keuangan",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
       }
     },
     {
@@ -288,6 +336,16 @@
       "classId": "AB13B413",
       "className": "Manajemen Risiko",
       "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
+      }
+    },
+    {
+      "classId": "AC133013",
+      "className": "Teori Akuntansi",
+      "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
@@ -305,23 +363,33 @@
       }
     },
     {
-      "classId": "SE13MI03",
-      "className": "Pengantar Manajemen dan Bisnis Islam",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 50
-      }
-    },
-    {
-      "classId": "AB13A503",
-      "className": "Akuntansi Dasar",
+      "classId": "SE13EI03",
+      "className": "Pengantar Ekonomi Islam",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
         "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "SE13ME02",
+      "className": "Sejarah Pemikiran Ekonomi Islam",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 30 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "AB13A803",
+      "className": "Manajemen Keuangan",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
       }
     },
     {
@@ -345,39 +413,29 @@
       }
     },
     {
-      "classId": "SE13IC02",
-      "className": "Islamic Corporate Governance & CSR",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer EMH has research day on Thursday",
-      "severity": "soft",
-      "details": {
-        "lecturer": "EMH",
-        "researchDay": "Thursday"
-      }
-    },
-    {
-      "classId": "SE13TA02",
-      "className": "Tasawuf dan Kearifan Lokal",
+      "classId": "SE13AH43",
+      "className": "Aspek Hukum dan Etika Bisnis Islam",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
         "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "SE13AH43",
+      "className": "Aspek Hukum dan Etika Bisnis Islam",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer MHA has research day on Wednesday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "MHA",
+        "researchDay": "Wednesday"
       }
     },
     {
       "classId": "SE13VP43",
       "className": "Manajemen Investasi & Portofolio Islam",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "AB13A713",
-      "className": "Manajemen Operasional",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
@@ -407,34 +465,54 @@
       }
     },
     {
-      "classId": "GS13EL03",
-      "className": "Bahasa Inggris",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 50
-      }
-    },
-    {
-      "classId": "EM13ST03",
-      "className": "Statistika",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 50
-      }
-    },
-    {
       "classId": "ET13CA03",
-      "className": "KALKULUS I",
+      "className": "Kalkulus I",
       "constraintType": "SC8: Research Day",
-      "reason": "Lecturer YNK has research day on Friday",
+      "reason": "Lecturer AAV has research day on Wednesday",
       "severity": "soft",
       "details": {
-        "lecturer": "YNK",
-        "researchDay": "Friday"
+        "lecturer": "AAV",
+        "researchDay": "Wednesday"
+      }
+    },
+    {
+      "classId": "ET13PA03",
+      "className": "Fisika Dasar I",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
+      }
+    },
+    {
+      "classId": "EM13CM03",
+      "className": "Kimia Dasar I",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
+      }
+    },
+    {
+      "classId": "EM13CM13",
+      "className": "Kimia Dasar II",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
+      }
+    },
+    {
+      "classId": "EM13MR13",
+      "className": "Riset Pasar dan Pemasaran",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
       }
     },
     {
@@ -450,6 +528,26 @@
     {
       "classId": "ET13PA03",
       "className": "FISIKA I",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 30 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "LE13LE02",
+      "className": "PENGANTAR TEKNIK LOGISTIK",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
+      }
+    },
+    {
+      "classId": "LE13PD02",
+      "className": "PEMROGRAMAN & PENGOLAHAN DATA",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
@@ -469,34 +567,13 @@
       }
     },
     {
-      "classId": "GS13IL02",
-      "className": "BAHASA INDONESIA",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
       "classId": "LE13CH03",
       "className": "KIMIA",
       "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
+      "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "LE13CH03",
-      "className": "KIMIA",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer UAG has research day on Wednesday",
-      "severity": "soft",
-      "details": {
-        "lecturer": "UAG",
-        "researchDay": "Wednesday"
+        "prayerTimeMinutes": 50
       }
     },
     {
@@ -510,34 +587,13 @@
       }
     },
     {
-      "classId": "LE13RO12",
-      "className": "RISET OPERASI II",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 50
-      }
-    },
-    {
       "classId": "ET13EE13",
       "className": "EKONOMI TEKNIK",
       "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
+      "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 50
-      }
-    },
-    {
-      "classId": "ET13EE13",
-      "className": "EKONOMI TEKNIK",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer LKT has research day on Friday",
-      "severity": "soft",
-      "details": {
-        "lecturer": "LKT",
-        "researchDay": "Friday"
+        "prayerTimeMinutes": 30
       }
     },
     {
@@ -551,8 +607,29 @@
       }
     },
     {
+      "classId": "ET13PP13",
+      "className": "PERENCANAAN PRODUKSI DAN PENGENDALIAN PERSEDIAAN",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer WND has research day on Friday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "WND",
+        "researchDay": "Friday"
+      }
+    },
+    {
       "classId": "CE12CP03",
       "className": "Proses Industri Kimia",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 30 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "CE13BC02",
+      "className": "Kimia Dasar 1",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
@@ -571,28 +648,8 @@
       }
     },
     {
-      "classId": "CE12PC22",
-      "className": "Kimia Fisika",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
       "classId": "ET13SE02",
       "className": "Sistem Lingkungan Berkelanjutan",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "ET13CT02",
-      "className": "Teknologi Industri Semen",
       "constraintType": "SC8: Research Day",
       "reason": "Lecturer UAG has research day on Wednesday",
       "severity": "soft",
@@ -602,8 +659,8 @@
       }
     },
     {
-      "classId": "CE11OQ13",
-      "className": "Operasi Teknik Kimia 2",
+      "classId": "CE13OA12",
+      "className": "Kimia Organik 1",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
@@ -655,6 +712,16 @@
       }
     },
     {
+      "classId": "ET13PA03",
+      "className": "Fisika Dasar",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 30 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 30
+      }
+    },
+    {
       "classId": "ET13CA03",
       "className": "Kalkulus I",
       "constraintType": "SC5: Prayer Time Overlap",
@@ -667,22 +734,22 @@
     {
       "classId": "AE13BC02",
       "className": "Kimia Dasar",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer WKS has research day on Wednesday",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "lecturer": "WKS",
-        "researchDay": "Wednesday"
+        "prayerTimeMinutes": 50
       }
     },
     {
       "classId": "AE13AI03",
       "className": "Pengantar Agroindustri",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer YSM has research day on Friday",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 30
+        "lecturer": "YSM",
+        "researchDay": "Friday"
       }
     },
     {
@@ -696,54 +763,45 @@
       }
     },
     {
-      "classId": "AE13OR13",
-      "className": "Riset Operasional",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
       "classId": "ET13SB13",
       "className": "Statistika II",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "ET13SB13",
-      "className": "Statistika II",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer FKH has research day on Wednesday",
-      "severity": "soft",
-      "details": {
-        "lecturer": "FKH",
-        "researchDay": "Wednesday"
-      }
-    },
-    {
-      "classId": "AE13AM13",
-      "className": "Pengetahuan Bahan Agroindustri",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
       "details": {
         "prayerTimeMinutes": 50
+      }
+    },
+    {
+      "classId": "AE13AM13",
+      "className": "Pengetahuan Bahan Agroindustri",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer WKS has research day on Wednesday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "WKS",
+        "researchDay": "Wednesday"
+      }
+    },
+    {
+      "classId": "AE13UO13",
+      "className": "Satuan Operasi Agroindustri",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer WKS has research day on Wednesday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "WKS",
+        "researchDay": "Wednesday"
       }
     },
     {
       "classId": "AE13UP13",
       "className": "Satuan Proses Agroindustri",
       "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
+      "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 50
+        "prayerTimeMinutes": 30
       }
     },
     {
@@ -769,19 +827,8 @@
       }
     },
     {
-      "classId": "AE13DM13",
-      "className": "Analisis Keputusan dan Multikriteria",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer ZSR has research day on Thursday",
-      "severity": "soft",
-      "details": {
-        "lecturer": "ZSR",
-        "researchDay": "Thursday"
-      }
-    },
-    {
-      "classId": "AE13QE13",
-      "className": "Rekayasa Mutu",
+      "classId": "AE13AC12",
+      "className": "Agroindustrial Community Development",
       "constraintType": "SC8: Research Day",
       "reason": "Lecturer YSM has research day on Friday",
       "severity": "soft",
@@ -791,24 +838,24 @@
       }
     },
     {
-      "classId": "DT13MD13",
-      "className": "Matematika Diskret ",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer NGT has research day on Wednesday",
+      "classId": "AE13DM13",
+      "className": "Analisis Keputusan dan Multikriteria",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "lecturer": "NGT",
-        "researchDay": "Wednesday"
+        "prayerTimeMinutes": 50
       }
     },
     {
-      "classId": "DT13MD13",
-      "className": "Matematika Diskret ",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
+      "classId": "AE13DM13",
+      "className": "Analisis Keputusan dan Multikriteria",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer ZSR has research day on Thursday",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 30
+        "lecturer": "ZSR",
+        "researchDay": "Thursday"
       }
     },
     {
@@ -824,11 +871,12 @@
     {
       "classId": "DT13PT12",
       "className": "Pengantar Teknologi Informasi",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer MZF has research day on Friday",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 50
+        "lecturer": "MZF",
+        "researchDay": "Friday"
       }
     },
     {
@@ -863,6 +911,16 @@
       }
     },
     {
+      "classId": "DT13ST13",
+      "className": "Statistika Dasar",
+      "constraintType": "SC5: Prayer Time Overlap",
+      "reason": "Class overlaps with 50 minutes of prayer time",
+      "severity": "soft",
+      "details": {
+        "prayerTimeMinutes": 50
+      }
+    },
+    {
       "classId": "IF13AS13",
       "className": "Algoritma dan Struktur Data",
       "constraintType": "SC5: Prayer Time Overlap",
@@ -875,26 +933,6 @@
     {
       "classId": "IF13JK13",
       "className": "Jaringan Komputer",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "IF13JK13",
-      "className": "Jaringan Komputer",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "IF13IM13",
-      "className": "Interaksi Manusia-Komputer",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
@@ -923,34 +961,13 @@
       }
     },
     {
-      "classId": "IS13SO02",
-      "className": "Pengantar Sistem Operasi",
+      "classId": "IS13KI02",
+      "className": "Keterampilan Interpersonal Bisnis",
       "constraintType": "SC5: Prayer Time Overlap",
       "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
         "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "IS13KI02",
-      "className": "Keterampilan Interpersonal Bisnis",
-      "constraintType": "SC8: Research Day",
-      "reason": "Lecturer GFP has research day on Wednesday",
-      "severity": "soft",
-      "details": {
-        "lecturer": "GFP",
-        "researchDay": "Wednesday"
-      }
-    },
-    {
-      "classId": "GS13RG02",
-      "className": "Agama",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 50
       }
     },
     {
@@ -965,26 +982,6 @@
       }
     },
     {
-      "classId": "IS13AD03",
-      "className": "Analisis & Desain Proses Bisnis",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "DT13SB13",
-      "className": "Sistem Basis Data",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
       "classId": "DT13SB13",
       "className": "Sistem Basis Data",
       "constraintType": "SC8: Research Day",
@@ -996,13 +993,24 @@
       }
     },
     {
-      "classId": "DT13AS13",
-      "className": "Algoritma dan Struktur Data",
+      "classId": "DT13SB13",
+      "className": "Sistem Basis Data",
       "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
+      "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 50
+        "prayerTimeMinutes": 30
+      }
+    },
+    {
+      "classId": "DT13AS13",
+      "className": "Algoritma dan Struktur Data",
+      "constraintType": "SC8: Research Day",
+      "reason": "Lecturer MNI has research day on Thursday",
+      "severity": "soft",
+      "details": {
+        "lecturer": "MNI",
+        "researchDay": "Thursday"
       }
     },
     {
@@ -1019,32 +1027,12 @@
     {
       "classId": "IS13VA33",
       "className": "Visualisasi dan Analisis Data",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
-      }
-    },
-    {
-      "classId": "IS13VA33",
-      "className": "Visualisasi dan Analisis Data",
       "constraintType": "SC8: Research Day",
       "reason": "Lecturer ADF has research day on Thursday",
       "severity": "soft",
       "details": {
         "lecturer": "ADF",
         "researchDay": "Thursday"
-      }
-    },
-    {
-      "classId": "IS13VA33",
-      "className": "Visualisasi dan Analisis Data",
-      "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
-      "severity": "soft",
-      "details": {
-        "prayerTimeMinutes": 30
       }
     },
     {
@@ -1103,10 +1091,10 @@
       "classId": "VD13RI03",
       "className": "Budaya Rupa Indonesia",
       "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 50 minutes of prayer time",
+      "reason": "Class overlaps with 30 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 50
+        "prayerTimeMinutes": 30
       }
     },
     {
@@ -1124,10 +1112,10 @@
       "classId": "VD13CW03",
       "className": "Copywriting",
       "constraintType": "SC5: Prayer Time Overlap",
-      "reason": "Class overlaps with 30 minutes of prayer time",
+      "reason": "Class overlaps with 50 minutes of prayer time",
       "severity": "soft",
       "details": {
-        "prayerTimeMinutes": 30
+        "prayerTimeMinutes": 50
       }
     },
     {
@@ -1142,11 +1130,12 @@
     }
   ],
   "summary": {
-    "totalHardViolations": 0,
-    "totalSoftViolations": 111,
+    "totalHardViolations": 2,
+    "totalSoftViolations": 107,
     "violationsByType": {
-      "SC5: Prayer Time Overlap": 82,
-      "SC8: Research Day": 29
+      "SC5: Prayer Time Overlap": 75,
+      "SC8: Research Day": 32,
+      "HC7: Max Daily Periods": 2
     }
   }
 }
