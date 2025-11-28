@@ -1,6 +1,6 @@
 {
   "name": "timetable-sa",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A powerful, modular solver for University Course Timetabling Problem (UCTP) using Simulated Annealing algorithm with TypeScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
