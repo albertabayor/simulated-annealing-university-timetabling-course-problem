@@ -2,7 +2,7 @@
  * Time calculation utilities
  */
 
-import { PRAYER_TIMES } from "../constants/index.js";
+import { PRAYER_TIMES } from "./prayer-times.js";
 
 /**
  * Convert time string (HH:MM) to minutes from midnight

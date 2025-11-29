@@ -3,7 +3,7 @@
  */
 
 import type { Room, ClassRequirement, ScheduleEntry, TimeSlot } from "../types/index.js";
-import { LAB_ROOMS, NON_LAB_ROOMS, EXCLUSIVE_ROOMS } from "../constants/index.js";
+import { LAB_ROOMS, NON_LAB_ROOMS, EXCLUSIVE_ROOMS } from "./room-constants.js";
 import { calculateEndTime, timeToMinutes } from "./time.js";
 
 /**
