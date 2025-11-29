@@ -276,7 +276,7 @@ describe('ConstraintChecker', () => {
         const conflicting: ScheduleEntry = {
           classId: 'IF102',
           className: 'Database',
-          class: 'IF-1B',
+          class: 'IF-1A',
           prodi: 'INFORMATIKA', // Same prodi
           lecturers: ['L002'],
           room: 'CM-102',
