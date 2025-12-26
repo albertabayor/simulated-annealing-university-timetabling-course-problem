@@ -11,7 +11,7 @@
  * 4. If no suitable room at current time, try changing time slot too
  */
 
-import type { MoveGenerator } from 'timetable-sa';
+import type { MoveGenerator } from '../../../src/index.js';
 import type { TimetableState, ScheduleEntry } from '../types/index.js';
 import { getValidTimeSlotAndRoomCombinationsWithPriority, canUseExclusiveRoom } from '../utils/index.js';
 
@@ -112,8 +112,9 @@ export class FixRoomCapacity implements MoveGenerator<TimetableState> {
       return state; // No violations to fix
     }
 
-    // Clone state
-    const newState = JSON.parse(JSON.stringify(state)) as TimetableState;
+    // Optimized shallow clone - only deep copy schedule entries
+    const newSchedule = state.schedule.map(e => ({ ...e, timeSlot: { ...e.timeSlot } }));
+    const newState: TimetableState = { ...state, schedule: newSchedule };
 
     // Pick random violating class
     const targetClass = violatingClasses[Math.floor(Math.random() * violatingClasses.length)];

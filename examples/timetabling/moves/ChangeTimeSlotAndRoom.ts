@@ -9,7 +9,7 @@
  * can find solutions that wouldn't be possible with sequential moves.
  */
 
-import type { MoveGenerator } from 'timetable-sa';
+import type { MoveGenerator } from '../../../src/index.js';
 import type { TimetableState } from '../types/index.js';
 import { getValidTimeSlotAndRoomCombinationsWithPriority, calculateEndTime } from '../utils/index.js';
 
@@ -21,8 +21,9 @@ export class ChangeTimeSlotAndRoom implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Clone state
-    const newState = JSON.parse(JSON.stringify(state)) as TimetableState;
+    // Optimized shallow clone - only deep copy schedule entries
+    const newSchedule = state.schedule.map(e => ({ ...e, timeSlot: { ...e.timeSlot } }));
+    const newState: TimetableState = { ...state, schedule: newSchedule };
 
     if (newState.schedule.length === 0) {
       return newState;

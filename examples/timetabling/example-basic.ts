@@ -7,13 +7,14 @@
  * Run with: npm run example:timetabling
  */
 
-import { SimulatedAnnealing } from "timetable-sa";
-import type { SAConfig, Constraint, MoveGenerator } from "timetable-sa";
-import type { TimetableState } from "./types/index.js";
+import type { SAConfig, Constraint, MoveGenerator } from "../../src/index.js";
+import type { TimetableState, ScheduleEntry } from "./types/index.js";
 import { loadDataFromExcel } from "./data/index.js";
 import { generateInitialSolution } from "./utils/initial-solution.js";
 import { NoFridayPrayConflict } from "./constraints/hard/NoFridayPrayConflit.js";
 import fs from "fs";
+import { SimulatedAnnealing } from "../../src/index.js";
+import { getCacheStats } from "./utils/cache.js";
 
 import { NoLecturerConflict, NoRoomConflict, RoomCapacity, NoProdiConflict, MaxDailyPeriods, ClassTypeTime, SaturdayRestriction, FridayTimeRestriction, PrayerTimeStart, ExclusiveRoom } from "./constraints/hard/index.js";
 import { Compactness, EveningClassPriority, OverflowPenalty, PrayerTimeOverlap, PreferredRoom, PreferredTime, ResearchDay, TransitTime } from "./constraints/soft/index.js";
@@ -106,12 +107,15 @@ const config: SAConfig<TimetableState> = {
   initialTemperature: 100000, // Higher for better exploration at start
   minTemperature: 0.0000001,
   coolingRate: 0.9998, // Slower cooling for thorough search
-  maxIterations: 100000, // Increased for better convergence (15-30 min runtime)
+  maxIterations: 60_000, // Increased for better convergence (15-30 min runtime)
   hardConstraintWeight: 100000, // Very high penalty for hard violations
 
-  // State cloning function
-  cloneState: (state) => JSON.parse(JSON.stringify(state)),
-
+  // State cloning function - optimized for performance
+  // Only clone schedule array (mutable), keep references to static data (rooms, lecturers, classes)
+cloneState: (state) => ({
+  ...state,
+  schedule: state.schedule.map((entry: ScheduleEntry) => ({ ...entry }))
+}),
   // Reheating to escape local minima
   reheatingThreshold: 500, // Reheat if no improvement for 500 iterations
   reheatingFactor: 150, // Strong reheating boost
@@ -140,6 +144,7 @@ const solution = solver.solve();
 
 console.log("=".repeat(70));
 console.log("\n✨ OPTIMIZATION COMPLETE!\n");
+console.log("Cache stats:", getCacheStats());
 
 // 7. Display results
 console.log("📊 RESULTS:");
@@ -176,7 +181,6 @@ console.log("✅ Example completed successfully!");
 console.log("=".repeat(70) + "\n");
 
 // Optional: Save results to JSON
-import fs from "fs";
 fs.writeFileSync(
   "timetable-result.json",
   JSON.stringify(

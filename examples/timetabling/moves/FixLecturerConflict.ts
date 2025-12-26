@@ -6,7 +6,7 @@
  * UPDATED: Now uses constraint-aware slot+room validation.
  */
 
-import type { MoveGenerator } from 'timetable-sa';
+import type { MoveGenerator } from '../../../src/index.js';
 import type { TimetableState, ScheduleEntry } from '../types/index.js';
 import { getValidTimeSlotAndRoomCombinationsWithPriority, calculateEndTime, timeToMinutes } from '../utils/index.js';
 
@@ -57,8 +57,9 @@ export class FixLecturerConflict implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Clone state
-    const newState = JSON.parse(JSON.stringify(state)) as TimetableState;
+    // Optimized shallow clone - only deep copy schedule entries
+    const newSchedule = state.schedule.map(e => ({ ...e, timeSlot: { ...e.timeSlot } }));
+    const newState: TimetableState = { ...state, schedule: newSchedule };
 
     // Find all classes with lecturer conflicts
     const conflictingClasses = this.findLecturerConflicts(newState.schedule);
