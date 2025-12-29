@@ -112,14 +112,29 @@ const config: SAConfig<TimetableState> = {
 
   // State cloning function - optimized for performance
   // Only clone schedule array (mutable), keep references to static data (rooms, lecturers, classes)
-cloneState: (state) => ({
-  ...state,
-  schedule: state.schedule.map((entry: ScheduleEntry) => ({ ...entry }))
-}),
+  cloneState: (state) => ({
+    ...state,
+    schedule: state.schedule.map((entry: ScheduleEntry) => ({ ...entry }))
+  }),
+
   // Reheating to escape local minima
   reheatingThreshold: 500, // Reheat if no improvement for 500 iterations
   reheatingFactor: 150, // Strong reheating boost
   maxReheats: 10,
+
+  // ============================================
+  // NEW: Tabu Search Configuration
+  // ============================================
+  tabuSearchEnabled: true, // Enable to prevent cycling
+  tabuTenure: 50, // How long a state stays tabu
+  maxTabuListSize: 1000, // Memory limit for tabu list
+
+  // ============================================
+  // NEW: Intensification Configuration
+  // ============================================
+  enableIntensification: true, // Enable Phase 1.5 for stubborn hard violations
+  intensificationIterations: 2000, // Iterations per intensification attempt
+  maxIntensificationAttempts: 3, // Max restart attempts
 
   // Logging
   logging: {

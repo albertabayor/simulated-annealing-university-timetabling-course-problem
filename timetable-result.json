@@ -1,6 +1,6 @@
 {
-  "fitness": 66693.39628268025,
-  "hardViolations": 2,
+  "fitness": 27.042417433621807,
+  "hardViolations": 0,
   "softViolations": 8,
   "iterations": 60000,
   "schedule": [
@@ -13,18 +13,18 @@
         "BAT",
         "WAH"
       ],
-      "room": "CM-101",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 1,
+        "period": 3,
         "day": "Monday",
-        "startTime": "15:30",
-        "endTime": "18:00"
+        "startTime": "17:10",
+        "endTime": "20:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 15,
       "classType": "sore",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -36,12 +36,12 @@
         "ALF",
         "WAH"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 4,
-        "day": "Saturday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -58,10 +58,10 @@
       "lecturers": [
         "GTK"
       ],
-      "room": "CM-101",
+      "room": "G4-R3",
       "timeSlot": {
         "period": 3,
-        "day": "Tuesday",
+        "day": "Friday",
         "startTime": "17:10",
         "endTime": "20:10"
       },
@@ -70,7 +70,7 @@
       "participants": 15,
       "classType": "sore",
       "prayerTimeAdded": 30,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "MM23CF03",
@@ -80,12 +80,12 @@
       "lecturers": [
         "BAT"
       ],
-      "room": "CM-202",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
@@ -103,10 +103,10 @@
         "LKT",
         "PTA"
       ],
-      "room": "G2-R3",
+      "room": "B3-R1",
       "timeSlot": {
         "period": 8,
-        "day": "Thursday",
+        "day": "Friday",
         "startTime": "13:20",
         "endTime": "16:20"
       },
@@ -126,19 +126,19 @@
         "BAT",
         "WAH"
       ],
-      "room": "G2-R2",
+      "room": "G3-R2",
       "timeSlot": {
-        "period": 1,
-        "day": "Saturday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Thursday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 15,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "MM23CS03",
@@ -148,18 +148,18 @@
       "lecturers": [
         "RPA"
       ],
-      "room": "CM-203",
+      "room": "G3-R4",
       "timeSlot": {
-        "period": 7,
-        "day": "Saturday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 8,
+        "day": "Monday",
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 15,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -171,10 +171,10 @@
         "RPA",
         "ELD"
       ],
-      "room": "G5-Lab1",
+      "room": "CM-103",
       "timeSlot": {
         "period": 3,
-        "day": "Friday",
+        "day": "Wednesday",
         "startTime": "17:10",
         "endTime": "20:10"
       },
@@ -183,7 +183,7 @@
       "participants": 15,
       "classType": "sore",
       "prayerTimeAdded": 30,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "MM23AB03",
@@ -195,10 +195,10 @@
       ],
       "room": "CM-103",
       "timeSlot": {
-        "period": 3,
-        "day": "Thursday",
-        "startTime": "17:10",
-        "endTime": "20:10"
+        "period": 2,
+        "day": "Tuesday",
+        "startTime": "16:20",
+        "endTime": "19:20"
       },
       "sks": 3,
       "needsLab": false,
@@ -216,19 +216,19 @@
         "ALF",
         "WKS"
       ],
-      "room": "G5-Lab1",
+      "room": "B2-R1",
       "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 15,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": true
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
     },
     {
       "classId": "MM23TM03",
@@ -238,18 +238,18 @@
       "lecturers": [
         "GTK"
       ],
-      "room": "CM-202",
+      "room": "B3-R2",
       "timeSlot": {
-        "period": 1,
+        "period": 2,
         "day": "Saturday",
-        "startTime": "15:30",
-        "endTime": "18:00"
+        "startTime": "16:20",
+        "endTime": "19:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "sore",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -260,12 +260,12 @@
       "lecturers": [
         "GTK"
       ],
-      "room": "G3-R4",
+      "room": "G3-R2",
       "timeSlot": {
-        "period": 4,
-        "day": "Thursday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 2,
+        "day": "Saturday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
@@ -283,12 +283,12 @@
         "WKS",
         "ELD"
       ],
-      "room": "G4-R3",
+      "room": "G3-R4",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Tuesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -306,19 +306,19 @@
         "PTA",
         "WND"
       ],
-      "room": "G4-R4",
+      "room": "G5-Lab1",
       "timeSlot": {
-        "period": 9,
-        "day": "Friday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 7,
+        "day": "Saturday",
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": true
     },
     {
       "classId": "AB13A103",
@@ -328,7 +328,7 @@
       "lecturers": [
         "MAL"
       ],
-      "room": "G4-R3",
+      "room": "CM-208",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -350,10 +350,10 @@
       "lecturers": [
         "AWD"
       ],
-      "room": "CM-203",
+      "room": "CM-204",
       "timeSlot": {
         "period": 1,
-        "day": "Wednesday",
+        "day": "Thursday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -372,10 +372,54 @@
       "lecturers": [
         "ALF"
       ],
+      "room": "CM-208",
+      "timeSlot": {
+        "period": 7,
+        "day": "Monday",
+        "startTime": "12:30",
+        "endTime": "15:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "MG13PB03",
+      "className": "Pengantar Bisnis dan Korporasi",
+      "class": "MG-1B",
+      "prodi": "MANAJEMEN",
+      "lecturers": [
+        "ALF"
+      ],
       "room": "B3-R3",
       "timeSlot": {
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "MG13PM03",
+      "className": "Pengantar Manajemen",
+      "class": "MG-1A",
+      "prodi": "MANAJEMEN",
+      "lecturers": [
+        "HDC"
+      ],
+      "room": "CM-LabVirtual",
+      "timeSlot": {
         "period": 4,
-        "day": "Monday",
+        "day": "Thursday",
         "startTime": "10:00",
         "endTime": "12:30"
       },
@@ -387,69 +431,25 @@
       "isOverflowToLab": false
     },
     {
-      "classId": "MG13PB03",
-      "className": "Pengantar Bisnis dan Korporasi",
-      "class": "MG-1B",
-      "prodi": "MANAJEMEN",
-      "lecturers": [
-        "ALF"
-      ],
-      "room": "CM-102",
-      "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "17:10"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
       "classId": "MG13PM03",
       "className": "Pengantar Manajemen",
-      "class": "MG-1A",
+      "class": "MG-1B",
       "prodi": "MANAJEMEN",
       "lecturers": [
         "HDC"
       ],
-      "room": "CM-101",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 7,
+        "day": "Monday",
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "MG13PM03",
-      "className": "Pengantar Manajemen",
-      "class": "MG-1B",
-      "prodi": "MANAJEMEN",
-      "lecturers": [
-        "HDC"
-      ],
-      "room": "CM-101",
-      "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -460,18 +460,18 @@
       "lecturers": [
         "HDC"
       ],
-      "room": "G4-R1",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 1,
-        "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 6,
+        "day": "Wednesday",
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -482,12 +482,12 @@
       "lecturers": [
         "HDC"
       ],
-      "room": "G4-R1",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 4,
+        "day": "Tuesday",
+        "startTime": "10:00",
+        "endTime": "11:40"
       },
       "sks": 2,
       "needsLab": false,
@@ -504,12 +504,12 @@
       "lecturers": [
         "AWP"
       ],
-      "room": "CM-201",
+      "room": "CM-205",
       "timeSlot": {
-        "period": 3,
-        "day": "Tuesday",
-        "startTime": "09:10",
-        "endTime": "11:40"
+        "period": 1,
+        "day": "Friday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -526,12 +526,34 @@
       "lecturers": [
         "ADL"
       ],
-      "room": "CM-204",
+      "room": "CM-103",
       "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 6,
+        "day": "Thursday",
+        "startTime": "11:40",
+        "endTime": "15:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 50,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "MG13MB03",
+      "className": "Matematika Bisnis",
+      "class": "MG-1A",
+      "prodi": "MANAJEMEN",
+      "lecturers": [
+        "LRS"
+      ],
+      "room": "CM-103",
+      "timeSlot": {
+        "period": 3,
+        "day": "Tuesday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": false,
@@ -543,45 +565,23 @@
     {
       "classId": "MG13MB03",
       "className": "Matematika Bisnis",
-      "class": "MG-1A",
-      "prodi": "MANAJEMEN",
-      "lecturers": [
-        "LRS"
-      ],
-      "room": "CM-201",
-      "timeSlot": {
-        "period": 6,
-        "day": "Tuesday",
-        "startTime": "11:40",
-        "endTime": "15:00"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 50,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "MG13MB03",
-      "className": "Matematika Bisnis",
       "class": "MG-1B",
       "prodi": "MANAJEMEN",
       "lecturers": [
         "ZSR"
       ],
-      "room": "G4-R4",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 6,
+        "period": 7,
         "day": "Tuesday",
-        "startTime": "11:40",
+        "startTime": "12:30",
         "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -592,12 +592,12 @@
       "lecturers": [
         "RRI"
       ],
-      "room": "CM-204",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 3,
-        "day": "Wednesday",
-        "startTime": "09:10",
-        "endTime": "11:40"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -614,52 +614,52 @@
       "lecturers": [
         "ANW"
       ],
-      "room": "CM-103",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
       "classId": "MG13MK13",
       "className": "Manajemen Keuangan",
       "class": "MG-3A",
+      "prodi": "MANAJEMEN",
+      "lecturers": [
+        "AWP"
+      ],
+      "room": "G4-R3",
+      "timeSlot": {
+        "period": 6,
+        "day": "Thursday",
+        "startTime": "11:40",
+        "endTime": "15:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 50,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "MG13MK13",
+      "className": "Manajemen Keuangan",
+      "class": "MG-3B",
       "prodi": "MANAJEMEN",
       "lecturers": [
         "AWP"
       ],
       "room": "CM-202",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "MG13MK13",
-      "className": "Manajemen Keuangan",
-      "class": "MG-3B",
-      "prodi": "MANAJEMEN",
-      "lecturers": [
-        "AWP"
-      ],
-      "room": "CM-102",
-      "timeSlot": {
         "period": 7,
         "day": "Monday",
         "startTime": "12:30",
@@ -680,18 +680,18 @@
       "lecturers": [
         "MDI"
       ],
-      "room": "G4-R1",
+      "room": "CM-103",
       "timeSlot": {
-        "period": 7,
+        "period": 9,
         "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -702,12 +702,12 @@
       "lecturers": [
         "MDI"
       ],
-      "room": "CM-201",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 4,
+        "period": 1,
         "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -724,18 +724,18 @@
       "lecturers": [
         "KWN"
       ],
-      "room": "G4-R2",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 9,
+        "day": "Wednesday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -746,12 +746,12 @@
       "lecturers": [
         "IRM"
       ],
-      "room": "CM-201",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 1,
-        "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 4,
+        "day": "Wednesday",
+        "startTime": "10:00",
+        "endTime": "11:40"
       },
       "sks": 2,
       "needsLab": false,
@@ -790,18 +790,18 @@
       "lecturers": [
         "HDC"
       ],
-      "room": "B3-R3",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 6,
-        "day": "Tuesday",
-        "startTime": "11:40",
-        "endTime": "15:00"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -834,12 +834,12 @@
       "lecturers": [
         "WAH"
       ],
-      "room": "CM-204",
+      "room": "G4-R2",
       "timeSlot": {
-        "period": 3,
+        "period": 7,
         "day": "Tuesday",
-        "startTime": "09:10",
-        "endTime": "10:50"
+        "startTime": "12:30",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -856,10 +856,32 @@
       "lecturers": [
         "IKN"
       ],
-      "room": "CM-203",
+      "room": "G4-R4",
+      "timeSlot": {
+        "period": 3,
+        "day": "Thursday",
+        "startTime": "09:10",
+        "endTime": "11:40"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "GS13EL03",
+      "className": "Bahasa Inggris",
+      "class": "MG-3B",
+      "prodi": "MANAJEMEN",
+      "lecturers": [
+        "IKN"
+      ],
+      "room": "CM-201",
       "timeSlot": {
         "period": 1,
-        "day": "Monday",
+        "day": "Wednesday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -871,28 +893,6 @@
       "isOverflowToLab": false
     },
     {
-      "classId": "GS13EL03",
-      "className": "Bahasa Inggris",
-      "class": "MG-3B",
-      "prodi": "MANAJEMEN",
-      "lecturers": [
-        "IKN"
-      ],
-      "room": "CM-LabVirtual",
-      "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
       "classId": "GS13IL02",
       "className": "Bahasa Indonesia",
       "class": "MG-3A",
@@ -900,18 +900,18 @@
       "lecturers": [
         "ARI"
       ],
-      "room": "CM-204",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 1,
+        "period": 6,
         "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -922,12 +922,12 @@
       "lecturers": [
         "ARI"
       ],
-      "room": "CM-208",
+      "room": "CM-103",
       "timeSlot": {
-        "period": 3,
-        "day": "Friday",
-        "startTime": "09:10",
-        "endTime": "10:50"
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -946,16 +946,16 @@
       ],
       "room": "CM-206",
       "timeSlot": {
-        "period": 5,
-        "day": "Thursday",
-        "startTime": "10:50",
-        "endTime": "14:10"
+        "period": 9,
+        "day": "Tuesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -966,7 +966,7 @@
       "lecturers": [
         "ALF"
       ],
-      "room": "CM-203",
+      "room": "G4-R2",
       "timeSlot": {
         "period": 4,
         "day": "Tuesday",
@@ -988,7 +988,7 @@
       "lecturers": [
         "MMK"
       ],
-      "room": "G3-R4",
+      "room": "G4-R4",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -1011,10 +1011,10 @@
         "ANW",
         "RRI"
       ],
-      "room": "CM-103",
+      "room": "B3-R3",
       "timeSlot": {
         "period": 9,
-        "day": "Wednesday",
+        "day": "Monday",
         "startTime": "14:10",
         "endTime": "17:10"
       },
@@ -1033,7 +1033,7 @@
       "lecturers": [
         "ALF"
       ],
-      "room": "CM-203",
+      "room": "CM-205",
       "timeSlot": {
         "period": 7,
         "day": "Tuesday",
@@ -1055,7 +1055,7 @@
       "lecturers": [
         "RPA"
       ],
-      "room": "CM-204",
+      "room": "CM-101",
       "timeSlot": {
         "period": 2,
         "day": "Friday",
@@ -1077,19 +1077,19 @@
       "lecturers": [
         "MMK"
       ],
-      "room": "B3-R3",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "isOverflowToLab": true
     },
     {
       "classId": "MG13MS23",
@@ -1099,19 +1099,19 @@
       "lecturers": [
         "MMK"
       ],
-      "room": "G4-R2",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 3,
-        "day": "Friday",
-        "startTime": "17:10",
-        "endTime": "20:10"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "18:00",
+        "endTime": "21:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "sore",
       "prayerTimeAdded": 30,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "MG13AD13",
@@ -1121,18 +1121,18 @@
       "lecturers": [
         "LRS"
       ],
-      "room": "CM-205",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -1143,7 +1143,7 @@
       "lecturers": [
         "MDI"
       ],
-      "room": "CM-103",
+      "room": "CM-205",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -1165,10 +1165,10 @@
       "lecturers": [
         "RPA"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-205",
       "timeSlot": {
         "period": 4,
-        "day": "Thursday",
+        "day": "Monday",
         "startTime": "10:00",
         "endTime": "12:30"
       },
@@ -1187,7 +1187,7 @@
       "lecturers": [
         "BAT"
       ],
-      "room": "CM-201",
+      "room": "G2-R2",
       "timeSlot": {
         "period": 3,
         "day": "Tuesday",
@@ -1209,18 +1209,18 @@
       "lecturers": [
         "RPA"
       ],
-      "room": "CM-208",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 3,
+        "day": "Thursday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -1231,7 +1231,7 @@
       "lecturers": [
         "RPA"
       ],
-      "room": "CM-206",
+      "room": "CM-102",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -1253,19 +1253,19 @@
       "lecturers": [
         "RPA"
       ],
-      "room": "G3-R4",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "15:30",
-        "endTime": "18:00"
+        "period": 3,
+        "day": "Friday",
+        "startTime": "17:10",
+        "endTime": "20:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "sore",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": true
     },
     {
       "classId": "MG13ME13",
@@ -1275,12 +1275,12 @@
       "lecturers": [
         "MMK"
       ],
-      "room": "CM-101",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 7,
+        "day": "Monday",
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -1297,18 +1297,18 @@
       "lecturers": [
         "MMK"
       ],
-      "room": "CM-208",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 3,
-        "day": "Wednesday",
-        "startTime": "09:10",
-        "endTime": "11:40"
+        "period": 9,
+        "day": "Thursday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -1319,12 +1319,12 @@
       "lecturers": [
         "RRI"
       ],
-      "room": "G2-R4",
+      "room": "B3-R1",
       "timeSlot": {
-        "period": 3,
+        "period": 2,
         "day": "Thursday",
-        "startTime": "17:10",
-        "endTime": "20:10"
+        "startTime": "16:20",
+        "endTime": "19:20"
       },
       "sks": 3,
       "needsLab": false,
@@ -1343,10 +1343,10 @@
       ],
       "room": "CM-202",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -1363,7 +1363,7 @@
       "lecturers": [
         "GTK"
       ],
-      "room": "CM-101",
+      "room": "CM-208",
       "timeSlot": {
         "period": 7,
         "day": "Tuesday",
@@ -1385,12 +1385,12 @@
       "lecturers": [
         "GTK"
       ],
-      "room": "CM-208",
+      "room": "B3-R1",
       "timeSlot": {
-        "period": 4,
+        "period": 3,
         "day": "Wednesday",
-        "startTime": "18:00",
-        "endTime": "21:00"
+        "startTime": "17:10",
+        "endTime": "20:10"
       },
       "sks": 3,
       "needsLab": false,
@@ -1407,12 +1407,12 @@
       "lecturers": [
         "ANW"
       ],
-      "room": "CM-101",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "period": 1,
+        "day": "Friday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -1429,12 +1429,12 @@
       "lecturers": [
         "ANW"
       ],
-      "room": "CM-205",
+      "room": "CM-206",
       "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 5,
+        "day": "Thursday",
+        "startTime": "10:50",
+        "endTime": "12:30"
       },
       "sks": 2,
       "needsLab": false,
@@ -1473,18 +1473,18 @@
       "lecturers": [
         "LRS"
       ],
-      "room": "CM-201",
+      "room": "G4-R1",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "period": 6,
+        "day": "Monday",
+        "startTime": "11:40",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 34,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -1495,18 +1495,18 @@
       "lecturers": [
         "LRS"
       ],
-      "room": "CM-201",
+      "room": "CM-206",
       "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 34,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -1517,7 +1517,7 @@
       "lecturers": [
         "AWP"
       ],
-      "room": "CM-202",
+      "room": "CM-205",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -1539,18 +1539,18 @@
       "lecturers": [
         "AWP"
       ],
-      "room": "CM-206",
+      "room": "G4-R4",
       "timeSlot": {
-        "period": 7,
+        "period": 6,
         "day": "Tuesday",
-        "startTime": "12:30",
+        "startTime": "11:40",
         "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 34,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -1561,18 +1561,18 @@
       "lecturers": [
         "ANW"
       ],
-      "room": "CM-101",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 34,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -1583,7 +1583,7 @@
       "lecturers": [
         "RRI"
       ],
-      "room": "G4-R3",
+      "room": "CM-208",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -1605,12 +1605,12 @@
       "lecturers": [
         "GTK"
       ],
-      "room": "CM-101",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Wednesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -1627,18 +1627,18 @@
       "lecturers": [
         "MDI"
       ],
-      "room": "CM-203",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 7,
+        "period": 9,
         "day": "Wednesday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 34,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -1649,10 +1649,10 @@
       "lecturers": [
         "MDI"
       ],
-      "room": "CM-205",
+      "room": "CM-LabVirtual",
       "timeSlot": {
         "period": 1,
-        "day": "Wednesday",
+        "day": "Thursday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -1671,18 +1671,18 @@
       "lecturers": [
         "ALF"
       ],
-      "room": "CM-101",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 5,
-        "day": "Thursday",
-        "startTime": "10:50",
-        "endTime": "14:10"
+        "period": 8,
+        "day": "Friday",
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 34,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -1693,7 +1693,95 @@
       "lecturers": [
         "FRD"
       ],
-      "room": "G4-R3",
+      "room": "CM-205",
+      "timeSlot": {
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "AB13A103",
+      "className": "Ekonomi Bisnis",
+      "class": "AK-1A",
+      "prodi": "Akuntansi",
+      "lecturers": [
+        "AWD"
+      ],
+      "room": "CM-208",
+      "timeSlot": {
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "AB13A503",
+      "className": "Akuntansi Dasar",
+      "class": "AK-1A",
+      "prodi": "Akuntansi",
+      "lecturers": [
+        "FRD"
+      ],
+      "room": "CM-205",
+      "timeSlot": {
+        "period": 4,
+        "day": "Thursday",
+        "startTime": "10:00",
+        "endTime": "12:30"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": true
+    },
+    {
+      "classId": "GS13EL03",
+      "className": "Bahasa Inggris",
+      "class": "AK-1A",
+      "prodi": "Akuntansi",
+      "lecturers": [
+        "IKN"
+      ],
+      "room": "CM-206",
+      "timeSlot": {
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 45,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "AB13A303",
+      "className": "Statistik Bisnis",
+      "class": "AK-1A",
+      "prodi": "Akuntansi",
+      "lecturers": [
+        "LRS"
+      ],
+      "room": "CM-Lab3",
       "timeSlot": {
         "period": 8,
         "day": "Tuesday",
@@ -1705,95 +1793,7 @@
       "participants": 45,
       "classType": "pagi",
       "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "AB13A103",
-      "className": "Ekonomi Bisnis",
-      "class": "AK-1A",
-      "prodi": "Akuntansi",
-      "lecturers": [
-        "AWD"
-      ],
-      "room": "CM-102",
-      "timeSlot": {
-        "period": 5,
-        "day": "Wednesday",
-        "startTime": "10:50",
-        "endTime": "14:10"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 50,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "AB13A503",
-      "className": "Akuntansi Dasar",
-      "class": "AK-1A",
-      "prodi": "Akuntansi",
-      "lecturers": [
-        "FRD"
-      ],
-      "room": "CM-208",
-      "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "GS13EL03",
-      "className": "Bahasa Inggris",
-      "class": "AK-1A",
-      "prodi": "Akuntansi",
-      "lecturers": [
-        "IKN"
-      ],
-      "room": "CM-207",
-      "timeSlot": {
-        "period": 1,
-        "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
       "isOverflowToLab": true
-    },
-    {
-      "classId": "AB13A303",
-      "className": "Statistik Bisnis",
-      "class": "AK-1A",
-      "prodi": "Akuntansi",
-      "lecturers": [
-        "LRS"
-      ],
-      "room": "CM-207",
-      "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "10:00"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 45,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
     },
     {
       "classId": "AC130703",
@@ -1803,10 +1803,10 @@
       "lecturers": [
         "AWD"
       ],
-      "room": "CM-203",
+      "room": "CM-201",
       "timeSlot": {
         "period": 4,
-        "day": "Thursday",
+        "day": "Tuesday",
         "startTime": "10:00",
         "endTime": "12:30"
       },
@@ -1815,7 +1815,7 @@
       "participants": 45,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "AC131413",
@@ -1825,19 +1825,19 @@
       "lecturers": [
         "ADL"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-206",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "isOverflowToLab": true
     },
     {
       "classId": "AC131313",
@@ -1849,8 +1849,74 @@
       ],
       "room": "B3-R3",
       "timeSlot": {
-        "period": 9,
+        "period": 1,
         "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "10:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 40,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "AC132013",
+      "className": "Akuntansi Keuangan Menengah 2",
+      "class": "AK-3A",
+      "prodi": "Akuntansi",
+      "lecturers": [
+        "AFT"
+      ],
+      "room": "CM-LabVirtual",
+      "timeSlot": {
+        "period": 6,
+        "day": "Tuesday",
+        "startTime": "11:40",
+        "endTime": "15:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 40,
+      "classType": "pagi",
+      "prayerTimeAdded": 50,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "AB13A713",
+      "className": "Manajemen Operasional",
+      "class": "AK-3A",
+      "prodi": "Akuntansi",
+      "lecturers": [
+        "MAK"
+      ],
+      "room": "CM-101",
+      "timeSlot": {
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 40,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "AB13A803",
+      "className": "Manajemen Keuangan",
+      "class": "AK-3A",
+      "prodi": "Akuntansi",
+      "lecturers": [
+        "FRD"
+      ],
+      "room": "CM-204",
+      "timeSlot": {
+        "period": 9,
+        "day": "Wednesday",
         "startTime": "14:10",
         "endTime": "17:10"
       },
@@ -1862,72 +1928,6 @@
       "isOverflowToLab": false
     },
     {
-      "classId": "AC132013",
-      "className": "Akuntansi Keuangan Menengah 2",
-      "class": "AK-3A",
-      "prodi": "Akuntansi",
-      "lecturers": [
-        "AFT"
-      ],
-      "room": "CM-205",
-      "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 40,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "AB13A713",
-      "className": "Manajemen Operasional",
-      "class": "AK-3A",
-      "prodi": "Akuntansi",
-      "lecturers": [
-        "MAK"
-      ],
-      "room": "CM-103",
-      "timeSlot": {
-        "period": 4,
-        "day": "Thursday",
-        "startTime": "10:00",
-        "endTime": "12:30"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 40,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": true
-    },
-    {
-      "classId": "AB13A803",
-      "className": "Manajemen Keuangan",
-      "class": "AK-3A",
-      "prodi": "Akuntansi",
-      "lecturers": [
-        "FRD"
-      ],
-      "room": "G4-R3",
-      "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 40,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
-    },
-    {
       "classId": "AB13B413",
       "className": "Manajemen Risiko",
       "class": "AK-3A",
@@ -1935,12 +1935,12 @@
       "lecturers": [
         "AWD"
       ],
-      "room": "CM-207",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 3,
+        "day": "Wednesday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": false,
@@ -1957,7 +1957,7 @@
       "lecturers": [
         "ADL"
       ],
-      "room": "CM-101",
+      "room": "CM-206",
       "timeSlot": {
         "period": 9,
         "day": "Friday",
@@ -1979,12 +1979,12 @@
       "lecturers": [
         "ELD"
       ],
-      "room": "CM-207",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 1,
+        "period": 2,
         "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
@@ -2001,18 +2001,18 @@
       "lecturers": [
         "AFT"
       ],
-      "room": "G4-R1",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 2,
-        "day": "Friday",
-        "startTime": "08:20",
-        "endTime": "10:50"
+        "period": 9,
+        "day": "Monday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 42,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -2023,19 +2023,19 @@
       "lecturers": [
         "FRD"
       ],
-      "room": "CM-208",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 1,
+        "period": 9,
         "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 42,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
     },
     {
       "classId": "AC133013",
@@ -2045,12 +2045,12 @@
       "lecturers": [
         "AFT"
       ],
-      "room": "CM-201",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -2067,18 +2067,18 @@
       "lecturers": [
         "MAK"
       ],
-      "room": "CM-204",
+      "room": "CM-206",
       "timeSlot": {
-        "period": 6,
-        "day": "Wednesday",
-        "startTime": "11:40",
-        "endTime": "15:00"
+        "period": 8,
+        "day": "Thursday",
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -2089,19 +2089,19 @@
       "lecturers": [
         "MAK"
       ],
-      "room": "CM-102",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": true
     },
     {
       "classId": "AC133423",
@@ -2111,10 +2111,10 @@
       "lecturers": [
         "FRD"
       ],
-      "room": "CM-102",
+      "room": "CM-202",
       "timeSlot": {
         "period": 1,
-        "day": "Thursday",
+        "day": "Tuesday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -2133,19 +2133,19 @@
       "lecturers": [
         "ADL"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 8,
-        "day": "Thursday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "period": 4,
+        "day": "Wednesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 42,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": true
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
     },
     {
       "classId": "AC133633",
@@ -2155,12 +2155,12 @@
       "lecturers": [
         "ELD"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Thursday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -2177,12 +2177,12 @@
       "lecturers": [
         "AWD"
       ],
-      "room": "CM-Lab3",
+      "room": "B3-R3",
       "timeSlot": {
-        "period": 1,
+        "period": 4,
         "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -2199,18 +2199,18 @@
       "lecturers": [
         "MAK"
       ],
-      "room": "CM-206",
+      "room": "CM-208",
       "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 8,
+        "day": "Friday",
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -2221,18 +2221,18 @@
       "lecturers": [
         "MAK"
       ],
-      "room": "CM-208",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 9,
+        "day": "Wednesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 36,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -2243,12 +2243,12 @@
       "lecturers": [
         "ELD"
       ],
-      "room": "CM-202",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 4,
+        "period": 1,
         "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -2265,12 +2265,12 @@
       "lecturers": [
         "MAL"
       ],
-      "room": "G2-R5",
+      "room": "G2-R2",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
@@ -2287,18 +2287,18 @@
       "lecturers": [
         "MAL"
       ],
-      "room": "G4-R3",
+      "room": "G4-R4",
       "timeSlot": {
-        "period": 9,
-        "day": "Monday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 25,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -2309,18 +2309,18 @@
       "lecturers": [
         "EMH"
       ],
-      "room": "B3-R3",
+      "room": "B3-R1",
       "timeSlot": {
-        "period": 2,
-        "day": "Friday",
-        "startTime": "08:20",
-        "endTime": "10:50"
+        "period": 5,
+        "day": "Monday",
+        "startTime": "10:50",
+        "endTime": "14:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 25,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -2331,18 +2331,18 @@
       "lecturers": [
         "ADM"
       ],
-      "room": "B3-R1",
+      "room": "G3-R1",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 25,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -2353,10 +2353,10 @@
       "lecturers": [
         "MHA"
       ],
-      "room": "G2-R5",
+      "room": "G2-R4",
       "timeSlot": {
         "period": 4,
-        "day": "Monday",
+        "day": "Thursday",
         "startTime": "10:00",
         "endTime": "11:40"
       },
@@ -2365,7 +2365,7 @@
       "participants": 25,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "SE13IB03",
@@ -2375,12 +2375,12 @@
       "lecturers": [
         "ADM"
       ],
-      "room": "G2-R2",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
@@ -2397,18 +2397,18 @@
       "lecturers": [
         "EMH"
       ],
-      "room": "G2-R5",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 6,
+        "day": "Thursday",
+        "startTime": "11:40",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -2419,10 +2419,32 @@
       "lecturers": [
         "MHA"
       ],
-      "room": "CM-202",
+      "room": "G2-R2",
+      "timeSlot": {
+        "period": 9,
+        "day": "Monday",
+        "startTime": "14:10",
+        "endTime": "17:10"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 30,
+      "classType": "pagi",
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": true
+    },
+    {
+      "classId": "SE13IA33",
+      "className": "Akuntansi Syariah",
+      "class": "ES-3A",
+      "prodi": "Ekonomi Syariah",
+      "lecturers": [
+        "ADM"
+      ],
+      "room": "G2-R4",
       "timeSlot": {
         "period": 4,
-        "day": "Thursday",
+        "day": "Tuesday",
         "startTime": "10:00",
         "endTime": "12:30"
       },
@@ -2434,28 +2456,6 @@
       "isOverflowToLab": false
     },
     {
-      "classId": "SE13IA33",
-      "className": "Akuntansi Syariah",
-      "class": "ES-3A",
-      "prodi": "Ekonomi Syariah",
-      "lecturers": [
-        "ADM"
-      ],
-      "room": "G3-R4",
-      "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 30,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": true
-    },
-    {
       "classId": "SE13DB03",
       "className": "Digitalisasi Proses Bisnis & Manajemen",
       "class": "ES-3A",
@@ -2463,18 +2463,18 @@
       "lecturers": [
         "WAH"
       ],
-      "room": "CM-102",
+      "room": "G2-R2",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 3,
+        "day": "Wednesday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -2485,7 +2485,7 @@
       "lecturers": [
         "MHA"
       ],
-      "room": "G5-Lab1",
+      "room": "G3-R2",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -2507,18 +2507,18 @@
       "lecturers": [
         "WAH"
       ],
-      "room": "G2-R6",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 6,
+        "day": "Wednesday",
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -2529,18 +2529,18 @@
       "lecturers": [
         "EMH"
       ],
-      "room": "B3-R1",
+      "room": "G5-Lab1",
       "timeSlot": {
-        "period": 9,
-        "day": "Friday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 25,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -2551,12 +2551,12 @@
       "lecturers": [
         "BAT"
       ],
-      "room": "CM-101",
+      "room": "G2-R6",
       "timeSlot": {
-        "period": 1,
+        "period": 7,
         "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -2573,18 +2573,18 @@
       "lecturers": [
         "WAH"
       ],
-      "room": "G2-R4",
+      "room": "G2-R6",
       "timeSlot": {
-        "period": 6,
-        "day": "Wednesday",
-        "startTime": "11:40",
-        "endTime": "14:10"
+        "period": 9,
+        "day": "Thursday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 25,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -2595,12 +2595,12 @@
       "lecturers": [
         "MHA"
       ],
-      "room": "G3-R1",
+      "room": "G5-Lab1",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "14:10"
+        "period": 3,
+        "day": "Wednesday",
+        "startTime": "09:10",
+        "endTime": "10:50"
       },
       "sks": 2,
       "needsLab": false,
@@ -2620,7 +2620,7 @@
       "room": "G2-R4",
       "timeSlot": {
         "period": 1,
-        "day": "Thursday",
+        "day": "Tuesday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -2639,18 +2639,18 @@
       "lecturers": [
         "ADM"
       ],
-      "room": "B2-R1",
+      "room": "G2-R7",
       "timeSlot": {
-        "period": 9,
+        "period": 5,
         "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "startTime": "10:50",
+        "endTime": "14:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 25,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -2661,10 +2661,10 @@
       "lecturers": [
         "JSM"
       ],
-      "room": "G2-R6",
+      "room": "G3-R2",
       "timeSlot": {
         "period": 1,
-        "day": "Monday",
+        "day": "Thursday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -2683,10 +2683,10 @@
       "lecturers": [
         "ADM"
       ],
-      "room": "G2-R2",
+      "room": "G3-R4",
       "timeSlot": {
         "period": 9,
-        "day": "Wednesday",
+        "day": "Friday",
         "startTime": "14:10",
         "endTime": "17:10"
       },
@@ -2705,7 +2705,7 @@
       "lecturers": [
         "MAL"
       ],
-      "room": "G2-R7",
+      "room": "CM-201",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -2727,18 +2727,18 @@
       "lecturers": [
         "WAH"
       ],
-      "room": "B3-R2",
+      "room": "CM-205",
       "timeSlot": {
-        "period": 3,
+        "period": 9,
         "day": "Wednesday",
-        "startTime": "09:10",
-        "endTime": "11:40"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -2749,10 +2749,10 @@
       "lecturers": [
         "EMH"
       ],
-      "room": "G2-R7",
+      "room": "B3-R2",
       "timeSlot": {
         "period": 6,
-        "day": "Thursday",
+        "day": "Tuesday",
         "startTime": "11:40",
         "endTime": "15:00"
       },
@@ -2771,12 +2771,12 @@
       "lecturers": [
         "EMH"
       ],
-      "room": "CM-207",
+      "room": "G3-R1",
       "timeSlot": {
-        "period": 7,
-        "day": "Tuesday",
-        "startTime": "12:30",
-        "endTime": "14:10"
+        "period": 8,
+        "day": "Friday",
+        "startTime": "13:20",
+        "endTime": "15:00"
       },
       "sks": 2,
       "needsLab": false,
@@ -2793,7 +2793,7 @@
       "lecturers": [
         "AAV"
       ],
-      "room": "G4-R4",
+      "room": "G4-R2",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -2805,7 +2805,7 @@
       "participants": 40,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "isOverflowToLab": true
     },
     {
       "classId": "ET13PA03",
@@ -2815,12 +2815,12 @@
       "lecturers": [
         "NCS"
       ],
-      "room": "CM-101",
+      "room": "B3-R3",
       "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -2837,12 +2837,12 @@
       "lecturers": [
         "NCS"
       ],
-      "room": "CM-203",
+      "room": "CM-205",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -2859,18 +2859,18 @@
       "lecturers": [
         "NWF"
       ],
-      "room": "CM-206",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -2881,18 +2881,18 @@
       "lecturers": [
         "AHY"
       ],
-      "room": "CM-208",
+      "room": "CM-206",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 7,
+        "day": "Monday",
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -2903,18 +2903,18 @@
       "lecturers": [
         "MAF"
       ],
-      "room": "CM-205",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 9,
-        "day": "Friday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 4,
+        "day": "Wednesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -2925,54 +2925,10 @@
       "lecturers": [
         "AAV"
       ],
-      "room": "CM-102",
-      "timeSlot": {
-        "period": 3,
-        "day": "Thursday",
-        "startTime": "17:10",
-        "endTime": "20:10"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 10,
-      "classType": "sore",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "ET13PA03",
-      "className": "Fisika Dasar I",
-      "class": "MR-1S",
-      "prodi": "Manajemen Rekayasa",
-      "lecturers": [
-        "NCS"
-      ],
-      "room": "CM-206",
+      "room": "CM-Lab3",
       "timeSlot": {
         "period": 3,
         "day": "Monday",
-        "startTime": "17:10",
-        "endTime": "20:10"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 10,
-      "classType": "sore",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "EM13CM03",
-      "className": "Kimia Dasar I",
-      "class": "MR-1S",
-      "prodi": "Manajemen Rekayasa",
-      "lecturers": [
-        "NCS"
-      ],
-      "room": "CM-207",
-      "timeSlot": {
-        "period": 3,
-        "day": "Tuesday",
         "startTime": "17:10",
         "endTime": "20:10"
       },
@@ -2984,6 +2940,50 @@
       "isOverflowToLab": true
     },
     {
+      "classId": "ET13PA03",
+      "className": "Fisika Dasar I",
+      "class": "MR-1S",
+      "prodi": "Manajemen Rekayasa",
+      "lecturers": [
+        "NCS"
+      ],
+      "room": "G2-R3",
+      "timeSlot": {
+        "period": 3,
+        "day": "Wednesday",
+        "startTime": "17:10",
+        "endTime": "20:10"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 10,
+      "classType": "sore",
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "EM13CM03",
+      "className": "Kimia Dasar I",
+      "class": "MR-1S",
+      "prodi": "Manajemen Rekayasa",
+      "lecturers": [
+        "NCS"
+      ],
+      "room": "B3-R2",
+      "timeSlot": {
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "15:30",
+        "endTime": "18:00"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 10,
+      "classType": "sore",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
       "classId": "EM13ED03",
       "className": "Menggambar Teknik",
       "class": "MR-1S",
@@ -2991,12 +2991,12 @@
       "lecturers": [
         "NWF"
       ],
-      "room": "CM-204",
+      "room": "B2-R1",
       "timeSlot": {
-        "period": 3,
-        "day": "Friday",
-        "startTime": "17:10",
-        "endTime": "20:10"
+        "period": 4,
+        "day": "Tuesday",
+        "startTime": "18:00",
+        "endTime": "21:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -3013,18 +3013,18 @@
       "lecturers": [
         "AHY"
       ],
-      "room": "CM-203",
+      "room": "G2-R5",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "15:30",
-        "endTime": "18:00"
+        "period": 3,
+        "day": "Friday",
+        "startTime": "17:10",
+        "endTime": "20:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 10,
       "classType": "sore",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -3035,12 +3035,12 @@
       "lecturers": [
         "MAF"
       ],
-      "room": "G3-R1",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "18:00",
-        "endTime": "21:00"
+        "period": 3,
+        "day": "Thursday",
+        "startTime": "17:10",
+        "endTime": "20:10"
       },
       "sks": 3,
       "needsLab": false,
@@ -3057,18 +3057,18 @@
       "lecturers": [
         "AAV"
       ],
-      "room": "B3-R1",
+      "room": "G2-R3",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 3,
+        "day": "Friday",
+        "startTime": "09:10",
+        "endTime": "10:50"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -3079,18 +3079,18 @@
       "lecturers": [
         "NCS"
       ],
-      "room": "G3-R1",
+      "room": "G5-Lab1",
       "timeSlot": {
-        "period": 1,
+        "period": 9,
         "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -3101,10 +3101,10 @@
       "lecturers": [
         "EMH"
       ],
-      "room": "G2-R2",
+      "room": "B2-R1",
       "timeSlot": {
         "period": 1,
-        "day": "Tuesday",
+        "day": "Thursday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -3123,7 +3123,7 @@
       "lecturers": [
         "NWF"
       ],
-      "room": "G4-R2",
+      "room": "CM-101",
       "timeSlot": {
         "period": 6,
         "day": "Monday",
@@ -3145,12 +3145,12 @@
       "lecturers": [
         "NWF"
       ],
-      "room": "CM-LabVirtual",
+      "room": "G4-R4",
       "timeSlot": {
-        "period": 5,
-        "day": "Wednesday",
-        "startTime": "10:50",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -3167,19 +3167,19 @@
       "lecturers": [
         "AHD"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 4,
+        "day": "Thursday",
+        "startTime": "10:00",
+        "endTime": "11:40"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 42,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "ET13PT02",
@@ -3189,12 +3189,12 @@
       "lecturers": [
         "FAP"
       ],
-      "room": "CM-201",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 7,
+        "day": "Tuesday",
+        "startTime": "12:30",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -3211,10 +3211,10 @@
       "lecturers": [
         "MNF"
       ],
-      "room": "CM-203",
+      "room": "B3-R3",
       "timeSlot": {
         "period": 1,
-        "day": "Thursday",
+        "day": "Tuesday",
         "startTime": "07:30",
         "endTime": "09:10"
       },
@@ -3233,18 +3233,18 @@
       "lecturers": [
         "AAV"
       ],
-      "room": "CM-207",
+      "room": "G3-R2",
       "timeSlot": {
-        "period": 6,
-        "day": "Monday",
-        "startTime": "11:40",
-        "endTime": "14:10"
+        "period": 1,
+        "day": "Friday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 15,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -3255,7 +3255,29 @@
       "lecturers": [
         "AEP"
       ],
-      "room": "B3-R1",
+      "room": "G3-R4",
+      "timeSlot": {
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 15,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "EM13MR13",
+      "className": "Riset Pasar dan Pemasaran",
+      "class": "MR-3-SIG,MR-5S",
+      "prodi": "Manajemen Rekayasa",
+      "lecturers": [
+        "AEP"
+      ],
+      "room": "G3-R1",
       "timeSlot": {
         "period": 9,
         "day": "Monday",
@@ -3270,28 +3292,6 @@
       "isOverflowToLab": false
     },
     {
-      "classId": "EM13MR13",
-      "className": "Riset Pasar dan Pemasaran",
-      "class": "MR-3-SIG,MR-5S",
-      "prodi": "Manajemen Rekayasa",
-      "lecturers": [
-        "AEP"
-      ],
-      "room": "G3-R4",
-      "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "10:00"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 15,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
-    },
-    {
       "classId": "EM13QM03",
       "className": "Metode Kuantitatif",
       "class": "MR-3-SIG",
@@ -3299,7 +3299,7 @@
       "lecturers": [
         "AEP"
       ],
-      "room": "G5-Lab2",
+      "room": "G2-R5",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -3321,7 +3321,7 @@
       "lecturers": [
         "NWF"
       ],
-      "room": "G5-Lab2",
+      "room": "G3-R4",
       "timeSlot": {
         "period": 3,
         "day": "Friday",
@@ -3343,18 +3343,18 @@
       "lecturers": [
         "CWR"
       ],
-      "room": "CM-205",
+      "room": "B3-R2",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "period": 6,
+        "day": "Thursday",
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 20,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -3365,19 +3365,19 @@
       "lecturers": [
         "AAV"
       ],
-      "room": "B2-R1",
+      "room": "B3-R2",
       "timeSlot": {
-        "period": 4,
-        "day": "Thursday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 20,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": true
     },
     {
       "classId": "EM13QE13",
@@ -3387,18 +3387,18 @@
       "lecturers": [
         "AAV"
       ],
-      "room": "G3-R4",
+      "room": "G2-R4",
       "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Thursday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 15,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -3409,18 +3409,18 @@
       "lecturers": [
         "AEP"
       ],
-      "room": "G3-R1",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 9,
-        "day": "Friday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 7,
+        "day": "Thursday",
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -3431,19 +3431,19 @@
       "lecturers": [
         "AEP"
       ],
-      "room": "G5-Lab2",
+      "room": "G2-R4",
       "timeSlot": {
-        "period": 9,
+        "period": 7,
         "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": true
     },
     {
       "classId": "ET13SC13",
@@ -3453,7 +3453,7 @@
       "lecturers": [
         "PTA"
       ],
-      "room": "CM-103",
+      "room": "CM-204",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -3475,18 +3475,18 @@
       "lecturers": [
         "AAV"
       ],
-      "room": "G2-R7",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 4,
+        "period": 5,
         "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "startTime": "10:50",
+        "endTime": "14:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -3499,10 +3499,10 @@
       ],
       "room": "CM-208",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Wednesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -3519,12 +3519,12 @@
       "lecturers": [
         "AEP"
       ],
-      "room": "G2-R3",
+      "room": "B3-R1",
       "timeSlot": {
-        "period": 4,
-        "day": "Thursday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -3541,7 +3541,7 @@
       "lecturers": [
         "HDP"
       ],
-      "room": "G2-R6",
+      "room": "B2-R1",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -3563,12 +3563,12 @@
       "lecturers": [
         "HDP"
       ],
-      "room": "G4-R2",
+      "room": "G4-R4",
       "timeSlot": {
-        "period": 8,
+        "period": 9,
         "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
@@ -3585,18 +3585,18 @@
       "lecturers": [
         "HDP"
       ],
-      "room": "G2-R5",
+      "room": "B3-R1",
       "timeSlot": {
-        "period": 8,
-        "day": "Tuesday",
-        "startTime": "13:20",
-        "endTime": "17:10"
+        "period": 2,
+        "day": "Thursday",
+        "startTime": "08:20",
+        "endTime": "11:40"
       },
       "sks": 4,
       "needsLab": false,
       "participants": 15,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -3607,18 +3607,18 @@
       "lecturers": [
         "HDP"
       ],
-      "room": "B2-R1",
+      "room": "B3-R1",
       "timeSlot": {
-        "period": 1,
+        "period": 8,
         "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -3629,12 +3629,12 @@
       "lecturers": [
         "HDP"
       ],
-      "room": "B2-R1",
+      "room": "G2-R4",
       "timeSlot": {
         "period": 9,
         "day": "Monday",
         "startTime": "14:10",
-        "endTime": "18:00"
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
@@ -3651,19 +3651,19 @@
       "lecturers": [
         "CWR"
       ],
-      "room": "B3-R3",
+      "room": "CM-208",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 35,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": true
     },
     {
       "classId": "ET13CA03",
@@ -3673,18 +3673,18 @@
       "lecturers": [
         "YNK"
       ],
-      "room": "CM-103",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 35,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": true
     },
     {
@@ -3695,18 +3695,18 @@
       "lecturers": [
         "NCS"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 1,
-        "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 8,
+        "day": "Friday",
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 35,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -3717,18 +3717,18 @@
       "lecturers": [
         "CWR"
       ],
-      "room": "CM-101",
+      "room": "CM-103",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 35,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -3739,19 +3739,19 @@
       "lecturers": [
         "AHD"
       ],
-      "room": "CM-204",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "period": 3,
+        "day": "Friday",
+        "startTime": "09:10",
+        "endTime": "10:50"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 35,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "ET13PT02",
@@ -3761,12 +3761,12 @@
       "lecturers": [
         "CWR"
       ],
-      "room": "CM-205",
+      "room": "B3-R3",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 3,
+        "day": "Tuesday",
+        "startTime": "09:10",
+        "endTime": "10:50"
       },
       "sks": 2,
       "needsLab": false,
@@ -3783,18 +3783,18 @@
       "lecturers": [
         "PMN"
       ],
-      "room": "G4-R2",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 1,
+        "period": 6,
         "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 35,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -3805,12 +3805,12 @@
       "lecturers": [
         "PMN"
       ],
-      "room": "CM-102",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 3,
+        "period": 1,
         "day": "Tuesday",
-        "startTime": "09:10",
-        "endTime": "10:50"
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -3827,7 +3827,7 @@
       "lecturers": [
         "MMP"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-207",
       "timeSlot": {
         "period": 7,
         "day": "Tuesday",
@@ -3849,12 +3849,12 @@
       "lecturers": [
         "MMP"
       ],
-      "room": "CM-206",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 4,
+        "period": 7,
         "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "startTime": "12:30",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": true,
@@ -3873,10 +3873,10 @@
       ],
       "room": "CM-101",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "11:40"
       },
       "sks": 2,
       "needsLab": false,
@@ -3893,12 +3893,12 @@
       "lecturers": [
         "NWF"
       ],
-      "room": "CM-103",
+      "room": "CM-208",
       "timeSlot": {
-        "period": 8,
-        "day": "Thursday",
-        "startTime": "13:20",
-        "endTime": "15:00"
+        "period": 5,
+        "day": "Tuesday",
+        "startTime": "10:50",
+        "endTime": "12:30"
       },
       "sks": 2,
       "needsLab": false,
@@ -3917,16 +3917,16 @@
       ],
       "room": "G4-R1",
       "timeSlot": {
-        "period": 6,
-        "day": "Wednesday",
-        "startTime": "11:40",
-        "endTime": "14:10"
+        "period": 1,
+        "day": "Friday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 60,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -3937,10 +3937,10 @@
       "lecturers": [
         "UAG"
       ],
-      "room": "G4-R3",
+      "room": "G4-R2",
       "timeSlot": {
         "period": 9,
-        "day": "Thursday",
+        "day": "Monday",
         "startTime": "14:10",
         "endTime": "17:10"
       },
@@ -3959,7 +3959,7 @@
       "lecturers": [
         "UAG"
       ],
-      "room": "G4-R1",
+      "room": "G4-R2",
       "timeSlot": {
         "period": 1,
         "day": "Wednesday",
@@ -3981,12 +3981,12 @@
       "lecturers": [
         "WKS"
       ],
-      "room": "B3-R3",
+      "room": "G4-R1",
       "timeSlot": {
-        "period": 4,
+        "period": 1,
         "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -4003,18 +4003,18 @@
       "lecturers": [
         "PMN"
       ],
-      "room": "CM-205",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 6,
+        "period": 4,
         "day": "Tuesday",
-        "startTime": "11:40",
-        "endTime": "15:00"
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -4025,12 +4025,12 @@
       "lecturers": [
         "PMN"
       ],
-      "room": "G4-R3",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "15:00"
+        "period": 5,
+        "day": "Wednesday",
+        "startTime": "10:50",
+        "endTime": "12:30"
       },
       "sks": 2,
       "needsLab": false,
@@ -4047,10 +4047,10 @@
       "lecturers": [
         "PMN"
       ],
-      "room": "CM-207",
+      "room": "B3-R3",
       "timeSlot": {
         "period": 9,
-        "day": "Wednesday",
+        "day": "Thursday",
         "startTime": "14:10",
         "endTime": "16:20"
       },
@@ -4059,7 +4059,7 @@
       "participants": 45,
       "classType": "pagi",
       "prayerTimeAdded": 30,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "ET13EE13",
@@ -4069,12 +4069,12 @@
       "lecturers": [
         "LKT"
       ],
-      "room": "CM-203",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 7,
+        "period": 4,
         "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -4091,7 +4091,7 @@
       "lecturers": [
         "WND"
       ],
-      "room": "CM-101",
+      "room": "CM-203",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -4114,19 +4114,19 @@
         "LKT",
         "WND"
       ],
-      "room": "CM-102",
+      "room": "CM-208",
       "timeSlot": {
-        "period": 4,
-        "day": "Thursday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Wednesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
     },
     {
       "classId": "LE13SL21",
@@ -4139,10 +4139,10 @@
       ],
       "room": "CM-Lab3",
       "timeSlot": {
-        "period": 6,
-        "day": "Monday",
-        "startTime": "11:40",
-        "endTime": "12:30"
+        "period": 8,
+        "day": "Thursday",
+        "startTime": "13:20",
+        "endTime": "14:10"
       },
       "sks": 1,
       "needsLab": true,
@@ -4159,12 +4159,12 @@
       "lecturers": [
         "WND"
       ],
-      "room": "CM-205",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 3,
-        "day": "Friday",
-        "startTime": "09:10",
-        "endTime": "10:50"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -4181,18 +4181,18 @@
       "lecturers": [
         "LKT"
       ],
-      "room": "CM-204",
+      "room": "G4-R2",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 43,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -4203,18 +4203,18 @@
       "lecturers": [
         "LKT"
       ],
-      "room": "CM-206",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 4,
-        "day": "Wednesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Thursday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 43,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4225,18 +4225,18 @@
       "lecturers": [
         "MMP"
       ],
-      "room": "G4-R2",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 3,
-        "day": "Tuesday",
-        "startTime": "09:10",
-        "endTime": "11:40"
+        "period": 9,
+        "day": "Wednesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 43,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4247,18 +4247,18 @@
       "lecturers": [
         "WND"
       ],
-      "room": "G4-R1",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 7,
+        "period": 6,
         "day": "Tuesday",
-        "startTime": "12:30",
+        "startTime": "11:40",
         "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 43,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -4269,12 +4269,12 @@
       "lecturers": [
         "PMN"
       ],
-      "room": "CM-204",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 4,
-        "day": "Thursday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -4291,12 +4291,12 @@
       "lecturers": [
         "PMN"
       ],
-      "room": "CM-103",
+      "room": "G2-R3",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -4313,18 +4313,18 @@
       "lecturers": [
         "WND"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-205",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 4,
+        "day": "Wednesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -4335,18 +4335,18 @@
       "lecturers": [
         "MMP"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 5,
-        "day": "Thursday",
-        "startTime": "10:50",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Monday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4357,18 +4357,18 @@
       "lecturers": [
         "LKT"
       ],
-      "room": "CM-204",
+      "room": "CM-102",
       "timeSlot": {
-        "period": 7,
+        "period": 9,
         "day": "Tuesday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4379,12 +4379,12 @@
       "lecturers": [
         "LKT"
       ],
-      "room": "CM-202",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 1,
+        "period": 4,
         "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -4402,18 +4402,18 @@
         "SII",
         "YNK"
       ],
-      "room": "G4-R1",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Wednesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 50,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4424,18 +4424,18 @@
       "lecturers": [
         "FAP"
       ],
-      "room": "G4-R4",
+      "room": "B3-R3",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 50,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4448,10 +4448,10 @@
       ],
       "room": "G4-R2",
       "timeSlot": {
-        "period": 3,
-        "day": "Wednesday",
-        "startTime": "09:10",
-        "endTime": "10:50"
+        "period": 5,
+        "day": "Monday",
+        "startTime": "10:50",
+        "endTime": "12:30"
       },
       "sks": 2,
       "needsLab": false,
@@ -4469,7 +4469,7 @@
         "SII",
         "CWR"
       ],
-      "room": "B3-R3",
+      "room": "G4-R1",
       "timeSlot": {
         "period": 5,
         "day": "Wednesday",
@@ -4493,10 +4493,10 @@
       ],
       "room": "G4-R2",
       "timeSlot": {
-        "period": 5,
-        "day": "Thursday",
-        "startTime": "10:50",
-        "endTime": "12:30"
+        "period": 7,
+        "day": "Monday",
+        "startTime": "12:30",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -4513,10 +4513,10 @@
       "lecturers": [
         "FAP"
       ],
-      "room": "G4-R4",
+      "room": "G4-R1",
       "timeSlot": {
         "period": 8,
-        "day": "Thursday",
+        "day": "Friday",
         "startTime": "13:20",
         "endTime": "14:10"
       },
@@ -4535,7 +4535,7 @@
       "lecturers": [
         "RNU"
       ],
-      "room": "G4-R2",
+      "room": "G4-R4",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -4558,10 +4558,10 @@
         "SII",
         "CWR"
       ],
-      "room": "G4-R1",
+      "room": "G4-R4",
       "timeSlot": {
         "period": 3,
-        "day": "Thursday",
+        "day": "Friday",
         "startTime": "09:10",
         "endTime": "10:50"
       },
@@ -4581,10 +4581,32 @@
         "YNK",
         "FAP"
       ],
-      "room": "G2-R3",
+      "room": "CM-LabVirtual",
+      "timeSlot": {
+        "period": 4,
+        "day": "Tuesday",
+        "startTime": "10:00",
+        "endTime": "11:40"
+      },
+      "sks": 2,
+      "needsLab": false,
+      "participants": 30,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "CE12PC22",
+      "className": "Kimia Fisika",
+      "class": "TK - 3A",
+      "prodi": "Teknik Kimia",
+      "lecturers": [
+        "FAP"
+      ],
+      "room": "G5-Lab1",
       "timeSlot": {
         "period": 6,
-        "day": "Tuesday",
+        "day": "Monday",
         "startTime": "11:40",
         "endTime": "14:10"
       },
@@ -4596,28 +4618,6 @@
       "isOverflowToLab": false
     },
     {
-      "classId": "CE12PC22",
-      "className": "Kimia Fisika",
-      "class": "TK - 3A",
-      "prodi": "Teknik Kimia",
-      "lecturers": [
-        "FAP"
-      ],
-      "room": "B2-R1",
-      "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "16:20"
-      },
-      "sks": 2,
-      "needsLab": false,
-      "participants": 30,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
       "classId": "CE12TL21",
       "className": "Praktikum Kimia Fisika*",
       "class": "TK - 3A",
@@ -4625,19 +4625,19 @@
       "lecturers": [
         "FAP"
       ],
-      "room": "CM-201",
+      "room": "G5-Lab2",
       "timeSlot": {
-        "period": 1,
+        "period": 3,
         "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "08:20"
+        "startTime": "09:10",
+        "endTime": "10:00"
       },
       "sks": 1,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "isOverflowToLab": true
     },
     {
       "classId": "CE13OL11",
@@ -4647,19 +4647,19 @@
       "lecturers": [
         "SII"
       ],
-      "room": "G2-R4",
+      "room": "G2-R5",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "14:10"
+        "period": 3,
+        "day": "Wednesday",
+        "startTime": "09:10",
+        "endTime": "10:00"
       },
       "sks": 1,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "isOverflowToLab": true
     },
     {
       "classId": "ET13SE02",
@@ -4669,12 +4669,12 @@
       "lecturers": [
         "UAG"
       ],
-      "room": "CM-205",
+      "room": "G2-R6",
       "timeSlot": {
-        "period": 7,
-        "day": "Wednesday",
-        "startTime": "12:30",
-        "endTime": "14:10"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:00"
       },
       "sks": 2,
       "needsLab": false,
@@ -4691,7 +4691,7 @@
       "lecturers": [
         "YNK"
       ],
-      "room": "B3-R2",
+      "room": "G3-R4",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -4713,18 +4713,18 @@
       "lecturers": [
         "YNK"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "period": 9,
+        "day": "Thursday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4735,18 +4735,18 @@
       "lecturers": [
         "UAG"
       ],
-      "room": "G2-R3",
+      "room": "B2-R1",
       "timeSlot": {
-        "period": 3,
-        "day": "Friday",
-        "startTime": "09:10",
-        "endTime": "10:50"
+        "period": 6,
+        "day": "Tuesday",
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -4757,7 +4757,7 @@
       "lecturers": [
         "UAG"
       ],
-      "room": "CM-LabVirtual",
+      "room": "G5-Lab1",
       "timeSlot": {
         "period": 4,
         "day": "Monday",
@@ -4779,12 +4779,12 @@
       "lecturers": [
         "ARH"
       ],
-      "room": "B3-R1",
+      "room": "G2-R2",
       "timeSlot": {
-        "period": 7,
+        "period": 1,
         "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "14:10"
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -4802,18 +4802,18 @@
         "UAG",
         "FAP"
       ],
-      "room": "B2-R1",
+      "room": "CM-208",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 6,
+        "day": "Thursday",
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -4824,10 +4824,10 @@
       "lecturers": [
         "ARI"
       ],
-      "room": "G4-R4",
+      "room": "G4-R1",
       "timeSlot": {
         "period": 1,
-        "day": "Friday",
+        "day": "Wednesday",
         "startTime": "07:30",
         "endTime": "09:10"
       },
@@ -4847,18 +4847,18 @@
         "SII",
         "CWR"
       ],
-      "room": "B3-R3",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 9,
+        "day": "Monday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 46,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4870,7 +4870,7 @@
         "FAP",
         "ARH"
       ],
-      "room": "B3-R3",
+      "room": "G4-R2",
       "timeSlot": {
         "period": 1,
         "day": "Thursday",
@@ -4893,18 +4893,18 @@
         "SII",
         "YNK"
       ],
-      "room": "G4-R2",
+      "room": "G4-R1",
       "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "11:40"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 46,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -4938,18 +4938,18 @@
       "lecturers": [
         "SII"
       ],
-      "room": "G4-R2",
+      "room": "G4-R4",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 1,
+        "day": "Friday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 46,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -4961,18 +4961,18 @@
         "SII",
         "LB"
       ],
-      "room": "CM-102",
+      "room": "G2-R5",
       "timeSlot": {
-        "period": 2,
-        "day": "Monday",
-        "startTime": "08:20",
-        "endTime": "10:00"
+        "period": 9,
+        "day": "Tuesday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -4983,18 +4983,18 @@
       "lecturers": [
         "CWR"
       ],
-      "room": "G2-R3",
+      "room": "G5-Lab2",
       "timeSlot": {
-        "period": 9,
+        "period": 5,
         "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "startTime": "10:50",
+        "endTime": "14:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -5005,18 +5005,18 @@
       "lecturers": [
         "ARH"
       ],
-      "room": "G3-R1",
+      "room": "G3-R2",
       "timeSlot": {
-        "period": 9,
+        "period": 7,
         "day": "Monday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -5027,7 +5027,7 @@
       "lecturers": [
         "UAG"
       ],
-      "room": "B3-R1",
+      "room": "G2-R6",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -5049,10 +5049,10 @@
       "lecturers": [
         "ARH"
       ],
-      "room": "G2-R2",
+      "room": "G3-R1",
       "timeSlot": {
         "period": 4,
-        "day": "Monday",
+        "day": "Thursday",
         "startTime": "10:00",
         "endTime": "11:40"
       },
@@ -5071,7 +5071,7 @@
       "lecturers": [
         "ARH"
       ],
-      "room": "CM-203",
+      "room": "CM-103",
       "timeSlot": {
         "period": 4,
         "day": "Wednesday",
@@ -5093,7 +5093,7 @@
       "lecturers": [
         "ARH"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-208",
       "timeSlot": {
         "period": 7,
         "day": "Wednesday",
@@ -5117,10 +5117,10 @@
       ],
       "room": "B2-R1",
       "timeSlot": {
-        "period": 1,
-        "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 7,
+        "day": "Wednesday",
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -5137,12 +5137,12 @@
       "lecturers": [
         "YNK"
       ],
-      "room": "G5-Lab1",
+      "room": "G2-R7",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 3,
+        "day": "Wednesday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": false,
@@ -5160,33 +5160,10 @@
         "YSM",
         "WKS"
       ],
-      "room": "G2-R6",
-      "timeSlot": {
-        "period": 9,
-        "day": "Friday",
-        "startTime": "14:10",
-        "endTime": "17:10"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 30,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "AE13AI03",
-      "className": "Pengantar Agroindustri",
-      "class": "TIP-1A",
-      "prodi": "Teknologi Industri Pertanian",
-      "lecturers": [
-        "YSM",
-        "WKS"
-      ],
-      "room": "G2-R6",
+      "room": "G4-R3",
       "timeSlot": {
         "period": 1,
-        "day": "Friday",
+        "day": "Monday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -5198,6 +5175,29 @@
       "isOverflowToLab": false
     },
     {
+      "classId": "AE13AI03",
+      "className": "Pengantar Agroindustri",
+      "class": "TIP-1A",
+      "prodi": "Teknologi Industri Pertanian",
+      "lecturers": [
+        "YSM",
+        "WKS"
+      ],
+      "room": "G3-R1",
+      "timeSlot": {
+        "period": 9,
+        "day": "Tuesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 30,
+      "classType": "pagi",
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
+    },
+    {
       "classId": "AE13ED02",
       "className": "Gambar Teknik",
       "class": "TIP-1A",
@@ -5205,12 +5205,12 @@
       "lecturers": [
         "FKH"
       ],
-      "room": "CM-103",
+      "room": "G2-R7",
       "timeSlot": {
-        "period": 7,
+        "period": 1,
         "day": "Wednesday",
-        "startTime": "12:30",
-        "endTime": "14:10"
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -5227,12 +5227,12 @@
       "lecturers": [
         "ZSR"
       ],
-      "room": "G2-R4",
+      "room": "G2-R5",
       "timeSlot": {
-        "period": 7,
-        "day": "Thursday",
-        "startTime": "12:30",
-        "endTime": "14:10"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "11:40"
       },
       "sks": 2,
       "needsLab": false,
@@ -5249,12 +5249,12 @@
       "lecturers": [
         "FKH"
       ],
-      "room": "B3-R1",
+      "room": "G3-R4",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "period": 7,
+        "day": "Tuesday",
+        "startTime": "12:30",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
@@ -5272,7 +5272,7 @@
         "FKH",
         "ZSR"
       ],
-      "room": "G2-R2",
+      "room": "G3-R2",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -5295,18 +5295,18 @@
         "FKH",
         "ZSR"
       ],
-      "room": "G2-R5",
+      "room": "G4-R4",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 6,
+        "day": "Monday",
+        "startTime": "11:40",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -5318,10 +5318,10 @@
         "YSM",
         "WKS"
       ],
-      "room": "G2-R4",
+      "room": "CM-208",
       "timeSlot": {
         "period": 9,
-        "day": "Tuesday",
+        "day": "Thursday",
         "startTime": "14:10",
         "endTime": "17:10"
       },
@@ -5340,12 +5340,12 @@
       "lecturers": [
         "WKS"
       ],
-      "room": "CM-103",
+      "room": "B3-R2",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
@@ -5385,19 +5385,19 @@
         "YSM",
         "WKS"
       ],
-      "room": "G2-R3",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 5,
-        "day": "Wednesday",
-        "startTime": "10:50",
-        "endTime": "12:30"
+        "period": 2,
+        "day": "Thursday",
+        "startTime": "08:20",
+        "endTime": "10:00"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": false
+      "isOverflowToLab": true
     },
     {
       "classId": "ET13EE13",
@@ -5408,7 +5408,7 @@
         "FKH",
         "ZSR"
       ],
-      "room": "G2-R5",
+      "room": "CM-102",
       "timeSlot": {
         "period": 9,
         "day": "Wednesday",
@@ -5431,18 +5431,18 @@
         "YSM",
         "WKS"
       ],
-      "room": "CM-204",
+      "room": "B2-R1",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 5,
+        "day": "Wednesday",
+        "startTime": "10:50",
+        "endTime": "12:30"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -5454,12 +5454,12 @@
         "FKH",
         "YSM"
       ],
-      "room": "CM-201",
+      "room": "B3-R2",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "11:40"
       },
       "sks": 2,
       "needsLab": false,
@@ -5477,10 +5477,10 @@
         "ZSR",
         "FKH"
       ],
-      "room": "G2-R5",
+      "room": "G3-R1",
       "timeSlot": {
         "period": 1,
-        "day": "Friday",
+        "day": "Tuesday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -5489,7 +5489,7 @@
       "participants": 30,
       "classType": "pagi",
       "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "AE13DF12",
@@ -5499,10 +5499,10 @@
       "lecturers": [
         "ZSR"
       ],
-      "room": "G2-R5",
+      "room": "CM-204",
       "timeSlot": {
         "period": 4,
-        "day": "Tuesday",
+        "day": "Thursday",
         "startTime": "10:00",
         "endTime": "11:40"
       },
@@ -5521,12 +5521,12 @@
       "lecturers": [
         "FKH"
       ],
-      "room": "G2-R5",
+      "room": "G3-R2",
       "timeSlot": {
-        "period": 1,
+        "period": 4,
         "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -5543,7 +5543,7 @@
       "lecturers": [
         "YSM"
       ],
-      "room": "G2-R4",
+      "room": "B3-R2",
       "timeSlot": {
         "period": 6,
         "day": "Monday",
@@ -5565,18 +5565,18 @@
       "lecturers": [
         "ZSR"
       ],
-      "room": "CM-201",
+      "room": "G2-R4",
       "timeSlot": {
-        "period": 3,
-        "day": "Wednesday",
-        "startTime": "09:10",
-        "endTime": "10:50"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -5588,18 +5588,18 @@
         "FKH",
         "ZSR"
       ],
-      "room": "G2-R3",
+      "room": "G2-R7",
       "timeSlot": {
-        "period": 9,
-        "day": "Friday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -5611,7 +5611,7 @@
         "FKH",
         "WKS"
       ],
-      "room": "G2-R2",
+      "room": "G5-Lab2",
       "timeSlot": {
         "period": 4,
         "day": "Thursday",
@@ -5633,10 +5633,10 @@
       "lecturers": [
         "MNF"
       ],
-      "room": "G4-R3",
+      "room": "G4-R4",
       "timeSlot": {
         "period": 1,
-        "day": "Wednesday",
+        "day": "Thursday",
         "startTime": "07:30",
         "endTime": "09:10"
       },
@@ -5655,18 +5655,18 @@
       "lecturers": [
         "NGT"
       ],
-      "room": "G3-R1",
+      "room": "G2-R6",
       "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 8,
+        "day": "Wednesday",
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -5677,18 +5677,18 @@
       "lecturers": [
         "NGT"
       ],
-      "room": "CM-206",
+      "room": "B3-R1",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 9,
+        "day": "Tuesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -5700,18 +5700,18 @@
         "NGT",
         "PAY"
       ],
-      "room": "G2-R7",
+      "room": "G5-Lab2",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "18:00"
+        "period": 1,
+        "day": "Friday",
+        "startTime": "07:30",
+        "endTime": "10:50"
       },
       "sks": 4,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -5723,7 +5723,7 @@
         "NGT",
         "PAY"
       ],
-      "room": "G3-R4",
+      "room": "B3-R1",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -5746,7 +5746,7 @@
         "NGT",
         "MZF"
       ],
-      "room": "G4-R4",
+      "room": "G4-R1",
       "timeSlot": {
         "period": 3,
         "day": "Wednesday",
@@ -5768,18 +5768,18 @@
       "lecturers": [
         "MNI"
       ],
-      "room": "G5-Lab2",
+      "room": "G2-R7",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "18:00"
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "07:30",
+        "endTime": "10:50"
       },
       "sks": 4,
       "needsLab": true,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -5790,12 +5790,12 @@
       "lecturers": [
         "MNI"
       ],
-      "room": "G5-Lab2",
+      "room": "G5-Lab1",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "16:20"
+        "period": 9,
+        "day": "Thursday",
+        "startTime": "14:10",
+        "endTime": "18:00"
       },
       "sks": 4,
       "needsLab": true,
@@ -5812,7 +5812,7 @@
       "lecturers": [
         "PAY"
       ],
-      "room": "G4-R4",
+      "room": "G3-R2",
       "timeSlot": {
         "period": 4,
         "day": "Monday",
@@ -5834,7 +5834,7 @@
       "lecturers": [
         "PAY"
       ],
-      "room": "G3-R2",
+      "room": "G2-R7",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -5856,7 +5856,7 @@
       "lecturers": [
         "MZF"
       ],
-      "room": "G4-R2",
+      "room": "CM-206",
       "timeSlot": {
         "period": 5,
         "day": "Wednesday",
@@ -5878,95 +5878,29 @@
       "lecturers": [
         "MZF"
       ],
-      "room": "CM-207",
-      "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
-      },
-      "sks": 3,
-      "needsLab": true,
-      "participants": 37,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "IF13JK13",
-      "className": "Jaringan Komputer",
-      "class": "IF-3A",
-      "prodi": "INFORMATIKA",
-      "lecturers": [
-        "TQB"
-      ],
       "room": "CM-Lab3",
       "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
-      },
-      "sks": 3,
-      "needsLab": true,
-      "participants": 38,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "IF13JK13",
-      "className": "Jaringan Komputer",
-      "class": "IF-3B",
-      "prodi": "INFORMATIKA",
-      "lecturers": [
-        "TQB"
-      ],
-      "room": "CM-202",
-      "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 37,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
-      "classId": "IF13IM13",
-      "className": "Interaksi Manusia-Komputer",
+      "classId": "IF13JK13",
+      "className": "Jaringan Komputer",
       "class": "IF-3A",
       "prodi": "INFORMATIKA",
       "lecturers": [
-        "LHY"
+        "TQB"
       ],
       "room": "CM-LabVirtual",
-      "timeSlot": {
-        "period": 6,
-        "day": "Tuesday",
-        "startTime": "11:40",
-        "endTime": "15:00"
-      },
-      "sks": 3,
-      "needsLab": false,
-      "participants": 38,
-      "classType": "pagi",
-      "prayerTimeAdded": 50,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "IF13IM13",
-      "className": "Interaksi Manusia-Komputer",
-      "class": "IF-3B",
-      "prodi": "INFORMATIKA",
-      "lecturers": [
-        "LHY"
-      ],
-      "room": "B3-R3",
       "timeSlot": {
         "period": 1,
         "day": "Tuesday",
@@ -5974,32 +5908,76 @@
         "endTime": "10:00"
       },
       "sks": 3,
-      "needsLab": false,
+      "needsLab": true,
+      "participants": 38,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "IF13JK13",
+      "className": "Jaringan Komputer",
+      "class": "IF-3B",
+      "prodi": "INFORMATIKA",
+      "lecturers": [
+        "TQB"
+      ],
+      "room": "CM-LabVirtual",
+      "timeSlot": {
+        "period": 3,
+        "day": "Wednesday",
+        "startTime": "09:10",
+        "endTime": "11:40"
+      },
+      "sks": 3,
+      "needsLab": true,
       "participants": 37,
       "classType": "pagi",
       "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
-      "classId": "IF13RP12",
-      "className": "Rekayasa Perangkat Lunak",
-      "class": "IF-3A, IF-3B",
+      "classId": "IF13IM13",
+      "className": "Interaksi Manusia-Komputer",
+      "class": "IF-3A",
       "prodi": "INFORMATIKA",
       "lecturers": [
-        "TQB"
+        "LHY"
       ],
-      "room": "CM-208",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 6,
+        "period": 1,
         "day": "Thursday",
-        "startTime": "11:40",
-        "endTime": "14:10"
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
-      "sks": 2,
+      "sks": 3,
       "needsLab": false,
-      "participants": 44,
+      "participants": 38,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "IF13IM13",
+      "className": "Interaksi Manusia-Komputer",
+      "class": "IF-3B",
+      "prodi": "INFORMATIKA",
+      "lecturers": [
+        "LHY"
+      ],
+      "room": "G4-R1",
+      "timeSlot": {
+        "period": 4,
+        "day": "Tuesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
+      },
+      "sks": 3,
+      "needsLab": false,
+      "participants": 37,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -6012,8 +5990,30 @@
       ],
       "room": "CM-203",
       "timeSlot": {
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "09:10"
+      },
+      "sks": 2,
+      "needsLab": false,
+      "participants": 44,
+      "classType": "pagi",
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "IF13RP12",
+      "className": "Rekayasa Perangkat Lunak",
+      "class": "IF-3A, IF-3B",
+      "prodi": "INFORMATIKA",
+      "lecturers": [
+        "TQB"
+      ],
+      "room": "CM-103",
+      "timeSlot": {
         "period": 9,
-        "day": "Friday",
+        "day": "Wednesday",
         "startTime": "14:10",
         "endTime": "16:20"
       },
@@ -6022,90 +6022,46 @@
       "participants": 43,
       "classType": "pagi",
       "prayerTimeAdded": 30,
-      "isOverflowToLab": true
+      "isOverflowToLab": false
     },
     {
       "classId": "DT13SB13",
       "className": "Sistem Basis Data",
       "class": "IF-3A",
+      "prodi": "INFORMATIKA",
+      "lecturers": [
+        "LHY"
+      ],
+      "room": "B3-R3",
+      "timeSlot": {
+        "period": 9,
+        "day": "Tuesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
+      },
+      "sks": 3,
+      "needsLab": true,
+      "participants": 38,
+      "classType": "pagi",
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "DT13SB13",
+      "className": "Sistem Basis Data",
+      "class": "IF-3B",
       "prodi": "INFORMATIKA",
       "lecturers": [
         "LHY"
       ],
       "room": "CM-Lab3",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "10:00"
-      },
-      "sks": 3,
-      "needsLab": true,
-      "participants": 38,
-      "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "DT13SB13",
-      "className": "Sistem Basis Data",
-      "class": "IF-3B",
-      "prodi": "INFORMATIKA",
-      "lecturers": [
-        "LHY"
-      ],
-      "room": "CM-202",
-      "timeSlot": {
-        "period": 9,
-        "day": "Wednesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
-      },
-      "sks": 3,
-      "needsLab": true,
-      "participants": 37,
-      "classType": "pagi",
-      "prayerTimeAdded": 30,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "IF13P214",
-      "className": "Pemrograman 2",
-      "class": "IF-3A",
-      "prodi": "INFORMATIKA",
-      "lecturers": [
-        "MZF"
-      ],
-      "room": "CM-207",
-      "timeSlot": {
-        "period": 4,
-        "day": "Friday",
-        "startTime": "10:00",
-        "endTime": "14:10"
-      },
-      "sks": 4,
-      "needsLab": true,
-      "participants": 38,
-      "classType": "pagi",
-      "prayerTimeAdded": 50,
-      "isOverflowToLab": false
-    },
-    {
-      "classId": "IF13P214",
-      "className": "Pemrograman 2",
-      "class": "IF-3B",
-      "prodi": "INFORMATIKA",
-      "lecturers": [
-        "MZF"
-      ],
-      "room": "CM-LabVirtual",
-      "timeSlot": {
         "period": 9,
         "day": "Monday",
         "startTime": "14:10",
         "endTime": "17:10"
       },
-      "sks": 4,
+      "sks": 3,
       "needsLab": true,
       "participants": 37,
       "classType": "pagi",
@@ -6113,26 +6069,70 @@
       "isOverflowToLab": false
     },
     {
-      "classId": "IF13MN13",
-      "className": "Metode Numerik",
+      "classId": "IF13P214",
+      "className": "Pemrograman 2",
       "class": "IF-3A",
       "prodi": "INFORMATIKA",
       "lecturers": [
-        "NGT",
-        "PAY"
+        "MZF"
       ],
       "room": "CM-205",
       "timeSlot": {
         "period": 7,
         "day": "Monday",
         "startTime": "12:30",
-        "endTime": "15:00"
+        "endTime": "16:20"
+      },
+      "sks": 4,
+      "needsLab": true,
+      "participants": 38,
+      "classType": "pagi",
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "IF13P214",
+      "className": "Pemrograman 2",
+      "class": "IF-3B",
+      "prodi": "INFORMATIKA",
+      "lecturers": [
+        "MZF"
+      ],
+      "room": "CM-207",
+      "timeSlot": {
+        "period": 8,
+        "day": "Friday",
+        "startTime": "13:20",
+        "endTime": "17:10"
+      },
+      "sks": 4,
+      "needsLab": true,
+      "participants": 37,
+      "classType": "pagi",
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
+    },
+    {
+      "classId": "IF13MN13",
+      "className": "Metode Numerik",
+      "class": "IF-3A",
+      "prodi": "INFORMATIKA",
+      "lecturers": [
+        "NGT",
+        "PAY"
+      ],
+      "room": "CM-201",
+      "timeSlot": {
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 38,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -6144,7 +6144,7 @@
         "NGT",
         "PAY"
       ],
-      "room": "CM-201",
+      "room": "CM-103",
       "timeSlot": {
         "period": 1,
         "day": "Thursday",
@@ -6166,18 +6166,18 @@
       "lecturers": [
         "MZF"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 1,
-        "day": "Monday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 5,
+        "day": "Thursday",
+        "startTime": "10:50",
+        "endTime": "14:10"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 28,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -6210,7 +6210,7 @@
       "lecturers": [
         "ARI"
       ],
-      "room": "G4-R2",
+      "room": "G4-R1",
       "timeSlot": {
         "period": 1,
         "day": "Thursday",
@@ -6232,7 +6232,7 @@
       "lecturers": [
         "ARI"
       ],
-      "room": "G4-R2",
+      "room": "G4-R1",
       "timeSlot": {
         "period": 3,
         "day": "Thursday",
@@ -6254,12 +6254,12 @@
       "lecturers": [
         "YIR"
       ],
-      "room": "CM-103",
+      "room": "G2-R6",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -6276,12 +6276,12 @@
       "lecturers": [
         "YIR"
       ],
-      "room": "B2-R1",
+      "room": "G3-R4",
       "timeSlot": {
-        "period": 4,
-        "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 7,
+        "day": "Wednesday",
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -6298,12 +6298,12 @@
       "lecturers": [
         "YIR"
       ],
-      "room": "CM-206",
+      "room": "CM-207",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 3,
+        "day": "Tuesday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": true,
@@ -6320,7 +6320,7 @@
       "lecturers": [
         "YIR"
       ],
-      "room": "G5-Lab1",
+      "room": "G5-Lab2",
       "timeSlot": {
         "period": 9,
         "day": "Thursday",
@@ -6364,12 +6364,12 @@
       "lecturers": [
         "TQB"
       ],
-      "room": "G3-R2",
+      "room": "G2-R6",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -6386,12 +6386,12 @@
       "lecturers": [
         "TQB"
       ],
-      "room": "G2-R6",
+      "room": "G3-R1",
       "timeSlot": {
-        "period": 7,
+        "period": 4,
         "day": "Tuesday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
@@ -6431,12 +6431,12 @@
       "lecturers": [
         "ADF"
       ],
-      "room": "G4-R4",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 7,
-        "day": "Wednesday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 1,
+        "day": "Tuesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -6453,12 +6453,12 @@
       "lecturers": [
         "MZF"
       ],
-      "room": "CM-207",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 3,
-        "day": "Thursday",
-        "startTime": "09:10",
-        "endTime": "11:40"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": true,
@@ -6475,18 +6475,18 @@
       "lecturers": [
         "PAY"
       ],
-      "room": "CM-207",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 6,
+        "day": "Tuesday",
+        "startTime": "11:40",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 35,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -6497,7 +6497,7 @@
       "lecturers": [
         "MNI"
       ],
-      "room": "CM-206",
+      "room": "CM-205",
       "timeSlot": {
         "period": 9,
         "day": "Friday",
@@ -6519,18 +6519,18 @@
       "lecturers": [
         "YIR"
       ],
-      "room": "CM-206",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 4,
-        "day": "Friday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 9,
+        "day": "Monday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 35,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -6541,12 +6541,12 @@
       "lecturers": [
         "YIR"
       ],
-      "room": "CM-206",
+      "room": "CM-103",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": true,
@@ -6565,16 +6565,16 @@
       ],
       "room": "CM-203",
       "timeSlot": {
-        "period": 1,
-        "day": "Friday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 9,
+        "day": "Tuesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -6585,19 +6585,19 @@
       "lecturers": [
         "MAL"
       ],
-      "room": "CM-207",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 6,
-        "day": "Wednesday",
-        "startTime": "11:40",
-        "endTime": "14:10"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "16:20"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
-      "isOverflowToLab": true
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
     },
     {
       "classId": "IS13EB02",
@@ -6607,7 +6607,7 @@
       "lecturers": [
         "MAL"
       ],
-      "room": "G4-R1",
+      "room": "CM-204",
       "timeSlot": {
         "period": 4,
         "day": "Wednesday",
@@ -6629,18 +6629,18 @@
       "lecturers": [
         "PTA"
       ],
-      "room": "CM-Lab3",
+      "room": "G4-R4",
       "timeSlot": {
-        "period": 6,
+        "period": 7,
         "day": "Wednesday",
-        "startTime": "11:40",
+        "startTime": "12:30",
         "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -6651,7 +6651,7 @@
       "lecturers": [
         "PTA"
       ],
-      "room": "B3-R3",
+      "room": "CM-206",
       "timeSlot": {
         "period": 9,
         "day": "Wednesday",
@@ -6673,18 +6673,18 @@
       "lecturers": [
         "BMR"
       ],
-      "room": "CM-203",
+      "room": "B3-R3",
       "timeSlot": {
-        "period": 1,
-        "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 5,
+        "day": "Monday",
+        "startTime": "10:50",
+        "endTime": "14:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -6695,7 +6695,7 @@
       "lecturers": [
         "PTA"
       ],
-      "room": "CM-204",
+      "room": "CM-101",
       "timeSlot": {
         "period": 1,
         "day": "Thursday",
@@ -6717,7 +6717,7 @@
       "lecturers": [
         "ADF"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-206",
       "timeSlot": {
         "period": 1,
         "day": "Monday",
@@ -6739,12 +6739,12 @@
       "lecturers": [
         "ADF"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-206",
       "timeSlot": {
-        "period": 8,
-        "day": "Friday",
-        "startTime": "13:20",
-        "endTime": "15:00"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": true,
@@ -6761,12 +6761,12 @@
       "lecturers": [
         "FDN"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 4,
+        "period": 1,
         "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "11:40"
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": true,
@@ -6783,19 +6783,19 @@
       "lecturers": [
         "FDN"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-205",
       "timeSlot": {
-        "period": 6,
-        "day": "Monday",
-        "startTime": "11:40",
-        "endTime": "14:10"
+        "period": 8,
+        "day": "Thursday",
+        "startTime": "13:20",
+        "endTime": "15:00"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
-      "isOverflowToLab": true
+      "prayerTimeAdded": 0,
+      "isOverflowToLab": false
     },
     {
       "classId": "IS13KI02",
@@ -6805,18 +6805,18 @@
       "lecturers": [
         "GFP"
       ],
-      "room": "CM-207",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 7,
-        "day": "Thursday",
-        "startTime": "12:30",
+        "period": 6,
+        "day": "Wednesday",
+        "startTime": "11:40",
         "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": true,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -6827,18 +6827,18 @@
       "lecturers": [
         "MHA"
       ],
-      "room": "CM-203",
+      "room": "CM-101",
       "timeSlot": {
-        "period": 9,
-        "day": "Thursday",
-        "startTime": "14:10",
-        "endTime": "16:20"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "09:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -6871,7 +6871,7 @@
       "lecturers": [
         "BMR"
       ],
-      "room": "G5-Lab2",
+      "room": "G5-Lab1",
       "timeSlot": {
         "period": 4,
         "day": "Tuesday",
@@ -6893,12 +6893,12 @@
       "lecturers": [
         "BMR"
       ],
-      "room": "G5-Lab1",
+      "room": "CM-Lab3",
       "timeSlot": {
-        "period": 7,
-        "day": "Tuesday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 1,
+        "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": true,
@@ -6915,12 +6915,12 @@
       "lecturers": [
         "MNI"
       ],
-      "room": "G2-R2",
+      "room": "G5-Lab2",
       "timeSlot": {
-        "period": 8,
+        "period": 9,
         "day": "Tuesday",
-        "startTime": "13:20",
-        "endTime": "16:20"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": true,
@@ -6937,12 +6937,12 @@
       "lecturers": [
         "MNI"
       ],
-      "room": "G5-Lab1",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": true,
@@ -6960,18 +6960,18 @@
         "BMR",
         "ADF"
       ],
-      "room": "CM-Lab3",
+      "room": "G5-Lab1",
       "timeSlot": {
-        "period": 3,
+        "period": 9,
         "day": "Monday",
-        "startTime": "09:10",
-        "endTime": "11:40"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -7006,7 +7006,7 @@
         "BMR",
         "ADF"
       ],
-      "room": "CM-206",
+      "room": "CM-LabVirtual",
       "timeSlot": {
         "period": 9,
         "day": "Thursday",
@@ -7028,12 +7028,12 @@
       "lecturers": [
         "ADF"
       ],
-      "room": "G4-R3",
+      "room": "G4-R2",
       "timeSlot": {
-        "period": 2,
+        "period": 1,
         "day": "Friday",
-        "startTime": "08:20",
-        "endTime": "10:50"
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -7050,18 +7050,18 @@
       "lecturers": [
         "MAF"
       ],
-      "room": "G4-R2",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 9,
-        "day": "Monday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Wednesday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 56,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -7072,7 +7072,7 @@
       "lecturers": [
         "TKN"
       ],
-      "room": "G4-R3",
+      "room": "G4-R2",
       "timeSlot": {
         "period": 4,
         "day": "Thursday",
@@ -7094,7 +7094,7 @@
       "lecturers": [
         "TKN"
       ],
-      "room": "G4-R1",
+      "room": "G4-R2",
       "timeSlot": {
         "period": 9,
         "day": "Thursday",
@@ -7116,7 +7116,7 @@
       "lecturers": [
         "BMR"
       ],
-      "room": "CM-103",
+      "room": "CM-203",
       "timeSlot": {
         "period": 1,
         "day": "Thursday",
@@ -7138,18 +7138,18 @@
       "lecturers": [
         "PTA"
       ],
-      "room": "CM-204",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 1,
+        "period": 6,
         "day": "Tuesday",
-        "startTime": "07:30",
-        "endTime": "09:10"
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -7162,10 +7162,10 @@
       ],
       "room": "CM-202",
       "timeSlot": {
-        "period": 7,
-        "day": "Tuesday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 1,
+        "day": "Monday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
@@ -7182,10 +7182,10 @@
       "lecturers": [
         "GFP"
       ],
-      "room": "G4-R1",
+      "room": "CM-207",
       "timeSlot": {
         "period": 4,
-        "day": "Tuesday",
+        "day": "Monday",
         "startTime": "10:00",
         "endTime": "12:30"
       },
@@ -7204,10 +7204,10 @@
       "lecturers": [
         "GFP"
       ],
-      "room": "G2-R7",
+      "room": "B3-R2",
       "timeSlot": {
         "period": 1,
-        "day": "Monday",
+        "day": "Tuesday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -7226,12 +7226,12 @@
       "lecturers": [
         "GFP"
       ],
-      "room": "CM-204",
+      "room": "G2-R7",
       "timeSlot": {
-        "period": 6,
-        "day": "Monday",
-        "startTime": "11:40",
-        "endTime": "15:00"
+        "period": 5,
+        "day": "Tuesday",
+        "startTime": "10:50",
+        "endTime": "14:10"
       },
       "sks": 3,
       "needsLab": false,
@@ -7248,18 +7248,18 @@
       "lecturers": [
         "PTA"
       ],
-      "room": "CM-206",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 9,
+        "day": "Monday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -7273,7 +7273,7 @@
       "room": "G4-R2",
       "timeSlot": {
         "period": 9,
-        "day": "Thursday",
+        "day": "Friday",
         "startTime": "14:10",
         "endTime": "17:10"
       },
@@ -7292,18 +7292,18 @@
       "lecturers": [
         "RNU"
       ],
-      "room": "G2-R2",
+      "room": "G2-R4",
       "timeSlot": {
-        "period": 6,
-        "day": "Wednesday",
-        "startTime": "11:40",
-        "endTime": "14:10"
+        "period": 5,
+        "day": "Monday",
+        "startTime": "10:50",
+        "endTime": "12:30"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -7314,12 +7314,12 @@
       "lecturers": [
         "TAN"
       ],
-      "room": "B3-R1",
+      "room": "G2-R4",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
@@ -7336,18 +7336,18 @@
       "lecturers": [
         "RNA"
       ],
-      "room": "G2-R7",
+      "room": "G2-R2",
       "timeSlot": {
-        "period": 6,
-        "day": "Monday",
-        "startTime": "11:40",
-        "endTime": "15:00"
+        "period": 4,
+        "day": "Tuesday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -7358,12 +7358,12 @@
       "lecturers": [
         "MNR"
       ],
-      "room": "B3-R2",
+      "room": "G3-R4",
       "timeSlot": {
-        "period": 4,
-        "day": "Tuesday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "period": 3,
+        "day": "Thursday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": false,
@@ -7380,10 +7380,10 @@
       "lecturers": [
         "MNR"
       ],
-      "room": "CM-202",
+      "room": "G2-R5",
       "timeSlot": {
         "period": 1,
-        "day": "Tuesday",
+        "day": "Monday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -7402,7 +7402,7 @@
       "lecturers": [
         "RNU"
       ],
-      "room": "CM-103",
+      "room": "B2-R1",
       "timeSlot": {
         "period": 9,
         "day": "Tuesday",
@@ -7426,16 +7426,16 @@
       ],
       "room": "G4-R1",
       "timeSlot": {
-        "period": 5,
+        "period": 6,
         "day": "Thursday",
-        "startTime": "10:50",
-        "endTime": "12:30"
+        "startTime": "11:40",
+        "endTime": "14:10"
       },
       "sks": 2,
       "needsLab": false,
       "participants": 60,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 50,
       "isOverflowToLab": false
     },
     {
@@ -7446,18 +7446,18 @@
       "lecturers": [
         "DAP"
       ],
-      "room": "G3-R4",
+      "room": "G5-Lab1",
       "timeSlot": {
-        "period": 5,
+        "period": 1,
         "day": "Tuesday",
-        "startTime": "10:50",
-        "endTime": "14:10"
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -7468,18 +7468,18 @@
       "lecturers": [
         "RNA"
       ],
-      "room": "G3-R2",
+      "room": "CM-202",
       "timeSlot": {
-        "period": 1,
-        "day": "Wednesday",
-        "startTime": "07:30",
-        "endTime": "10:50"
+        "period": 8,
+        "day": "Friday",
+        "startTime": "13:20",
+        "endTime": "17:10"
       },
       "sks": 4,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -7490,18 +7490,18 @@
       "lecturers": [
         "DAP"
       ],
-      "room": "B3-R2",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 4,
+        "day": "Monday",
+        "startTime": "10:00",
+        "endTime": "12:30"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -7512,12 +7512,12 @@
       "lecturers": [
         "MNR"
       ],
-      "room": "G5-Lab1",
+      "room": "G5-LabAudioVisual",
       "timeSlot": {
-        "period": 4,
+        "period": 7,
         "day": "Monday",
-        "startTime": "10:00",
-        "endTime": "12:30"
+        "startTime": "12:30",
+        "endTime": "15:00"
       },
       "sks": 3,
       "needsLab": true,
@@ -7534,19 +7534,19 @@
       "lecturers": [
         "TAN"
       ],
-      "room": "B2-R1",
+      "room": "G3-R4",
       "timeSlot": {
-        "period": 1,
+        "period": 9,
         "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
-      "isOverflowToLab": true
+      "prayerTimeAdded": 30,
+      "isOverflowToLab": false
     },
     {
       "classId": "VD13RI03",
@@ -7556,18 +7556,18 @@
       "lecturers": [
         "RNA"
       ],
-      "room": "G3-R4",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 7,
-        "day": "Thursday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 9,
+        "day": "Wednesday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -7578,10 +7578,10 @@
       "lecturers": [
         "MHA"
       ],
-      "room": "CM-208",
+      "room": "CM-102",
       "timeSlot": {
         "period": 1,
-        "day": "Monday",
+        "day": "Thursday",
         "startTime": "07:30",
         "endTime": "09:10"
       },
@@ -7600,18 +7600,18 @@
       "lecturers": [
         "TAN"
       ],
-      "room": "B3-R3",
+      "room": "CM-201",
       "timeSlot": {
-        "period": 5,
-        "day": "Thursday",
-        "startTime": "10:50",
-        "endTime": "15:00"
+        "period": 7,
+        "day": "Monday",
+        "startTime": "12:30",
+        "endTime": "16:20"
       },
       "sks": 4,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -7622,12 +7622,12 @@
       "lecturers": [
         "RNU"
       ],
-      "room": "CM-202",
+      "room": "CM-203",
       "timeSlot": {
-        "period": 2,
-        "day": "Friday",
-        "startTime": "08:20",
-        "endTime": "10:50"
+        "period": 3,
+        "day": "Tuesday",
+        "startTime": "09:10",
+        "endTime": "11:40"
       },
       "sks": 3,
       "needsLab": false,
@@ -7644,18 +7644,18 @@
       "lecturers": [
         "TAN"
       ],
-      "room": "CM-202",
+      "room": "CM-LabVirtual",
       "timeSlot": {
-        "period": 7,
-        "day": "Monday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "period": 8,
+        "day": "Friday",
+        "startTime": "13:20",
+        "endTime": "16:20"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -7666,18 +7666,18 @@
       "lecturers": [
         "RNA"
       ],
-      "room": "CM-Lab3",
+      "room": "CM-206",
       "timeSlot": {
-        "period": 9,
-        "day": "Tuesday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 2,
+        "day": "Friday",
+        "startTime": "08:20",
+        "endTime": "10:50"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 40,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -7688,18 +7688,18 @@
       "lecturers": [
         "RNU"
       ],
-      "room": "CM-201",
+      "room": "CM-204",
       "timeSlot": {
-        "period": 6,
+        "period": 9,
         "day": "Thursday",
-        "startTime": "11:40",
-        "endTime": "15:00"
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 50,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     },
     {
@@ -7710,10 +7710,10 @@
       "lecturers": [
         "DAP"
       ],
-      "room": "CM-205",
+      "room": "B3-R3",
       "timeSlot": {
         "period": 4,
-        "day": "Monday",
+        "day": "Wednesday",
         "startTime": "10:00",
         "endTime": "12:30"
       },
@@ -7732,18 +7732,18 @@
       "lecturers": [
         "DAP"
       ],
-      "room": "CM-208",
+      "room": "G4-R3",
       "timeSlot": {
-        "period": 9,
-        "day": "Friday",
-        "startTime": "14:10",
-        "endTime": "17:10"
+        "period": 1,
+        "day": "Thursday",
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": false,
       "participants": 45,
       "classType": "pagi",
-      "prayerTimeAdded": 30,
+      "prayerTimeAdded": 0,
       "isOverflowToLab": false
     },
     {
@@ -7754,10 +7754,10 @@
       "lecturers": [
         "DAP"
       ],
-      "room": "CM-LabVirtual",
+      "room": "CM-208",
       "timeSlot": {
         "period": 1,
-        "day": "Tuesday",
+        "day": "Friday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -7776,10 +7776,10 @@
       "lecturers": [
         "DAP"
       ],
-      "room": "G4-R1",
+      "room": "CM-Lab3",
       "timeSlot": {
         "period": 1,
-        "day": "Monday",
+        "day": "Wednesday",
         "startTime": "07:30",
         "endTime": "10:00"
       },
@@ -7798,12 +7798,12 @@
       "lecturers": [
         "MNR"
       ],
-      "room": "G5-Lab2",
+      "room": "G2-R2",
       "timeSlot": {
-        "period": 7,
+        "period": 1,
         "day": "Tuesday",
-        "startTime": "12:30",
-        "endTime": "15:00"
+        "startTime": "07:30",
+        "endTime": "10:00"
       },
       "sks": 3,
       "needsLab": true,
@@ -7820,38 +7820,26 @@
       "lecturers": [
         "MNR"
       ],
-      "room": "CM-206",
+      "room": "G5-Lab2",
       "timeSlot": {
-        "period": 1,
-        "day": "Thursday",
-        "startTime": "07:30",
-        "endTime": "10:00"
+        "period": 9,
+        "day": "Friday",
+        "startTime": "14:10",
+        "endTime": "17:10"
       },
       "sks": 3,
       "needsLab": true,
       "participants": 30,
       "classType": "pagi",
-      "prayerTimeAdded": 0,
+      "prayerTimeAdded": 30,
       "isOverflowToLab": false
     }
   ],
   "violation": [
     {
-      "constraintName": "No Friday Pray Conflict",
-      "constraintType": "hard",
-      "score": 0.3333333333333333,
-      "description": "Class IF13P214 (Pemrograman 2) overlaps with Friday prayer time (11:40-13:10). Class time: 10:00-14:10"
-    },
-    {
-      "constraintName": "No Friday Pray Conflict",
-      "constraintType": "hard",
-      "score": 0.3333333333333333,
-      "description": "Class IF13PP13 (Proyek Pengembangan Perangkat Lunak) overlaps with Friday prayer time (11:40-13:10). Class time: 10:00-12:30"
-    },
-    {
       "constraintName": "Preferred Time",
       "constraintType": "soft",
-      "score": 0.6709183673469388
+      "score": 0.6581632653061225
     },
     {
       "constraintName": "Preferred Room",
@@ -7866,12 +7854,12 @@
     {
       "constraintName": "Compactness",
       "constraintType": "soft",
-      "score": 0.977628635346756
+      "score": 0.9696122296793438
     },
     {
       "constraintName": "Prayer Time Overlap",
       "constraintType": "soft",
-      "score": 0.8776836158192077
+      "score": 0.8694915254237272
     },
     {
       "constraintName": "Evening Class Priority",
@@ -7881,12 +7869,12 @@
     {
       "constraintName": "Research Day",
       "constraintType": "soft",
-      "score": 0.8829971181556207
+      "score": 0.8971181556195974
     },
     {
       "constraintName": "Overflow Penalty",
       "constraintType": "soft",
-      "score": 0.9395480225988695
+      "score": 0.9353107344632766
     }
   ]
 }

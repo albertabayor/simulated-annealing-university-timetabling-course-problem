@@ -123,6 +123,69 @@ export interface SAConfig<TState> {
    */
   maxReheats?: number;
 
+  // ============================================
+  // TABU SEARCH CONFIGURATION
+  // ============================================
+
+  /**
+   * Enable Tabu Search to prevent cycling back to recently visited states.
+   *
+   * When enabled, the algorithm tracks recent moves and prevents revisiting
+   * the same solutions, which helps escape local minima.
+   *
+   * @default false
+   */
+  tabuSearchEnabled?: boolean;
+
+  /**
+   * Number of iterations a move stays in the tabu list.
+   *
+   * Higher values = more diverse search but may miss good solutions
+   * Lower values = less diverse but faster convergence
+   *
+   * @default 50
+   */
+  tabuTenure?: number;
+
+  /**
+   * Maximum size of the tabu list for memory management.
+   *
+   * When the list exceeds this size, oldest entries are removed.
+   *
+   * @default 1000
+   */
+  maxTabuListSize?: number;
+
+  // ============================================
+  // INTENSIFICATION CONFIGURATION
+  // ============================================
+
+  /**
+   * Enable Phase 1.5 Intensification mode.
+   *
+   * When Phase 1 ends with remaining hard violations, this mode
+   * aggressively targets those violations with dedicated iterations.
+   *
+   * @default true
+   */
+  enableIntensification?: boolean;
+
+  /**
+   * Maximum iterations for each intensification attempt.
+   *
+   * @default 2000
+   */
+  intensificationIterations?: number;
+
+  /**
+   * Maximum number of intensification restart attempts.
+   *
+   * Each attempt resets temperature and focuses on remaining violations.
+   *
+   * @default 3
+   */
+  maxIntensificationAttempts?: number;
+
   /**
    * Logging configuration
    */
