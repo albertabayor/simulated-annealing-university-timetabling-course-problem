@@ -365,8 +365,8 @@ export class SimulatedAnnealing<TState> {
 
     // Adaptive selection based on success rates
     const selectedGenerator = this.selectMoveGenerator(applicableGenerators);
-
-    const newState = selectedGenerator.generate(state, temperature);
+    const clonedState = this.config.cloneState(state); 
+    const newState = selectedGenerator.generate(clonedState, temperature);
 
     return { newState, operatorName: selectedGenerator.name };
   }

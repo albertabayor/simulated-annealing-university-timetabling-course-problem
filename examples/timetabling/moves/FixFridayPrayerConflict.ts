@@ -42,26 +42,24 @@ export class FixFridayPrayerConflict implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Optimized shallow clone - only deep copy schedule entries
-    const newSchedule = state.schedule.map(e => ({ ...e, timeSlot: { ...e.timeSlot } }));
-    const newState: TimetableState = { ...state, schedule: newSchedule };
+    // SA engine already clones state, so we work directly on the passed state
 
     // Find all classes violating Friday time restriction (invalid start OR overlap)
-    const violatingClasses = newState.schedule.filter(
+    const violatingClasses = state.schedule.filter(
       (entry) =>
         (entry.timeSlot.day === 'Friday' && !isValidFridayStartTime(entry.timeSlot.startTime)) ||
         this.overlapsWithPrayerTime(entry)
     );
 
     if (violatingClasses.length === 0) {
-      return newState;
+      return state;
     }
 
     // Pick one violating class randomly
-    const entry = violatingClasses[Math.floor(Math.random() * violatingClasses.length)];
+    const entry = violatingClasses[Math.floor(Math.random() * violatingClasses.length)]!;
 
     // Use constraint-aware slot+room validator to get ONLY valid (time, room) combinations
-    const { preferred, acceptable, all } = getValidTimeSlotAndRoomCombinationsWithPriority(newState, entry);
+    const { preferred, acceptable, all } = getValidTimeSlotAndRoomCombinationsWithPriority(state, entry);
 
     // Strongly prefer moving to non-Friday days (95% chance)
     let combinationsToUse = preferred;
@@ -75,11 +73,11 @@ export class FixFridayPrayerConflict implements MoveGenerator<TimetableState> {
     }
 
     if (combinationsToUse.length === 0) {
-      return newState; // No valid combinations available
+      return state; // No valid combinations available
     }
 
     // Pick random valid combination
-    const combo = combinationsToUse[Math.floor(Math.random() * combinationsToUse.length)];
+    const combo = combinationsToUse[Math.floor(Math.random() * combinationsToUse.length)]!;
 
     // Calculate prayer time adjustment
     const calc = calculateEndTime(combo.timeSlot.startTime, entry.sks, combo.timeSlot.day);
@@ -98,6 +96,6 @@ export class FixFridayPrayerConflict implements MoveGenerator<TimetableState> {
     const isLabRoom = combo.roomType.toLowerCase().includes('lab');
     entry.isOverflowToLab = !entry.needsLab && isLabRoom;
 
-    return newState;
+    return state;
   }
 }

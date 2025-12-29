@@ -19,36 +19,34 @@ export class FixMaxDailyPeriods implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Optimized shallow clone - only deep copy schedule entries
-    const newSchedule = state.schedule.map(e => ({ ...e, timeSlot: { ...e.timeSlot } }));
-    const newState: TimetableState = { ...state, schedule: newSchedule };
+    // SA engine already clones state, so we work directly on the passed state
 
     // Find violating lecturer-day combinations
-    const violations = this.findViolations(newState);
+    const violations = this.findViolations(state);
 
     if (violations.length === 0) {
-      return newState;
+      return state;
     }
 
     // Pick a random violation
-    const violation = violations[Math.floor(Math.random() * violations.length)];
+    const violation = violations[Math.floor(Math.random() * violations.length)]!;
     const { lecturerCode, day, classes } = violation;
 
     // Pick a random class from this lecturer's overloaded day
-    const entry = classes[Math.floor(Math.random() * classes.length)];
+    const entry = classes[Math.floor(Math.random() * classes.length)]!;
 
     // Use constraint-aware slot+room validator to get ONLY valid combinations
-    const { preferred, acceptable, all } = getValidTimeSlotAndRoomCombinationsWithPriority(newState, entry);
+    const { preferred, acceptable, all } = getValidTimeSlotAndRoomCombinationsWithPriority(state, entry);
 
     // Filter out the current overloaded day (we want to move to a different day)
     const validDifferentDayCombos = all.filter(c => c.timeSlot.day !== day);
 
     if (validDifferentDayCombos.length === 0) {
-      return newState; // No valid combinations on different days
+      return state; // No valid combinations on different days
     }
 
     // Pick random valid combination from a different day
-    const combo = validDifferentDayCombos[Math.floor(Math.random() * validDifferentDayCombos.length)];
+    const combo = validDifferentDayCombos[Math.floor(Math.random() * validDifferentDayCombos.length)]!;
 
     // Calculate prayer time adjustment
     const calc = calculateEndTime(combo.timeSlot.startTime, entry.sks, combo.timeSlot.day);
@@ -67,7 +65,7 @@ export class FixMaxDailyPeriods implements MoveGenerator<TimetableState> {
     const isLabRoom = combo.roomType.toLowerCase().includes('lab');
     entry.isOverflowToLab = !entry.needsLab && isLabRoom;
 
-    return newState;
+    return state;
   }
 
   private hasMaxDailyPeriodsViolation(state: TimetableState): boolean {

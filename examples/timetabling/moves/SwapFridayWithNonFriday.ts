@@ -48,26 +48,24 @@ export class SwapFridayWithNonFriday implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Optimized shallow clone - only deep copy schedule entries
-    const newSchedule = state.schedule.map(e => ({ ...e, timeSlot: { ...e.timeSlot } }));
-    const newState: TimetableState = { ...state, schedule: newSchedule };
+    // SA engine already clones state, so we work directly on the passed state
 
     // Find all classes violating Friday constraints
-    const fridayViolators = newState.schedule.filter(
+    const fridayViolators = state.schedule.filter(
       (entry) =>
         (entry.timeSlot.day === 'Friday' && !isValidFridayStartTime(entry.timeSlot.startTime)) ||
         this.overlapsWithPrayerTime(entry)
     );
 
     if (fridayViolators.length === 0) {
-      return newState;
+      return state;
     }
 
     // Pick one violating Friday class
-    const fridayClass = fridayViolators[Math.floor(Math.random() * fridayViolators.length)];
+    const fridayClass = fridayViolators[Math.floor(Math.random() * fridayViolators.length)]!;
 
     // Find non-Friday classes from the same lecturer(s)
-    const swapCandidates = newState.schedule.filter((entry) => {
+    const swapCandidates = state.schedule.filter((entry) => {
       // Must be non-Friday
       if (entry.timeSlot.day === 'Friday') return false;
 
@@ -82,22 +80,22 @@ export class SwapFridayWithNonFriday implements MoveGenerator<TimetableState> {
     });
 
     if (swapCandidates.length === 0) {
-      return newState; // No swap candidates available
+      return state; // No swap candidates available
     }
 
     // Pick a random swap candidate
-    const nonFridayClass = swapCandidates[Math.floor(Math.random() * swapCandidates.length)];
+    const nonFridayClass = swapCandidates[Math.floor(Math.random() * swapCandidates.length)]!;
 
     // Check if swap is feasible (room compatibility)
     const fridayClassCanUseNonFridayRoom = this.canSwapRoom(
-      newState,
+      state,
       fridayClass,
       nonFridayClass.room,
       nonFridayClass.timeSlot.day
     );
 
     const nonFridayClassCanUseFridayRoom = this.canSwapRoom(
-      newState,
+      state,
       nonFridayClass,
       fridayClass.room,
       fridayClass.timeSlot.day
@@ -118,7 +116,7 @@ export class SwapFridayWithNonFriday implements MoveGenerator<TimetableState> {
       nonFridayClass.room = tempRoom;
       nonFridayClass.prayerTimeAdded = tempPrayerTime;
 
-      return newState;
+      return state;
     }
 
     // If rooms incompatible, try swapping time slots and finding new rooms
@@ -128,8 +126,8 @@ export class SwapFridayWithNonFriday implements MoveGenerator<TimetableState> {
     nonFridayClass.timeSlot = tempTimeSlot;
 
     // Try to find suitable rooms for both classes at their new time slots
-    const fridayClassNewRoom = this.findSuitableRoom(newState, fridayClass);
-    const nonFridayClassNewRoom = this.findSuitableRoom(newState, nonFridayClass);
+    const fridayClassNewRoom = this.findSuitableRoom(state, fridayClass);
+    const nonFridayClassNewRoom = this.findSuitableRoom(state, nonFridayClass);
 
     if (fridayClassNewRoom && nonFridayClassNewRoom) {
       fridayClass.room = fridayClassNewRoom;
@@ -149,10 +147,15 @@ export class SwapFridayWithNonFriday implements MoveGenerator<TimetableState> {
       fridayClass.timeSlot.endTime = calc1.endTime;
       nonFridayClass.timeSlot.endTime = calc2.endTime;
 
-      return newState;
+      return state;
     }
 
-    // Swap failed, return original state
+    // Swap failed - revert and return original
+    // Need to swap back since we modified in place
+    const revertTimeSlot = { ...fridayClass.timeSlot };
+    fridayClass.timeSlot = { ...nonFridayClass.timeSlot };
+    nonFridayClass.timeSlot = revertTimeSlot;
+    
     return state;
   }
 

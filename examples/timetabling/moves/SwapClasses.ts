@@ -1,5 +1,9 @@
 /**
  * Move operator: Swap time slots and/or rooms between two classes
+ *
+ * UPDATED: Temperature-dependent swap behavior
+ * - High temp (>10000): Prefer full swaps (both time+room) for exploration
+ * - Low temp (<1000): Prefer targeted swaps (just time OR room) for exploitation
  */
 
 import type { MoveGenerator } from '../../../src/index.js';
@@ -14,58 +18,62 @@ export class SwapClasses implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Optimized shallow clone - only deep copy schedule entries
-    const newSchedule = state.schedule.map(e => ({ ...e, timeSlot: { ...e.timeSlot } }));
-    const newState: TimetableState = { ...state, schedule: newSchedule };
-
-    if (newState.schedule.length < 2) {
-      return newState;
+    // SA engine already clones state, so we work directly on the passed state
+    if (state.schedule.length < 2) {
+      return state;
     }
 
     // Pick two random classes
-    const idx1 = Math.floor(Math.random() * newState.schedule.length);
-    let idx2 = Math.floor(Math.random() * newState.schedule.length);
+    const idx1 = Math.floor(Math.random() * state.schedule.length);
+    let idx2 = Math.floor(Math.random() * state.schedule.length);
 
     while (idx2 === idx1) {
-      idx2 = Math.floor(Math.random() * newState.schedule.length);
+      idx2 = Math.floor(Math.random() * state.schedule.length);
     }
 
-    const entry1 = newState.schedule[idx1];
-    const entry2 = newState.schedule[idx2];
+    const entry1 = state.schedule[idx1]!;
+    const entry2 = state.schedule[idx2]!;
 
-    // Randomly decide what to swap
-    const swapType = Math.random();
-
-    if (swapType < 0.33) {
-      // Swap time slots only
-      const tempTimeSlot = entry1.timeSlot;
-      entry1.timeSlot = entry2.timeSlot;
-      entry2.timeSlot = tempTimeSlot;
-
-      // Recalculate end times based on each class's SKS
-      const calc1 = calculateEndTime(entry1.timeSlot.startTime, entry1.sks, entry1.timeSlot.day);
-      const calc2 = calculateEndTime(entry2.timeSlot.startTime, entry2.sks, entry2.timeSlot.day);
-
-      entry1.timeSlot.endTime = calc1.endTime;
-      entry1.prayerTimeAdded = calc1.prayerTimeAdded;
-
-      entry2.timeSlot.endTime = calc2.endTime;
-      entry2.prayerTimeAdded = calc2.prayerTimeAdded;
-    } else if (swapType < 0.66) {
-      // Swap rooms only
-      const tempRoom = entry1.room;
-      entry1.room = entry2.room;
-      entry2.room = tempRoom;
+    // Temperature-dependent swap type selection
+    let swapType: 'time' | 'room' | 'both';
+    
+    if (temperature > 10000) {
+      // HIGH TEMPERATURE: Prefer full swaps for maximum exploration
+      const rand = Math.random();
+      if (rand < 0.5) {
+        swapType = 'both';  // 50% full swap
+      } else if (rand < 0.75) {
+        swapType = 'time';  // 25% time only
+      } else {
+        swapType = 'room';  // 25% room only
+      }
+    } else if (temperature > 1000) {
+      // MEDIUM TEMPERATURE: Balanced
+      const rand = Math.random();
+      if (rand < 0.33) {
+        swapType = 'both';
+      } else if (rand < 0.66) {
+        swapType = 'time';
+      } else {
+        swapType = 'room';
+      }
     } else {
-      // Swap both
-      const tempTimeSlot = entry1.timeSlot;
-      const tempRoom = entry1.room;
+      // LOW TEMPERATURE: Prefer targeted swaps for fine-tuning
+      const rand = Math.random();
+      if (rand < 0.2) {
+        swapType = 'both';  // 20% full swap
+      } else if (rand < 0.6) {
+        swapType = 'time';  // 40% time only (more precise)
+      } else {
+        swapType = 'room';  // 40% room only (more precise)
+      }
+    }
 
-      entry1.timeSlot = entry2.timeSlot;
-      entry1.room = entry2.room;
-
+    if (swapType === 'time' || swapType === 'both') {
+      // Swap time slots
+      const tempTimeSlot = { ...entry1.timeSlot };
+      entry1.timeSlot = { ...entry2.timeSlot };
       entry2.timeSlot = tempTimeSlot;
-      entry2.room = tempRoom;
 
       // Recalculate end times based on each class's SKS
       const calc1 = calculateEndTime(entry1.timeSlot.startTime, entry1.sks, entry1.timeSlot.day);
@@ -78,6 +86,13 @@ export class SwapClasses implements MoveGenerator<TimetableState> {
       entry2.prayerTimeAdded = calc2.prayerTimeAdded;
     }
 
-    return newState;
+    if (swapType === 'room' || swapType === 'both') {
+      // Swap rooms
+      const tempRoom = entry1.room;
+      entry1.room = entry2.room;
+      entry2.room = tempRoom;
+    }
+
+    return state;
   }
 }
