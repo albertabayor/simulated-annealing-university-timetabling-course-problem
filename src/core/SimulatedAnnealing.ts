@@ -236,16 +236,19 @@ export class SimulatedAnnealing<TState> {
         currentHardViolations = bestHardViolations;
         
         while (intensificationIterations < this.config.intensificationIterations && bestHardViolations > 0) {
-          // Use only targeted operators during intensification (those that can fix violations)
-          const targetedGenerators = this.moveGenerators.filter((gen) => {
+          // Include ALL operators during intensification, but weight targeted ones higher
+          // This fixes the bug where ChangeTimeSlotAndRoom (12.8% success rate) was excluded
+          const allGenerators = this.moveGenerators.filter((gen) => gen.canApply(currentState));
+          const targetedGenerators = allGenerators.filter((gen) => {
             const name = gen.name.toLowerCase();
-            return (name.includes('fix') || name.includes('swap')) && gen.canApply(currentState);
+            // Include 'change' to capture ChangeTimeSlotAndRoom which is highly effective
+            return name.includes('fix') || name.includes('swap') || name.includes('change');
           });
           
-          // Fallback to all applicable if no targeted operators
-          const generators = targetedGenerators.length > 0 
-            ? targetedGenerators 
-            : this.moveGenerators.filter((gen) => gen.canApply(currentState));
+          // Use targeted operators 70% of time, all operators 30% (more exploration)
+          const generators = targetedGenerators.length > 0 && Math.random() < 0.7
+            ? targetedGenerators
+            : allGenerators;
           
           if (generators.length === 0) {
             break;
@@ -287,7 +290,13 @@ export class SimulatedAnnealing<TState> {
               stagnationCounter++;
             }
           } else {
-            // Never accept if hard violations increase during intensification
+            // Occasionally accept worse moves to escape local minima (simulated annealing style)
+            // This helps break out of deadlock situations
+            const worsenProb = Math.exp(-1 / (intensificationTemp / 10000));
+            if (Math.random() < worsenProb * 0.05) {
+              accept = true;
+              this.log('debug', '[Intensification] Accepting worsening move to escape local minimum');
+            }
             stagnationCounter++;
           }
           

@@ -10,7 +10,7 @@ export { ChangeTimeSlotAndRoom } from './ChangeTimeSlotAndRoom.js';
 
 // Targeted move operators for specific violations
 export { FixFridayPrayerConflict } from './FixFridayPrayerConflict.js';
-export { SwapFridayWithNonFriday } from './SwapFridayWithNonFriday.js';
+// Removed SwapFridayWithNonFriday - had 0-0.2% success rate, not worth the iteration cost
 export { FixLecturerConflict } from './FixLecturerConflict.js';
 export { FixRoomConflict } from './FixRoomConflict.js';
 export { FixMaxDailyPeriods } from './FixMaxDailyPeriods.js';

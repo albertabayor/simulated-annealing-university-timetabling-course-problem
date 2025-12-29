@@ -7,6 +7,26 @@ import { TIME_SLOTS_PAGI, TIME_SLOTS_SORE, initializeTimeSlots, calculateEndTime
 import fs from 'fs';
 
 /**
+ * Configuration for greedy initial solution
+ */
+export interface GreedyConfig {
+  /** Enable randomization by shuffling class order before placement */
+  randomize?: boolean;
+}
+
+/**
+ * Shuffle array using Fisher-Yates algorithm
+ */
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+/**
  * Check if a new entry conflicts with existing schedule
  */
 function hasConflict(entry: ScheduleEntry, schedule: ScheduleEntry[]): boolean {
@@ -44,8 +64,9 @@ function hasConflict(entry: ScheduleEntry, schedule: ScheduleEntry[]): boolean {
   return false;
 }
 
-export function generateInitialSolution(data: TimetableInput): TimetableState {
+export function generateInitialSolution(data: TimetableInput, config: GreedyConfig = {}): TimetableState {
   const { rooms, lecturers, classes } = data;
+
 
   // Initialize default time slots
   initializeTimeSlots();
@@ -54,11 +75,17 @@ export function generateInitialSolution(data: TimetableInput): TimetableState {
   const availableTimeSlots: TimeSlot[] = [...TIME_SLOTS_PAGI, ...TIME_SLOTS_SORE];
 
   console.log(`\nGenerating initial solution for ${classes.length} classes...`);
+  if (config.randomize) {
+    console.log(`   🔀 Randomization enabled - shuffling class order`);
+  }
 
   let successCount = 0;
   let failCount = 0;
 
-  for (const classReq of classes) {
+  // Shuffle classes if randomization is enabled for diverse starting points
+  const classesToPlace = config.randomize ? shuffleArray(classes) : classes;
+
+  for (const classReq of classesToPlace) {
     // Extract lecturer codes
     const lecturerCodes: string[] = [];
     if (classReq.Kode_Dosen1) lecturerCodes.push(classReq.Kode_Dosen1);

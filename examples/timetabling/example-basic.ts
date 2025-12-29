@@ -18,7 +18,7 @@ import { getCacheStats } from "./utils/cache.js";
 
 import { NoLecturerConflict, NoRoomConflict, RoomCapacity, NoProdiConflict, MaxDailyPeriods, ClassTypeTime, SaturdayRestriction, FridayTimeRestriction, PrayerTimeStart, ExclusiveRoom } from "./constraints/hard/index.js";
 import { Compactness, EveningClassPriority, OverflowPenalty, PrayerTimeOverlap, PreferredRoom, PreferredTime, ResearchDay, TransitTime } from "./constraints/soft/index.js";
-import { ChangeTimeSlot, ChangeRoom, SwapClasses, ChangeTimeSlotAndRoom, FixFridayPrayerConflict, SwapFridayWithNonFriday, FixLecturerConflict, FixRoomConflict, FixMaxDailyPeriods, FixRoomCapacity } from "./moves/index.js";
+import { ChangeTimeSlot, ChangeRoom, SwapClasses, ChangeTimeSlotAndRoom, FixFridayPrayerConflict, FixLecturerConflict, FixRoomConflict, FixMaxDailyPeriods, FixRoomCapacity } from "./moves/index.js";
 
 console.log("=".repeat(70));
 console.log("  UNIVERSITY COURSE TIMETABLING - Simulated Annealing v2.0");
@@ -36,7 +36,7 @@ console.log(`   Classes: ${data.classes.length}`);
 
 // 2. Generate initial solution using greedy algorithm
 console.log("\n🏗️  Generating initial timetable (greedy algorithm)...");
-const initialState = generateInitialSolution(data);
+const initialState = generateInitialSolution(data, { randomize: true });
 
 // Save initial solution for comparison
 fs.writeFileSync(
@@ -83,21 +83,21 @@ console.log("\n🔄 Setting up move operators...");
 const moveGenerators: MoveGenerator<TimetableState>[] = [
   // Targeted operators (higher priority - will be selected more often when violations exist)
   new FixFridayPrayerConflict(),
-  new SwapFridayWithNonFriday(), // NEW: Advanced operator to break Friday deadlocks
+  // SwapFridayWithNonFriday removed - had 0-0.2% success rate, not worth iterations
   new FixLecturerConflict(),
   new FixRoomConflict(),
   new FixMaxDailyPeriods(),
   new FixRoomCapacity(),
 
   // General operators (for exploration and optimization)
-  new ChangeTimeSlotAndRoom(), // ULTIMATE smart operator - changes both time AND room
+  new ChangeTimeSlotAndRoom(), // BEST operator - 12.8% success rate, changes both time AND room
   new ChangeTimeSlot(),
   new ChangeRoom(),
   new SwapClasses(),
 ];
 
-console.log(`   Targeted operators: 6 (including Friday swap operator)`);
-console.log(`   General operators: 4 (including smart time+room operator)`);
+console.log(`   Targeted operators: 5 (FixFridayPrayerConflict, FixLecturerConflict, etc.)`);
+console.log(`   General operators: 4 (including high-success ChangeTimeSlotAndRoom)`);
 console.log(`   Total operators: ${moveGenerators.length}`);
 
 // 5. Configure Simulated Annealing
