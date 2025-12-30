@@ -5,7 +5,7 @@
 // General move operators
 export { ChangeTimeSlot } from './ChangeTimeSlot.js';
 export { ChangeRoom } from './ChangeRoom.js';
-export { SwapClasses } from './SwapClasses.js';
+export { SwapClasses } from './SwapClasses.js'; // Low success rate but provides search diversity
 export { ChangeTimeSlotAndRoom } from './ChangeTimeSlotAndRoom.js';
 
 // Targeted move operators for specific violations

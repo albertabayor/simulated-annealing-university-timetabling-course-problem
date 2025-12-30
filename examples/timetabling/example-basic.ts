@@ -19,6 +19,7 @@ import { getCacheStats } from "./utils/cache.js";
 import { NoLecturerConflict, NoRoomConflict, RoomCapacity, NoProdiConflict, MaxDailyPeriods, ClassTypeTime, SaturdayRestriction, FridayTimeRestriction, PrayerTimeStart, ExclusiveRoom } from "./constraints/hard/index.js";
 import { Compactness, EveningClassPriority, OverflowPenalty, PrayerTimeOverlap, PreferredRoom, PreferredTime, ResearchDay, TransitTime } from "./constraints/soft/index.js";
 import { ChangeTimeSlot, ChangeRoom, SwapClasses, ChangeTimeSlotAndRoom, FixFridayPrayerConflict, FixLecturerConflict, FixRoomConflict, FixMaxDailyPeriods, FixRoomCapacity } from "./moves/index.js";
+import { SwapFridayWithNonFriday } from "./moves/SwapFridayWithNonFriday.js";
 
 console.log("=".repeat(70));
 console.log("  UNIVERSITY COURSE TIMETABLING - Simulated Annealing v2.0");
@@ -83,17 +84,17 @@ console.log("\n🔄 Setting up move operators...");
 const moveGenerators: MoveGenerator<TimetableState>[] = [
   // Targeted operators (higher priority - will be selected more often when violations exist)
   new FixFridayPrayerConflict(),
-  // SwapFridayWithNonFriday removed - had 0-0.2% success rate, not worth iterations
+  new SwapFridayWithNonFriday(),
   new FixLecturerConflict(),
   new FixRoomConflict(),
   new FixMaxDailyPeriods(),
   new FixRoomCapacity(),
 
   // General operators (for exploration and optimization)
-  new ChangeTimeSlotAndRoom(), // BEST operator - 12.8% success rate, changes both time AND room
+  new ChangeTimeSlotAndRoom(), // BEST operator - 10-13% success rate, changes both time AND room
   new ChangeTimeSlot(),
   new ChangeRoom(),
-  new SwapClasses(),
+  new SwapClasses(), // Low success rate but provides critical search diversity
 ];
 
 console.log(`   Targeted operators: 5 (FixFridayPrayerConflict, FixLecturerConflict, etc.)`);
@@ -107,7 +108,7 @@ const config: SAConfig<TimetableState> = {
   initialTemperature: 100000, // Higher for better exploration at start
   minTemperature: 0.0000001,
   coolingRate: 0.9998, // Slower cooling for thorough search
-  maxIterations: 60_000, // Increased for better convergence (15-30 min runtime)
+  maxIterations: 200_000, // Increased for better convergence (15-30 min runtime)
   hardConstraintWeight: 100000, // Very high penalty for hard violations
 
   // State cloning function - optimized for performance

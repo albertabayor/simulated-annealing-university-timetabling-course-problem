@@ -292,8 +292,9 @@ export class SimulatedAnnealing<TState> {
           } else {
             // Occasionally accept worse moves to escape local minima (simulated annealing style)
             // This helps break out of deadlock situations
+            // Reduced from 5% to 2% to prevent destabilization (saw 1→20 violations in trials)
             const worsenProb = Math.exp(-1 / (intensificationTemp / 10000));
-            if (Math.random() < worsenProb * 0.05) {
+            if (Math.random() < worsenProb * 0.02) {
               accept = true;
               this.log('debug', '[Intensification] Accepting worsening move to escape local minimum');
             }

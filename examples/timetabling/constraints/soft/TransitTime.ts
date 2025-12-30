@@ -2,7 +2,7 @@
  * SC3: Ensure sufficient transit time between classes for lecturers
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 import { timeToMinutes, calculateEndTime } from '../../utils/index.js';
 
@@ -70,5 +70,9 @@ export class TransitTime implements Constraint<TimetableState> {
     }
 
     return minScore;
+  }
+
+  describe(): string {
+    return 'Insufficient transit time between consecutive classes for lecturers';
   }
 }

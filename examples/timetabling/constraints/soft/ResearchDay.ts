@@ -2,7 +2,7 @@
  * SC8: Avoid scheduling on lecturer's research day
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 
 export class ResearchDay implements Constraint<TimetableState> {
@@ -43,5 +43,9 @@ export class ResearchDay implements Constraint<TimetableState> {
     }
 
     return count > 0 ? totalScore / count : 1;
+  }
+
+  describe(): string {
+    return 'Classes scheduled on lecturer\'s designated research day';
   }
 }

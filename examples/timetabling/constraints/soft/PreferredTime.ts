@@ -2,7 +2,7 @@
  * SC1: Prefer lecturer's preferred time slots
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 
 export class PreferredTime implements Constraint<TimetableState> {
@@ -35,6 +35,10 @@ export class PreferredTime implements Constraint<TimetableState> {
     }
 
     return count > 0 ? totalScore / count : 1;
+  }
+
+  describe(): string {
+    return 'Classes not scheduled in lecturer\'s preferred time slots';
   }
 
   private matchesPreferredTime(entry: any, preferredTime: string): boolean {

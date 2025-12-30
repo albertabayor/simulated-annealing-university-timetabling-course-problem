@@ -3,7 +3,7 @@
  * Penalizes classes that overlap with prayer times
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 import { getPrayerTimeOverlap, timeToMinutes, calculateEndTime } from '../../utils/index.js';
 
@@ -59,5 +59,9 @@ export class PrayerTimeOverlap implements Constraint<TimetableState> {
     }
 
     return count > 0 ? totalScore / count : 1;
+  }
+
+  describe(): string {
+    return 'Classes overlapping with prayer times (especially Friday 12:00-13:00)';
   }
 }
