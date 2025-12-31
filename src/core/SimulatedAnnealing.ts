@@ -1,9 +1,16 @@
 /**
  * Generic Simulated Annealing optimizer for constraint satisfaction problems.
  *
- * This class implements a two-phase simulated annealing algorithm:
- * - Phase 1: Eliminate hard constraint violations
+ * This class implements a multi-phase simulated annealing algorithm:
+ * - Phase 1: Eliminate hard constraint violations (60% of maxIterations)
+ * - Phase 1.5: Intensification - Aggressively target remaining hard violations (optional)
  * - Phase 2: Optimize soft constraints while maintaining hard constraint satisfaction
+ *
+ * Features:
+ * - Tabu Search: Prevents cycling by tracking recently visited states
+ * - Adaptive Operator Selection: Learns which operators work best
+ * - Reheating: Escapes local minima by temporarily increasing temperature
+ * - Intensification: Focused optimization to eliminate stubborn hard violations
  *
  * @template TState - The state type for your problem domain
  */
@@ -80,7 +87,24 @@ export class SimulatedAnnealing<TState> {
   /**
    * Run the optimization algorithm
    *
-   * @returns Best solution found
+   * Algorithm Phases:
+   * 1. Phase 1: Eliminate hard constraint violations (60% of maxIterations)
+   *    - Focuses on reducing hard violations
+   *    - Uses tabu search if enabled to prevent cycling
+   *    - Reheats if stuck in local minima
+   *
+   * 2. Phase 1.5: Intensification (if enableIntensification = true and hardViolations > 0)
+   *    - Aggressively targets remaining hard violations
+   *    - Uses focused operator selection (70% targeted, 30% random)
+   *    - Multiple restart attempts (maxIntensificationAttempts)
+   *    - Stops early when all hard violations eliminated
+   *
+   * 3. Phase 2: Optimize soft constraints
+   *    - Maintains hard constraint satisfaction (strict enforcement)
+   *    - Optimizes soft constraint satisfaction
+   *    - Uses tabu search if enabled
+   *
+   * @returns Best solution found with detailed statistics
    */
   solve(): Solution<TState> {
     this.log('info', 'Starting optimization...');
@@ -209,11 +233,18 @@ export class SimulatedAnnealing<TState> {
 
     this.log('info', `Phase 1 complete: Hard violations = ${bestHardViolations}`);
 
-    // ============================================
-    // PHASE 1.5: INTENSIFICATION
-    // ============================================
-    // If hard violations remain and intensification is enabled,
-    // aggressively target remaining violations with multiple restart attempts
+  // ============================================
+  // PHASE 1.5: INTENSIFICATION
+  // ============================================
+  // If hard violations remain and intensification is enabled,
+  // aggressively target remaining violations with multiple restart attempts.
+  //
+  // Intensification features:
+  // - Focused operator selection (70% targeted: fix/swap/change, 30% random)
+  // - Aggressive acceptance logic for reducing hard violations
+  // - Multiple restart attempts with temperature reset
+  // - Reheating when stagnation detected (300 iterations without improvement)
+  // - Early exit when all hard violations eliminated
     
     if (bestHardViolations > 0 && this.config.enableIntensification) {
       this.log('info', 'Phase 1.5: Intensification - targeting remaining hard violations');
@@ -590,13 +621,32 @@ export class SimulatedAnnealing<TState> {
   // ============================================
   // TABU SEARCH METHODS
   // ============================================
+  //
+  // Tabu Search prevents the algorithm from cycling back to recently visited states.
+  // This helps escape local minima by maintaining a short-term memory of the search.
+  //
+  // How it works:
+  // 1. Each state is assigned a lightweight signature (hash)
+  // 2. Signatures are stored in a tabu list with their iteration number
+  // 3. Before accepting a move, check if the new state is tabu
+  // 4. States remain tabu for 'tabuTenure' iterations
+  // 5. Old entries are automatically removed when list exceeds 'maxTabuListSize'
+  //
+  // Configuration:
+  // - tabuSearchEnabled: Enable/disable tabu search (default: false)
+  // - tabuTenure: Number of iterations a state stays tabu (default: 50)
+  // - maxTabuListSize: Maximum tabu entries stored (default: 1000)
 
   /**
    * Generate a lightweight signature for a state
    * Used to track visited states in the tabu list
-   * 
-   * Note: This creates a hash based on schedule assignments, not the full state
-   * This is efficient because we only care about the assignment decisions
+   *
+   * Note: This creates a hash based on schedule assignments, not the full state.
+   * This is efficient because we only care about the assignment decisions,
+   * not the entire state object.
+   *
+   * The signature format: "classId:day:startTime:room|classId:day:startTime:room|..."
+   * Sorted for consistency so same assignments produce same signature
    */
   private getStateSignature(state: TState): string {
     // Get schedule from state (generic approach)
@@ -678,6 +728,11 @@ export class SimulatedAnnealing<TState> {
 
   /**
    * Phase 1 acceptance probability (prioritize hard constraints)
+   *
+   * Logic:
+   * - Always accept if hard violations decrease
+   * - Standard SA acceptance if hard violations stay the same
+   * - Never accept if hard violations increase
    */
   private acceptanceProbabilityPhase1(
     currentHardViolations: number,
@@ -705,6 +760,14 @@ export class SimulatedAnnealing<TState> {
 
   /**
    * Phase 2 acceptance probability (strictly enforce hard constraints)
+   *
+   * Logic:
+   * - NEVER accept if hard violations increase (strict enforcement)
+   * - Always accept if hard violations decrease
+   * - Standard SA acceptance for soft constraint optimization if hard violations stable
+   *
+   * This ensures once a feasible solution is found, we never violate hard constraints
+   * while optimizing soft constraints.
    */
   private acceptanceProbabilityPhase2(
     bestHardViolations: number,

@@ -108,7 +108,7 @@ const config: SAConfig<TimetableState> = {
   initialTemperature: 100000, // Higher for better exploration at start
   minTemperature: 0.0000001,
   coolingRate: 0.9998, // Slower cooling for thorough search
-  maxIterations: 200_000, // Increased for better convergence (15-30 min runtime)
+  maxIterations: 400_000, // Increased for better convergence (15-30 min runtime)
   hardConstraintWeight: 100000, // Very high penalty for hard violations
 
   // State cloning function - optimized for performance
