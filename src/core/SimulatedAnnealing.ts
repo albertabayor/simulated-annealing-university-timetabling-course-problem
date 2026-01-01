@@ -518,7 +518,7 @@ export class SimulatedAnnealing<TState> {
     // Evaluate hard constraints
     for (const constraint of this.hardConstraints) {
       const score = constraint.evaluate(state);
-      if (score < 1) {
+      if (score < 1) {        
         hardPenalty += (1 - score);
       }
     }
@@ -531,6 +531,7 @@ export class SimulatedAnnealing<TState> {
         softPenalty += (1 - score) * weight;
       }
     }
+
 
     return hardPenalty * this.config.hardConstraintWeight + softPenalty;
   }
@@ -547,6 +548,7 @@ export class SimulatedAnnealing<TState> {
         // If getViolations() is available, count actual violations
         if (constraint.getViolations) {
           const violations = constraint.getViolations(state);
+          
           count += violations.length;
         } else {
           // Fallback: try to infer violation count from score
@@ -585,6 +587,10 @@ export class SimulatedAnnealing<TState> {
 
   /**
    * Select move generator adaptively based on success rates
+   * this concept method is inspired by Roulette Wheel Selection
+   * and it's implemented by linear search, why am i not using binary search ?
+   * it's good idea though but i don't want to complicate things, anyway it's so rare that move generators are more than 100 innit ?
+   * @returns Selected MoveGenerator<TState>
    */
   private selectMoveGenerator(generators: MoveGenerator<TState>[]): MoveGenerator<TState> {
     // 30% of the time: random selection (exploration)
@@ -751,6 +757,11 @@ export class SimulatedAnnealing<TState> {
       if (newFitness < currentFitness) {
         return 1.0;
       }
+      // Standard SA acceptance probability
+      // i.e :
+      // currentFitness = 150, newFitness = 160, temperature = 1000
+      // acceptanceProbability = exp((150 - 160) / 1000) = exp(-10 / 1000) = exp(-0.01) ≈ 0.99005
+      // so the chance of accepting a slightly worse solution is about 99%
       return Math.exp((currentFitness - newFitness) / temperature);
     }
 
