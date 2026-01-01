@@ -1,10 +1,18 @@
 /**
  * HC2: No two classes can use the same room at the same time
+ * Optimized from O(N²) to O(N log N) using group-sort-shortcircuit pattern
  */
 
 import type { Constraint } from 'timetable-sa';
 import type { TimetableState, ScheduleEntry } from '../../types/index.js';
-import { timeToMinutes, calculateEndTime } from '../../utils/index.js';
+import {
+  timeToMinutes,
+  groupScheduleByKey,
+  sortEntriesByStartTime,
+  getEndTimeInMinutes,
+  hasTimeOverlap,
+  startsAfterEnd,
+} from '../../utils/index.js';
 
 export class NoRoomConflict implements Constraint<TimetableState> {
   name = 'No Room Conflict';
@@ -14,12 +22,33 @@ export class NoRoomConflict implements Constraint<TimetableState> {
     const { schedule } = state;
     let violationCount = 0;
 
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
+    // Step 1: Group by room + day - O(N)
+    const grouped = groupScheduleByKey(schedule, (entry) =>
+      `${entry.room}_${entry.timeSlot.day}`
+    );
 
-        if (this.hasRoomConflict(entry1, entry2)) {
+    // Step 2: Check conflicts within each group
+    for (const entries of grouped.values()) {
+      if (entries.length < 2) continue;
+
+      // Sort by start time - O(K log K)
+      sortEntriesByStartTime(entries);
+
+      // Check for overlaps with short-circuit - O(K)
+      for (let i = 0; i < entries.length; i++) {
+        const entry1 = entries[i];
+        const end1 = getEndTimeInMinutes(entry1);
+
+        for (let j = i + 1; j < entries.length; j++) {
+          const entry2 = entries[j];
+          const start2 = timeToMinutes(entry2.timeSlot.startTime);
+
+          // Short-circuit: if entry2 starts after entry1 ends, no more overlaps possible
+          if (startsAfterEnd(end1, start2)) {
+            break;
+          }
+
+          // Time overlap detected (same room + same day + overlapping time)
           violationCount++;
         }
       }
@@ -33,12 +62,28 @@ export class NoRoomConflict implements Constraint<TimetableState> {
   describe(state: TimetableState): string | undefined {
     const { schedule } = state;
 
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
+    // Group by room + day
+    const grouped = groupScheduleByKey(schedule, (entry) =>
+      `${entry.room}_${entry.timeSlot.day}`
+    );
 
-        if (this.hasRoomConflict(entry1, entry2)) {
+    for (const entries of grouped.values()) {
+      if (entries.length < 2) continue;
+
+      sortEntriesByStartTime(entries);
+
+      for (let i = 0; i < entries.length; i++) {
+        const entry1 = entries[i];
+        const end1 = getEndTimeInMinutes(entry1);
+
+        for (let j = i + 1; j < entries.length; j++) {
+          const entry2 = entries[j];
+          const start2 = timeToMinutes(entry2.timeSlot.startTime);
+
+          if (startsAfterEnd(end1, start2)) {
+            break;
+          }
+
           return `Room ${entry1.room} is occupied by both ${entry1.classId} and ${entry2.classId} on ${entry1.timeSlot.day} at ${entry1.timeSlot.startTime}`;
         }
       }
@@ -51,12 +96,28 @@ export class NoRoomConflict implements Constraint<TimetableState> {
     const { schedule } = state;
     const violations: string[] = [];
 
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
+    // Group by room + day
+    const grouped = groupScheduleByKey(schedule, (entry) =>
+      `${entry.room}_${entry.timeSlot.day}`
+    );
 
-        if (this.hasRoomConflict(entry1, entry2)) {
+    for (const entries of grouped.values()) {
+      if (entries.length < 2) continue;
+
+      sortEntriesByStartTime(entries);
+
+      for (let i = 0; i < entries.length; i++) {
+        const entry1 = entries[i];
+        const end1 = getEndTimeInMinutes(entry1);
+
+        for (let j = i + 1; j < entries.length; j++) {
+          const entry2 = entries[j];
+          const start2 = timeToMinutes(entry2.timeSlot.startTime);
+
+          if (startsAfterEnd(end1, start2)) {
+            break;
+          }
+
           violations.push(
             `Room ${entry1.room} is occupied by both ${entry1.classId} (${entry1.timeSlot.startTime}) and ${entry2.classId} (${entry2.timeSlot.startTime}) on ${entry1.timeSlot.day}`
           );
@@ -65,32 +126,5 @@ export class NoRoomConflict implements Constraint<TimetableState> {
     }
 
     return violations;
-  }
-
-  private hasRoomConflict(entry1: ScheduleEntry, entry2: ScheduleEntry): boolean {
-    // Must be same room
-    if (entry1.room !== entry2.room) {
-      return false;
-    }
-
-    // Must be same day
-    if (entry1.timeSlot.day !== entry2.timeSlot.day) {
-      return false;
-    }
-
-    // Check time overlap
-    return this.isTimeOverlap(entry1, entry2);
-  }
-
-  private isTimeOverlap(entry1: ScheduleEntry, entry2: ScheduleEntry): boolean {
-    const calc1 = calculateEndTime(entry1.timeSlot.startTime, entry1.sks, entry1.timeSlot.day);
-    const calc2 = calculateEndTime(entry2.timeSlot.startTime, entry2.sks, entry2.timeSlot.day);
-
-    const start1 = timeToMinutes(entry1.timeSlot.startTime);
-    const end1 = timeToMinutes(calc1.endTime);
-    const start2 = timeToMinutes(entry2.timeSlot.startTime);
-    const end2 = timeToMinutes(calc2.endTime);
-
-    return start1 < end2 && start2 < end1;
   }
 }

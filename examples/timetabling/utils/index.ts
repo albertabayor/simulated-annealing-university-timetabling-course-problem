@@ -56,3 +56,10 @@ export {
   getCacheStats,
 } from './cache.js';
 
+export {
+  groupScheduleByKey,
+  sortEntriesByStartTime,
+  getEndTimeInMinutes,
+  hasTimeOverlap,
+  startsAfterEnd,
+} from './constraint-helpers.js';
