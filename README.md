@@ -1,4 +1,4 @@
-# timetable-sa v2.1.0
+# timetable-sa v2.1.1
 
 **Generic, Unopinionated Simulated Annealing Library for Constraint Satisfaction Problems**
 
@@ -7,7 +7,7 @@ A powerful TypeScript library that solves ANY constraint-satisfaction and optimi
 [![npm version](https://img.shields.io/npm/v/timetable-sa.svg)](https://www.npmjs.com/package/timetable-sa)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## What's New in v2.1.0
+## What's New in v2.1.1
 
 **Advanced Features for Better Solutions**
 
@@ -15,6 +15,13 @@ A powerful TypeScript library that solves ANY constraint-satisfaction and optimi
 - **Phase 1.5 Intensification**: Aggressively targets remaining hard violations when Phase 1 doesn't achieve zero violations
 - **Enhanced Operator Statistics**: Better tracking of move operator performance with success rate metrics
 - **Multi-Phase Optimization**: Automatic transition between Phase 1, Phase 1.5, and Phase 2
+- **Performance Optimization**: Unified fitness calculation reduces constraint evaluation overhead by ~28%
+
+**Benchmark Results:**
+- **60% success rate** for achieving zero hard constraint violations
+- **Average fitness: ~26.6** (lower is better) for successful runs
+- **Best fitness: 26.54** achieved in testing
+- See [`docs/OPTIMIZATION_SUMMARY.md`](./docs/OPTIMIZATION_SUMMARY.md) for detailed performance analysis
 
 ## What's New in v2.0
 
@@ -32,9 +39,22 @@ v2.0 is a complete rewrite that transforms `timetable-sa` from a university-spec
 - **Adaptive Operator Selection**: Learns which operators work best and uses them more frequently
 - **Reheating Mechanism**: Escapes local minima by temporarily increasing temperature
 - **Intensification**: Aggressively targets remaining hard violations with focused search
+- **Performance Optimized**: Unified fitness calculation, efficient constraint evaluation
 - **Comprehensive Logging**: Detailed progress tracking and violation reporting
 - **Full TypeScript Type Safety**: Generic type support with `<TState>`
 - **Zero Dependencies**: Core library has no external dependencies
+
+## Performance
+
+Based on benchmark testing with university course timetabling (356 classes, 11 hard constraints, 8 soft constraints):
+
+| Metric | Value |
+|--------|-------|
+| Success Rate (0 hard violations) | 60% (3/5 runs average) |
+| Best Fitness Achieved | 26.54 |
+| Average Fitness (successful) | 26.6 |
+| Average Execution Time | ~30 seconds per run |
+| Recommended: Multiple Instances | Run 3-5 parallel instances for near 100% success |
 
 ## Installation
 
