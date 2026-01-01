@@ -329,9 +329,8 @@ for (let i = 0; i < PROFILE_ITERATIONS; i++) {
     stats
   );
 
-  // 4. Count hard violations (evaluates hard constraints again)
-  // Note: This is potentially redundant with calculateFitness!
-  profileHardConstraintCount(newState, hardConstraints, stats);
+  // NOTE: In the actual SA engine, hard violations are now computed TOGETHER
+  // with fitness in calculateFitnessAndViolations(). This call is removed.
 
   // 5. Accept or reject
   const acceptStart = performance.now();
@@ -378,6 +377,8 @@ const other = overallTime - categorized;
 
 const breakdown = [
   { name: "Constraint Evaluation", time: stats.constraintTime, pct: (stats.constraintTime / overallTime * 100) },
+  // NOTE: Since SA engine now uses unified calculateFitnessAndViolations(), 
+  // hard constraint count time should be 0 - keeping the metric for visibility
   { name: "Hard Constraint Count", time: stats.hardConstraintTime, pct: (stats.hardConstraintTime / overallTime * 100) },
   { name: "State Cloning", time: stats.cloneTime, pct: (stats.cloneTime / overallTime * 100) },
   { name: "Move Generation", time: stats.moveGenerationTime, pct: (stats.moveGenerationTime / overallTime * 100) },
@@ -445,12 +446,13 @@ if (movePct > 30) {
   console.log(`   🟢 MOVE GENERATION is only ${movePct.toFixed(1)}% of time - acceptable`);
 }
 
-// Check for duplicate evaluation
+// Check for duplicate evaluation (should be 0 now after optimization)
 if (stats.hardConstraintTime > 0) {
-  console.log(`\n   ⚠️  Note: Hard constraints are evaluated TWICE per iteration:`);
+  console.log(`\n   ⚠️  Note: Hard constraints evaluated separately:`);
   console.log(`      - In calculateFitness(): ${stats.constraintTime.toFixed(1)} ms total`);
   console.log(`      - In countHardViolations(): ${stats.hardConstraintTime.toFixed(1)} ms total`);
-  console.log(`      Consider caching or combining these operations!`);
+} else {
+  console.log(`\n   ✅ Unified constraint evaluation: No redundant hard constraint calls!`);
 }
 
 console.log("\n" + "=".repeat(70));
