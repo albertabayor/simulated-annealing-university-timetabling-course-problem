@@ -5,7 +5,7 @@
  * is assigned to multiple classes at overlapping times.
  */
 
-import type { MoveGenerator } from 'timetable-sa';
+import type { MoveGenerator } from '../../../src/index.js';
 import type { TimetableState, ScheduleEntry } from '../types/index.js';
 import { timeToMinutes, canUseExclusiveRoom } from '../utils/index.js';
 
@@ -54,21 +54,20 @@ export class FixRoomConflict implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Clone state
-    const newState = JSON.parse(JSON.stringify(state)) as TimetableState;
+    // SA engine already clones state, so we work directly on the passed state
 
     // Find all classes with room conflicts
-    const conflictingClasses = this.findRoomConflicts(newState.schedule);
+    const conflictingClasses = this.findRoomConflicts(state.schedule);
 
     if (conflictingClasses.length === 0) {
-      return newState;
+      return state;
     }
 
     // Pick one conflicting class randomly
-    const entry = conflictingClasses[Math.floor(Math.random() * conflictingClasses.length)];
+    const entry = conflictingClasses[Math.floor(Math.random() * conflictingClasses.length)]!;
 
     // Get suitable rooms based on requirements
-    const suitableRooms = newState.rooms.filter(room => {
+    const suitableRooms = state.rooms.filter(room => {
       // Check capacity
       if (room.Capacity < entry.participants) return false;
 
@@ -79,7 +78,7 @@ export class FixRoomConflict implements MoveGenerator<TimetableState> {
       if (!canUseExclusiveRoom(room.Code, entry.className, entry.prodi)) return false;
 
       // Check if room is available at this time slot (no conflict)
-      const hasConflict = newState.schedule.some(other => {
+      const hasConflict = state.schedule.some(other => {
         if (other.classId === entry.classId) return false; // Skip self
         if (other.room !== room.Code) return false; // Different room
         return this.hasTimeOverlap(entry, other); // Check time overlap
@@ -91,18 +90,18 @@ export class FixRoomConflict implements MoveGenerator<TimetableState> {
     });
 
     if (suitableRooms.length === 0) {
-      return newState; // No suitable rooms available
+      return state; // No suitable rooms available
     }
 
     // Pick random room (different from current if possible)
     const otherRooms = suitableRooms.filter(r => r.Code !== entry.room);
     const roomsToChooseFrom = otherRooms.length > 0 ? otherRooms : suitableRooms;
 
-    const newRoom = roomsToChooseFrom[Math.floor(Math.random() * roomsToChooseFrom.length)];
+    const newRoom = roomsToChooseFrom[Math.floor(Math.random() * roomsToChooseFrom.length)]!;
 
     // Update room
     entry.room = newRoom.Code;
 
-    return newState;
+    return state;
   }
 }

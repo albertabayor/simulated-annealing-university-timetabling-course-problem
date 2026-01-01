@@ -10,6 +10,8 @@ This guide helps you configure the Simulated Annealing algorithm for optimal res
 - [Constraint Weights](#constraint-weights)
 - [State Cloning](#state-cloning)
 - [Reheating](#reheating)
+- [Tabu Search](#tabu-search)
+- [Intensification](#intensification)
 - [Logging](#logging)
 - [Tuning Guide](#tuning-guide)
 
@@ -273,6 +275,187 @@ const config: SAConfig<SimpleState> = {
 
 **Recommendation:** Use manual cloning for production use!
 
+## Tabu Search
+
+Tabu Search prevents the algorithm from cycling back to recently visited states.
+
+### Enable Tabu Search
+
+```typescript
+const config: SAConfig<MyState> = {
+  // ... other config
+  tabuSearchEnabled: true,    // Enable tabu search
+  tabuTenure: 50,              // Keep states tabu for 50 iterations
+  maxTabuListSize: 1000,       // Maximum 1000 tabu entries
+};
+```
+
+### Parameters
+
+**tabuSearchEnabled**
+- Enable/disable Tabu Search
+- Default: `false`
+- Recommended for complex problems with many local minima
+
+**tabuTenure**
+- Number of iterations a state stays in the tabu list
+- Higher: more diverse search, less cycling
+- Lower: faster convergence, may cycle
+- Default: 50
+- Typical range: 30 - 100
+
+**maxTabuListSize**
+- Maximum number of tabu entries stored
+- Prevents unbounded memory usage
+- Default: 1000
+- Typical range: 500 - 5000
+
+### When to Use Tabu Search
+
+**Enable when:**
+- Seeing oscillation in fitness values
+- Getting stuck in local minima repeatedly
+- Problem has many similar states
+- Long optimization runs (50,000+ iterations)
+
+**Disable when:**
+- Problem is simple/convex
+- Quick testing or prototyping
+- Memory is very limited
+- Problem has extremely large state space
+
+### Configuration Examples
+
+```typescript
+// Moderate tabu search (recommended for most problems)
+{
+  tabuSearchEnabled: true,
+  tabuTenure: 50,              // Remember for 50 iterations
+  maxTabuListSize: 1000,       // Keep up to 1000 entries
+}
+
+// Aggressive tabu search (very diverse)
+{
+  tabuSearchEnabled: true,
+  tabuTenure: 100,             // Remember for 100 iterations
+  maxTabuListSize: 2000,       // Keep up to 2000 entries
+}
+
+// Conservative tabu search (minimal cycling prevention)
+{
+  tabuSearchEnabled: true,
+  tabuTenure: 30,              // Remember for 30 iterations
+  maxTabuListSize: 500,        // Keep up to 500 entries
+}
+```
+
+## Intensification
+
+Intensification is an aggressive phase (Phase 1.5) that targets remaining hard violations when Phase 1 doesn't achieve zero violations.
+
+### Enable Intensification
+
+```typescript
+const config: SAConfig<MyState> = {
+  // ... other config
+  enableIntensification: true,        // Enable intensification (default)
+  intensificationIterations: 2000,    // 2000 iterations per attempt
+  maxIntensificationAttempts: 3,       // Up to 3 restart attempts
+};
+```
+
+### Parameters
+
+**enableIntensification**
+- Enable/disable Phase 1.5 intensification
+- Default: `true`
+- Recommended for problems with complex, conflicting constraints
+
+**intensificationIterations**
+- Number of iterations per intensification attempt
+- Higher: more thorough search of remaining violations
+- Lower: faster but may miss solutions
+- Default: 2000
+- Typical range: 1000 - 5000
+
+**maxIntensificationAttempts**
+- Maximum number of restart attempts
+- Each attempt resets temperature and focuses on remaining violations
+- Default: 3
+- Typical range: 2 - 5
+
+### How Intensification Works
+
+1. **Trigger**: Phase 1 ends with `hardViolations > 0`
+2. **Focused Selection**: Uses targeted operators (fix, swap, change) 70% of time
+3. **Aggressive Acceptance**: Heavily favors moves reducing hard violations
+4. **Multiple Attempts**: Up to `maxIntensificationAttempts` restarts
+5. **Early Exit**: Stops when all hard violations eliminated
+
+### When to Use Intensification
+
+**Enable (default) when:**
+- Phase 1 frequently ends with violations
+- Problem has many complex constraints
+- Hard constraints are difficult to satisfy
+- You need guaranteed feasibility
+
+**Disable when:**
+- Phase 1 consistently reaches zero violations
+- Problem is simple
+- Looking for quick approximate solutions
+- Soft constraints are more important
+
+### Configuration Examples
+
+```typescript
+// Standard intensification (default)
+{
+  enableIntensification: true,
+  intensificationIterations: 2000,    // 2000 iterations per attempt
+  maxIntensificationAttempts: 3,       // Up to 3 attempts
+}
+
+// Aggressive intensification (for very difficult problems)
+{
+  enableIntensification: true,
+  intensificationIterations: 5000,    // 5000 iterations per attempt
+  maxIntensificationAttempts: 5,       // Up to 5 attempts
+}
+
+// Quick intensification (for faster runs)
+{
+  enableIntensification: true,
+  intensificationIterations: 1000,    // 1000 iterations per attempt
+  maxIntensificationAttempts: 2,       // Up to 2 attempts
+}
+
+// Disabled (for simple problems)
+{
+  enableIntensification: false,       // Skip Phase 1.5
+}
+```
+
+### Monitoring Intensification
+
+```typescript
+const config: SAConfig<MyState> = {
+  // ... other config
+  logging: {
+    level: 'debug',
+    logInterval: 500,
+  },
+};
+
+// Output shows intensification progress:
+// [INFO] Phase 1 complete: Hard violations = 3
+// [INFO] Phase 1.5: Intensification - targeting remaining hard violations
+// [INFO] [Intensification] Attempt 1/3
+// [DEBUG] [Intensification] New best: Hard violations = 2
+// [DEBUG] [Intensification] New best: Hard violations = 0
+// [INFO] [Intensification] SUCCESS! All hard violations eliminated in attempt 1
+```
+
 ## Reheating
 
 Reheating helps escape local minima by temporarily increasing temperature.
@@ -436,7 +619,10 @@ maxIterations: 20000, // was 50000
 
 **Problem: Can't satisfy hard constraints**
 ```typescript
-// Solution: Add reheating, check constraints are feasible
+// Solution: Enable intensification, add reheating, check constraints are feasible
+enableIntensification: true,
+intensificationIterations: 2000,
+maxIntensificationAttempts: 5,
 reheatingThreshold: 2000,
 reheatingFactor: 2.5,
 maxReheats: 5,
@@ -451,8 +637,26 @@ maxIterations: 100000, // was 50000
 
 **Problem: Converges too early**
 ```typescript
-// Solution: Higher initial temperature
+// Solution: Higher initial temperature, enable tabu search
 initialTemperature: 5000, // was 1000
+tabuSearchEnabled: true,
+tabuTenure: 50,
+```
+
+**Problem: Fitness oscillating between values**
+```typescript
+// Solution: Enable tabu search to prevent cycling
+tabuSearchEnabled: true,
+tabuTenure: 50,
+maxTabuListSize: 1000,
+```
+
+**Problem: Phase 1 always ends with violations**
+```typescript
+// Solution: Increase intensification iterations and attempts
+enableIntensification: true,
+intensificationIterations: 4000,  // was 2000
+maxIntensificationAttempts: 5,      // was 3
 ```
 
 ### Step 4: Fine-tune Weights
@@ -496,6 +700,12 @@ const config: SAConfig<MyState> = {
   reheatingThreshold: 2000,
   reheatingFactor: 2.0,
   maxReheats: 3,
+  tabuSearchEnabled: true,
+  tabuTenure: 50,
+  maxTabuListSize: 1000,
+  enableIntensification: true,
+  intensificationIterations: 2000,
+  maxIntensificationAttempts: 3,
   logging: { level: 'info', logInterval: 1000 },
 };
 ```
@@ -513,9 +723,63 @@ const config: SAConfig<MyState> = {
   reheatingThreshold: 5000,
   reheatingFactor: 2.5,
   maxReheats: 5,
+  tabuSearchEnabled: true,
+  tabuTenure: 100,
+  maxTabuListSize: 2000,
+  enableIntensification: true,
+  intensificationIterations: 5000,
+  maxIntensificationAttempts: 5,
   logging: { level: 'info', logInterval: 2000 },
 };
 ```
+
+### Production - Maximum Features
+
+```typescript
+const config: SAConfig<MyState> = {
+  // Temperature settings
+  initialTemperature: 10000,
+  minTemperature: 0.0001,
+  coolingRate: 0.999,
+  maxIterations: 500000,
+
+  // Constraint weight
+  hardConstraintWeight: 50000,
+
+  // State cloning
+  cloneState: manualCloneFunction,
+
+  // Reheating - escape local minima
+  reheatingThreshold: 3000,
+  reheatingFactor: 3.0,
+  maxReheats: 5,
+
+  // Tabu Search - prevent cycling
+  tabuSearchEnabled: true,
+  tabuTenure: 150,
+  maxTabuListSize: 3000,
+
+  // Intensification - target stubborn violations
+  enableIntensification: true,
+  intensificationIterations: 8000,
+  maxIntensificationAttempts: 5,
+
+  // Logging
+  logging: {
+    enabled: true,
+    level: 'debug',
+    logInterval: 1000,
+    output: 'console',
+  },
+};
+```
+
+Use this configuration for:
+- Very large, complex problems
+- When solution quality is critical
+- Problems with many local minima
+- When you have time for longer optimization runs
+
 
 ## Next Steps
 

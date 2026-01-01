@@ -1,10 +1,17 @@
 /**
  * HC1: No lecturer can teach two classes at the same time
+ * Optimized from O(N²) to O(N log N) using group-sort-shortcircuit pattern
  */
 
 import type { Constraint } from 'timetable-sa';
 import type { TimetableState, ScheduleEntry } from '../../types/index.js';
-import { timeToMinutes, calculateEndTime, hasClassOverlap } from '../../utils/index.js';
+import {
+  timeToMinutes,
+  groupScheduleByKey,
+  sortEntriesByStartTime,
+  getEndTimeInMinutes,
+  startsAfterEnd,
+} from '../../utils/index.js';
 
 export class NoLecturerConflict implements Constraint<TimetableState> {
   name = 'No Lecturer Conflict';
@@ -14,18 +21,51 @@ export class NoLecturerConflict implements Constraint<TimetableState> {
     const { schedule } = state;
     let violationCount = 0;
 
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
+    // Step 1: Group by day - O(N)
+    const groupedByDay = groupScheduleByKey(schedule, (entry) => entry.timeSlot.day);
 
-        if (this.hasLecturerConflict(entry1, entry2)) {
-          violationCount++;
+    // Step 2: Process each day
+    for (const entries of groupedByDay.values()) {
+      if (entries.length < 2) continue;
+
+      // Sort by start time - O(K log K)
+      sortEntriesByStartTime(entries);
+
+      // Build lecturer -> entries index for this day - O(K * L) where L = avg lecturers per class
+      const lecturerIndex = new Map<string, ScheduleEntry[]>();
+      for (const entry of entries) {
+        for (const lecturer of entry.lecturers) {
+          if (!lecturerIndex.has(lecturer)) {
+            lecturerIndex.set(lecturer, []);
+          }
+          lecturerIndex.get(lecturer)!.push(entry);
+        }
+      }
+
+      // Check conflicts per lecturer - already sorted by start time
+      for (const lecturerEntries of lecturerIndex.values()) {
+        if (lecturerEntries.length < 2) continue;
+
+        for (let i = 0; i < lecturerEntries.length; i++) {
+          const entry1 = lecturerEntries[i];
+          const end1 = getEndTimeInMinutes(entry1);
+
+          for (let j = i + 1; j < lecturerEntries.length; j++) {
+            const entry2 = lecturerEntries[j];
+            const start2 = timeToMinutes(entry2.timeSlot.startTime);
+
+            // Short-circuit: if entry2 starts after entry1 ends, no more overlaps
+            if (startsAfterEnd(end1, start2)) {
+              break;
+            }
+
+            // Time overlap detected for this lecturer
+            violationCount++;
+          }
         }
       }
     }
 
-    // Return score between 0 and 1
     if (violationCount === 0) return 1;
     return 1 / (1 + violationCount);
   }
@@ -33,14 +73,40 @@ export class NoLecturerConflict implements Constraint<TimetableState> {
   describe(state: TimetableState): string | undefined {
     const { schedule } = state;
 
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
+    const groupedByDay = groupScheduleByKey(schedule, (entry) => entry.timeSlot.day);
 
-        if (this.hasLecturerConflict(entry1, entry2)) {
-          const conflictingLecturer = entry1.lecturers.find(l => entry2.lecturers.includes(l));
-          return `Lecturer ${conflictingLecturer} has conflict between ${entry1.classId} and ${entry2.classId} on ${entry1.timeSlot.day}`;
+    for (const entries of groupedByDay.values()) {
+      if (entries.length < 2) continue;
+
+      sortEntriesByStartTime(entries);
+
+      const lecturerIndex = new Map<string, ScheduleEntry[]>();
+      for (const entry of entries) {
+        for (const lecturer of entry.lecturers) {
+          if (!lecturerIndex.has(lecturer)) {
+            lecturerIndex.set(lecturer, []);
+          }
+          lecturerIndex.get(lecturer)!.push(entry);
+        }
+      }
+
+      for (const [lecturerCode, lecturerEntries] of lecturerIndex) {
+        if (lecturerEntries.length < 2) continue;
+
+        for (let i = 0; i < lecturerEntries.length; i++) {
+          const entry1 = lecturerEntries[i];
+          const end1 = getEndTimeInMinutes(entry1);
+
+          for (let j = i + 1; j < lecturerEntries.length; j++) {
+            const entry2 = lecturerEntries[j];
+            const start2 = timeToMinutes(entry2.timeSlot.startTime);
+
+            if (startsAfterEnd(end1, start2)) {
+              break;
+            }
+
+            return `Lecturer ${lecturerCode} has conflict between ${entry1.classId} and ${entry2.classId} on ${entry1.timeSlot.day}`;
+          }
         }
       }
     }
@@ -52,53 +118,46 @@ export class NoLecturerConflict implements Constraint<TimetableState> {
     const { schedule } = state;
     const violations: string[] = [];
 
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
+    const groupedByDay = groupScheduleByKey(schedule, (entry) => entry.timeSlot.day);
 
-        if (this.hasLecturerConflict(entry1, entry2)) {
-          const conflictingLecturer = entry1.lecturers.find(l => entry2.lecturers.includes(l));
-          violations.push(
-            `Lecturer ${conflictingLecturer} has conflict between ${entry1.classId} (${entry1.timeSlot.day} ${entry1.timeSlot.startTime}) and ${entry2.classId} (${entry2.timeSlot.day} ${entry2.timeSlot.startTime})`
-          );
+    for (const entries of groupedByDay.values()) {
+      if (entries.length < 2) continue;
+
+      sortEntriesByStartTime(entries);
+
+      const lecturerIndex = new Map<string, ScheduleEntry[]>();
+      for (const entry of entries) {
+        for (const lecturer of entry.lecturers) {
+          if (!lecturerIndex.has(lecturer)) {
+            lecturerIndex.set(lecturer, []);
+          }
+          lecturerIndex.get(lecturer)!.push(entry);
+        }
+      }
+
+      for (const [lecturerCode, lecturerEntries] of lecturerIndex) {
+        if (lecturerEntries.length < 2) continue;
+
+        for (let i = 0; i < lecturerEntries.length; i++) {
+          const entry1 = lecturerEntries[i];
+          const end1 = getEndTimeInMinutes(entry1);
+
+          for (let j = i + 1; j < lecturerEntries.length; j++) {
+            const entry2 = lecturerEntries[j];
+            const start2 = timeToMinutes(entry2.timeSlot.startTime);
+
+            if (startsAfterEnd(end1, start2)) {
+              break;
+            }
+
+            violations.push(
+              `Lecturer ${lecturerCode} has conflict between ${entry1.classId} (${entry1.timeSlot.day} ${entry1.timeSlot.startTime}) and ${entry2.classId} (${entry2.timeSlot.day} ${entry2.timeSlot.startTime})`
+            );
+          }
         }
       }
     }
 
     return violations;
-  }
-
-  private hasLecturerConflict(entry1: ScheduleEntry, entry2: ScheduleEntry): boolean {
-    // Must be same day
-    if (entry1.timeSlot.day !== entry2.timeSlot.day) {
-      return false;
-    }
-
-    // Check time overlap
-    if (!this.isTimeOverlap(entry1, entry2)) {
-      return false;
-    }
-
-    // Check if any lecturer is teaching both classes
-    for (const lecturer of entry1.lecturers) {
-      if (entry2.lecturers.includes(lecturer)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private isTimeOverlap(entry1: ScheduleEntry, entry2: ScheduleEntry): boolean {
-    const calc1 = calculateEndTime(entry1.timeSlot.startTime, entry1.sks, entry1.timeSlot.day);
-    const calc2 = calculateEndTime(entry2.timeSlot.startTime, entry2.sks, entry2.timeSlot.day);
-
-    const start1 = timeToMinutes(entry1.timeSlot.startTime);
-    const end1 = timeToMinutes(calc1.endTime);
-    const start2 = timeToMinutes(entry2.timeSlot.startTime);
-    const end2 = timeToMinutes(calc2.endTime);
-
-    return start1 < end2 && start2 < end1;
   }
 }

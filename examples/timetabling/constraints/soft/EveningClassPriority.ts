@@ -5,7 +5,7 @@
  * Penalize very late starts (>= 19:30)
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 import { timeToMinutes } from '../../utils/index.js';
 
@@ -56,5 +56,9 @@ export class EveningClassPriority implements Constraint<TimetableState> {
     }
 
     return count > 0 ? totalScore / count : 1;
+  }
+
+  describe(): string {
+    return 'Evening classes (sore) not starting at optimal time (18:30)';
   }
 }

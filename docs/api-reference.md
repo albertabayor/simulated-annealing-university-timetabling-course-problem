@@ -1,6 +1,19 @@
 # API Reference
 
-Complete API documentation for **timetable-sa** v2.0.
+Complete API documentation for **timetable-sa** v2.1.0.
+
+## Version History
+
+**v2.1.0 - Advanced Features (Current)**
+- Tabu Search support for preventing cycling and escaping local minima
+- Phase 1.5 Intensification for aggressive hard constraint violation resolution
+- Enhanced operator statistics with success rate tracking
+
+**v2.0.0 - Core Release**
+- Multi-phase optimization (Phase 1: Hard, Phase 2: Soft)
+- Adaptive operator selection
+- Reheating mechanism
+- Basic constraint and move generator interfaces
 
 ## Table of Contents
 
@@ -314,6 +327,16 @@ interface SAConfig<TState> {
   reheatingFactor?: number;
   maxReheats?: number;
 
+  // Optional: Tabu Search
+  tabuSearchEnabled?: boolean;
+  tabuTenure?: number;
+  maxTabuListSize?: number;
+
+  // Optional: Intensification
+  enableIntensification?: boolean;
+  intensificationIterations?: number;
+  maxIntensificationAttempts?: number;
+
   // Optional: Logging
   logging?: LoggingConfig;
 }
@@ -390,6 +413,83 @@ cloneState: (state) => ({
 - Prevents infinite reheating loops
 - Typical values: 2 - 5
 - Default: 3
+
+#### Tabu Search Parameters (Optional)
+
+**tabuSearchEnabled?: boolean**
+- Enable Tabu Search to prevent cycling back to recently visited states
+- When enabled, tracks recent moves and prevents revisiting same solutions
+- Helps escape local minima by preventing the search from oscillating
+- Typical values: `true` for complex problems, `false` for simpler ones
+- Default: `false`
+
+**tabuTenure?: number**
+- Number of iterations a move stays in the tabu list
+- Higher values = more diverse search but may miss good solutions
+- Lower values = less diverse but faster convergence
+- Typical values: 30 - 100
+- Default: 50
+
+**maxTabuListSize?: number**
+- Maximum size of the tabu list for memory management
+- When the list exceeds this size, oldest entries are removed
+- Prevents unbounded memory usage during long runs
+- Typical values: 500 - 5000
+- Default: 1000
+
+**Example: Tabu Search Configuration**
+```typescript
+const config: SAConfig<TimetableState> = {
+  // ... core parameters
+  
+  // Enable tabu search
+  tabuSearchEnabled: true,
+  tabuTenure: 50,           // Remember moves for 50 iterations
+  maxTabuListSize: 1000,    // Keep at most 1000 entries
+};
+```
+
+#### Intensification Parameters (Optional)
+
+**enableIntensification?: boolean**
+- Enable Phase 1.5 Intensification mode
+- When Phase 1 ends with remaining hard violations, aggressively targets them
+- Runs dedicated iterations with focused operator selection to eliminate remaining violations
+- Uses targeted operators (fix, swap, change) more frequently during intensification
+- Typical values: `true` for problems with many constraints, `false` for simple problems
+- Default: `true`
+
+**intensificationIterations?: number**
+- Maximum iterations for each intensification attempt
+- Each intensification attempt runs this many iterations focusing on remaining violations
+- Typical values: 1000 - 5000
+- Default: 2000
+
+**maxIntensificationAttempts?: number**
+- Maximum number of intensification restart attempts
+- Each attempt resets temperature and focuses on remaining violations
+- Stops when either all hard violations eliminated or max attempts reached
+- Typical values: 2 - 5
+- Default: 3
+
+**Example: Intensification Configuration**
+```typescript
+const config: SAConfig<TimetableState> = {
+  // ... core parameters
+  
+  // Enable intensification for stubborn hard violations
+  enableIntensification: true,
+  intensificationIterations: 2000,      // 2000 iterations per attempt
+  maxIntensificationAttempts: 3,         // Up to 3 attempts
+};
+```
+
+**Intensification Behavior:**
+1. **Triggered**: When Phase 1 ends with hard violations > 0
+2. **Focused Selection**: Uses targeted operators (fix, swap, change) 70% of time
+3. **Acceptance Logic**: Heavily favors reducing hard violations
+4. **Reheating**: Reheats if stagnation detected (no improvement for 300 iterations)
+5. **Stops Early**: When all hard violations eliminated or max attempts reached
 
 #### Logging Parameters (Optional)
 
@@ -592,6 +692,16 @@ const config: SAConfig<TimetableState> = {
   reheatingThreshold: 2000,
   reheatingFactor: 2.5,
   maxReheats: 5,
+
+  // Tabu Search
+  tabuSearchEnabled: true,
+  tabuTenure: 50,
+  maxTabuListSize: 1000,
+
+  // Intensification
+  enableIntensification: true,
+  intensificationIterations: 2000,
+  maxIntensificationAttempts: 3,
 
   // Logging
   logging: {

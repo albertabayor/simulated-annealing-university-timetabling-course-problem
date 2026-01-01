@@ -339,7 +339,7 @@ interface MoveGenerator<TState> {
 
 ## The Algorithm
 
-timetable-sa uses a **two-phase simulated annealing** approach:
+timetable-sa uses a **multi-phase simulated annealing** approach:
 
 ### Phase 1: Eliminate Hard Constraints
 
@@ -348,6 +348,28 @@ Goal: Find a **feasible** solution (all hard constraints satisfied)
 - Focus exclusively on reducing hard constraint violations
 - Reject moves that increase hard violations
 - Continue until hard violations reach 0 or phase 1 iteration limit
+- Uses 60% of maxIterations
+
+### Phase 1.5: Intensification (Optional)
+
+Goal: Aggressively eliminate remaining hard violations
+
+- **Triggered**: When Phase 1 ends with hard violations > 0
+- **Focus**: Uses targeted operators (fix, swap, change) to resolve violations
+- **Behavior**: Heavily favors moves that reduce hard violations
+- **Multiple attempts**: Up to `maxIntensificationAttempts` restarts
+- **Reheating**: Reheats if stagnation detected during intensification
+- **Stops early**: When all hard violations eliminated
+- Uses `intensificationIterations` per attempt
+
+**Configuration**:
+```typescript
+const config = {
+  enableIntensification: true,  // Default: true
+  intensificationIterations: 2000,  // Default: 2000
+  maxIntensificationAttempts: 3,    // Default: 3
+};
+```
 
 ### Phase 2: Optimize Soft Constraints
 
@@ -356,6 +378,24 @@ Goal: Find the **best** feasible solution
 - Maintain hard constraint satisfaction (NEVER accept moves that violate hard constraints)
 - Optimize soft constraint satisfaction
 - Continue until temperature reaches minimum or max iterations
+
+### Tabu Search (Optional)
+
+Goal: Prevent cycling and escape local minima
+
+- **Enabled**: Set `tabuSearchEnabled: true` in config
+- **Behavior**: Tracks recently visited states and prevents returning to them
+- **Tabu Tenure**: States remain tabu for `tabuTenure` iterations (default: 50)
+- **Memory Management**: Limits tabu list size to `maxTabuListSize` (default: 1000)
+
+**Configuration**:
+```typescript
+const config = {
+  tabuSearchEnabled: true,  // Default: false
+  tabuTenure: 50,           // Default: 50
+  maxTabuListSize: 1000,    // Default: 1000
+};
+```
 
 ### Adaptive Operator Selection
 
@@ -374,6 +414,16 @@ When stuck in a local minimum, the algorithm can "reheat":
 2. Response: Multiply temperature by reheating factor
 3. Effect: Temporarily increase exploration to escape local minimum
 4. Limit: Maximum number of reheats (default: 3)
+5. Occurs in: Phase 1, Intensification, and Phase 2
+
+**Configuration**:
+```typescript
+const config = {
+  reheatingThreshold: 2000,  // Trigger after 2000 iterations without improvement
+  reheatingFactor: 2.5,      // Multiply temperature by 2.5
+  maxReheats: 5,             // Maximum 5 reheating events
+};
+```
 
 ## Fitness Calculation
 

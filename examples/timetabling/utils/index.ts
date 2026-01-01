@@ -47,3 +47,19 @@ export {
   getValidTimeSlotAndRoomCombinationsWithPriority,
   isTimeSlotValid,
 } from './slot-validator.js';
+
+export {
+  TimeCache,
+  EndTimeCache,
+  PrayerOverlapCache,
+  clearAllCaches,
+  getCacheStats,
+} from './cache.js';
+
+export {
+  groupScheduleByKey,
+  sortEntriesByStartTime,
+  getEndTimeInMinutes,
+  hasTimeOverlap,
+  startsAfterEnd,
+} from './constraint-helpers.js';

@@ -1,4 +1,4 @@
-# timetable-sa v2.0
+# timetable-sa v2.1.0
 
 **Generic, Unopinionated Simulated Annealing Library for Constraint Satisfaction Problems**
 
@@ -6,6 +6,15 @@ A powerful TypeScript library that solves ANY constraint-satisfaction and optimi
 
 [![npm version](https://img.shields.io/npm/v/timetable-sa.svg)](https://www.npmjs.com/package/timetable-sa)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## What's New in v2.1.0
+
+**Advanced Features for Better Solutions**
+
+- **Tabu Search**: Prevents cycling by tracking recently visited states, helping escape local minima more effectively
+- **Phase 1.5 Intensification**: Aggressively targets remaining hard violations when Phase 1 doesn't achieve zero violations
+- **Enhanced Operator Statistics**: Better tracking of move operator performance with success rate metrics
+- **Multi-Phase Optimization**: Automatic transition between Phase 1, Phase 1.5, and Phase 2
 
 ## What's New in v2.0
 
@@ -18,12 +27,14 @@ v2.0 is a complete rewrite that transforms `timetable-sa` from a university-spec
 
 ## Features
 
-- Two-phase optimization (hard constraints → soft constraints)
-- Adaptive operator selection based on success rates
-- Reheating mechanism to escape local minima
-- Comprehensive logging and violation tracking
-- Full TypeScript type safety
-- Zero dependencies for core library
+- **Multi-Phase Optimization**: Phase 1 (hard constraints), Phase 1.5 (intensification), Phase 2 (soft constraints)
+- **Tabu Search**: Prevents cycling and escapes local minima by tracking visited states
+- **Adaptive Operator Selection**: Learns which operators work best and uses them more frequently
+- **Reheating Mechanism**: Escapes local minima by temporarily increasing temperature
+- **Intensification**: Aggressively targets remaining hard violations with focused search
+- **Comprehensive Logging**: Detailed progress tracking and violation reporting
+- **Full TypeScript Type Safety**: Generic type support with `<TState>`
+- **Zero Dependencies**: Core library has no external dependencies
 
 ## Installation
 
@@ -94,12 +105,20 @@ const constraints = [new NoWorkerConflict()];
 const moveGenerators = [new ChangeTime()];
 
 const config: SAConfig<MyState> = {
+  // Core parameters
   initialTemperature: 100,
   minTemperature: 0.01,
   coolingRate: 0.99,
   maxIterations: 10000,
   hardConstraintWeight: 1000,
   cloneState: (state) => JSON.parse(JSON.stringify(state)),
+
+  // Advanced features (optional)
+  tabuSearchEnabled: true,        // Prevent cycling
+  enableIntensification: true,      // Aggressively fix violations
+  reheatingThreshold: 500,         // Escape local minima
+  reheatingFactor: 2.0,
+  maxReheats: 2,
 };
 
 const solver = new SimulatedAnnealing(initialState, constraints, moveGenerators, config);
@@ -222,6 +241,16 @@ interface SAConfig<TState> {
   // State management
   cloneState: (state: TState) => TState;
 
+  // Optional: Tabu Search (prevent cycling)
+  tabuSearchEnabled?: boolean;     // Enable/disable (default: false)
+  tabuTenure?: number;            // Tabu duration in iterations (default: 50)
+  maxTabuListSize?: number;        // Max tabu entries (default: 1000)
+
+  // Optional: Intensification (aggressive violation elimination)
+  enableIntensification?: boolean;   // Enable/disable (default: true)
+  intensificationIterations?: number; // Iterations per attempt (default: 2000)
+  maxIntensificationAttempts?: number; // Max restart attempts (default: 3)
+
   // Optional: Reheating (escape local minima)
   reheatingThreshold?: number;   // Iterations without improvement before reheating
   reheatingFactor?: number;      // Temperature multiplication factor (default: 2.0)
@@ -238,19 +267,27 @@ interface SAConfig<TState> {
 }
 ```
 
-## Two-Phase Optimization
+## Multi-Phase Optimization
 
-The solver uses a two-phase approach:
+The solver uses a multi-phase approach to find high-quality solutions:
 
-1. **Phase 1**: Eliminate hard constraint violations
+1. **Phase 1**: Eliminate hard constraint violations (60% of maxIterations)
    - Focuses exclusively on satisfying hard constraints
    - Refuses moves that increase hard violations
+   - Uses Tabu Search if enabled to prevent cycling
 
-2. **Phase 2**: Optimize soft constraints
-   - Maintains hard constraint satisfaction
+2. **Phase 1.5**: Intensification (optional, if enabled)
+   - Triggered when Phase 1 ends with remaining hard violations
+   - Aggressively targets remaining violations with focused operator selection
+   - Multiple restart attempts with temperature reset
+   - Stops early when all hard violations eliminated
+
+3. **Phase 2**: Optimize soft constraints
+   - Maintains hard constraint satisfaction (strict enforcement)
    - Optimizes soft constraint satisfaction
+   - Uses Tabu Search if enabled to prevent cycling
 
-This ensures hard constraints are always satisfied before optimizing for preferences.
+This ensures hard constraints are satisfied before optimizing for preferences, with additional mechanisms to handle difficult constraint sets.
 
 ## Adaptive Operator Selection
 
@@ -263,14 +300,14 @@ Comprehensive documentation is available in the [`docs/`](./docs) directory:
 - **[Getting Started](./docs/getting-started.md)** - Your first program with timetable-sa
 - **[Core Concepts](./docs/core-concepts.md)** - Understanding states, constraints, and moves
 - **[Configuration Guide](./docs/configuration.md)** - Detailed parameter tuning
-- **[Advanced Features](./docs/advanced-features.md)** - Two-phase optimization, reheating, adaptive operators
+- **[Advanced Features](./docs/advanced-features.md)** - Multi-phase optimization, tabu search, intensification, reheating
 - **[API Reference](./docs/api-reference.md)** - Complete API documentation
 - **[Examples](./docs/examples.md)** - Complete working examples
 - **[Migration Guide](./docs/migration-guide.md)** - Migrating from v1.x to v2.0
 
 ## Examples
 
-See the [`examples/timetabling/`](./examples/timetabling) directory for a complete university timetabling implementation using v2.0.
+See the [`examples/timetabling/`](./examples/timetabling) directory for a complete university timetabling implementation using v2.1.0.
 
 Run the example:
 ```bash
@@ -280,6 +317,8 @@ npm run example:timetabling
 ## Migration from v1.x
 
 v2.0 is a **complete rewrite** with breaking changes. The old v1 API is not compatible.
+
+**v2.1.0** adds advanced features while maintaining full API compatibility with v2.0.</think>
 
 **Old v1 API (domain-specific):**
 ```typescript

@@ -3,7 +3,7 @@
  * Penalizes large gaps between classes on the same day
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 import { timeToMinutes, calculateEndTime } from '../../utils/index.js';
 
@@ -70,5 +70,9 @@ export class Compactness implements Constraint<TimetableState> {
     }
 
     return count > 0 ? totalScore / count : 1;
+  }
+
+  describe(): string {
+    return 'Large gaps (>60 min) between consecutive classes for same prodi';
   }
 }

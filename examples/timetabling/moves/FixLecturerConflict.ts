@@ -6,7 +6,7 @@
  * UPDATED: Now uses constraint-aware slot+room validation.
  */
 
-import type { MoveGenerator } from 'timetable-sa';
+import type { MoveGenerator } from '../../../src/index.js';
 import type { TimetableState, ScheduleEntry } from '../types/index.js';
 import { getValidTimeSlotAndRoomCombinationsWithPriority, calculateEndTime, timeToMinutes } from '../utils/index.js';
 
@@ -57,30 +57,29 @@ export class FixLecturerConflict implements MoveGenerator<TimetableState> {
   }
 
   generate(state: TimetableState, temperature: number): TimetableState {
-    // Clone state
-    const newState = JSON.parse(JSON.stringify(state)) as TimetableState;
+    // SA engine already clones state, so we work directly on the passed state
 
     // Find all classes with lecturer conflicts
-    const conflictingClasses = this.findLecturerConflicts(newState.schedule);
+    const conflictingClasses = this.findLecturerConflicts(state.schedule);
 
     if (conflictingClasses.length === 0) {
-      return newState;
+      return state;
     }
 
     // Pick one conflicting class randomly
-    const entry = conflictingClasses[Math.floor(Math.random() * conflictingClasses.length)];
+    const entry = conflictingClasses[Math.floor(Math.random() * conflictingClasses.length)]!;
 
     // Use constraint-aware slot+room validator to get ONLY valid combinations
-    const { preferred, acceptable, all } = getValidTimeSlotAndRoomCombinationsWithPriority(newState, entry);
+    const { preferred, acceptable, all } = getValidTimeSlotAndRoomCombinationsWithPriority(state, entry);
 
     let combinationsToUse = preferred.length > 0 ? preferred : (acceptable.length > 0 ? acceptable : all);
 
     if (combinationsToUse.length === 0) {
-      return newState; // No valid combinations available
+      return state; // No valid combinations available
     }
 
     // Pick random valid combination
-    const combo = combinationsToUse[Math.floor(Math.random() * combinationsToUse.length)];
+    const combo = combinationsToUse[Math.floor(Math.random() * combinationsToUse.length)]!;
 
     // Calculate prayer time adjustment
     const calc = calculateEndTime(combo.timeSlot.startTime, entry.sks, combo.timeSlot.day);
@@ -99,6 +98,6 @@ export class FixLecturerConflict implements MoveGenerator<TimetableState> {
     const isLabRoom = combo.roomType.toLowerCase().includes('lab');
     entry.isOverflowToLab = !entry.needsLab && isLabRoom;
 
-    return newState;
+    return state;
   }
 }

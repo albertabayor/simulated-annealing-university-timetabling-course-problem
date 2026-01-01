@@ -1,90 +1,98 @@
 /**
- * Time calculation utilities
+ * Time calculation utilities - with caching for performance
  */
 
 import { PRAYER_TIMES } from "./prayer-times.js";
+import { TimeCache, EndTimeCache, PrayerOverlapCache } from "./cache.js";
 
 /**
- * Convert time string (HH:MM) to minutes from midnight
+ * Convert time string (HH:MM) to minutes from midnight - CACHED
  */
 export function timeToMinutes(time: string): number {
-  const [hour, minute] = time.split(":").map(Number);
-  return hour! * 60 + minute!;
+  return TimeCache.getMinutes(time);
 }
 
 /**
- * Convert minutes from midnight to time string (HH:MM)
+ * Convert minutes from midnight to time string (HH:MM) - CACHED
  */
 export function minutesToTime(minutes: number): string {
-  const hour = Math.floor(minutes / 60);
-  const minute = minutes % 60;
-  return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+  return TimeCache.getTimeString(minutes);
 }
 
 /**
- * Calculate prayer time overlap for a class session
+ * Calculate prayer time overlap for a class session - CACHED
  */
 export function getPrayerTimeOverlap(startTime: string, sks: number, day: string): number {
-  const startMinutes = timeToMinutes(startTime);
+  // Check cache first
+  const cached = PrayerOverlapCache.get(startTime, sks, day);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  // Calculate if not cached
+  const startMinutes = TimeCache.getMinutes(startTime);
   const classMinutes = sks * 50;
   const endMinutes = startMinutes + classMinutes;
 
   let totalPrayerTime = 0;
 
-  // Only add prayer time if the class STARTS before prayer END and WOULD END after prayer START
-  // AND the class actually spans through significant portion of prayer time
-
   // DZUHUR (11:40-12:30): Only add if class significantly overlaps
   if (startMinutes < PRAYER_TIMES.DZUHUR.end && endMinutes > PRAYER_TIMES.DZUHUR.start) {
-    // Only add if class would end AFTER prayer end time (12:30)
-    // This prevents extending classes that naturally end before/at prayer time
-    if (endMinutes <= PRAYER_TIMES.DZUHUR.end) {
-      // Class ends before or at prayer end - NO extension needed
-      totalPrayerTime += 0;
-    } else {
+    if (endMinutes > PRAYER_TIMES.DZUHUR.end) {
       totalPrayerTime += PRAYER_TIMES.DZUHUR.duration;
     }
   }
 
   // ASHAR (15:00-15:30): Only add if class would span through it
   if (startMinutes < PRAYER_TIMES.ASHAR.end && endMinutes > PRAYER_TIMES.ASHAR.start) {
-    if (endMinutes <= PRAYER_TIMES.ASHAR.end) {
-      totalPrayerTime += 0;
-    } else {
+    if (endMinutes > PRAYER_TIMES.ASHAR.end) {
       totalPrayerTime += PRAYER_TIMES.ASHAR.duration;
     }
   }
 
   // MAGHRIB (18:00-18:30): Only add if class would span through it
   if (startMinutes < PRAYER_TIMES.MAGHRIB.end && endMinutes > PRAYER_TIMES.MAGHRIB.start) {
-    if (endMinutes <= PRAYER_TIMES.MAGHRIB.end) {
-      totalPrayerTime += 0;
-    } else {
+    if (endMinutes > PRAYER_TIMES.MAGHRIB.end) {
       totalPrayerTime += PRAYER_TIMES.MAGHRIB.duration;
     }
   }
+
+  // Store in cache
+  PrayerOverlapCache.set(startTime, sks, day, totalPrayerTime);
 
   return totalPrayerTime;
 }
 
 /**
- * Calculate end time for a class including prayer time
+ * Calculate end time for a class including prayer time - CACHED
  */
 export function calculateEndTime(
   startTime: string,
   sks: number,
   day: string
 ): { endTime: string; prayerTimeAdded: number } {
-  const startMinutes = timeToMinutes(startTime);
+  // Check cache first
+  const cached = EndTimeCache.get(startTime, sks, day);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  // Calculate if not cached
+  const startMinutes = TimeCache.getMinutes(startTime);
   const classMinutes = sks * 50;
   const prayerTimeAdded = getPrayerTimeOverlap(startTime, sks, day);
   const totalMinutes = classMinutes + prayerTimeAdded;
   const endMinutes = startMinutes + totalMinutes;
 
-  return {
-    endTime: minutesToTime(endMinutes),
+  const result = {
+    endTime: TimeCache.getTimeString(endMinutes),
     prayerTimeAdded,
   };
+
+  // Store in cache
+  EndTimeCache.set(startTime, sks, day, result);
+
+  return result;
 }
 
 /**

@@ -3,7 +3,7 @@
  * Generic Simulated Annealing Library for Constraint Satisfaction Problems
  *
  * A powerful, unopinionated optimization library that can solve ANY constraint-satisfaction
- * problem using Simulated Annealing algorithm.
+ * problem using Simulated Annealing algorithm with advanced features.
  *
  * @example
  * ```typescript
@@ -25,14 +25,30 @@
  *   // ... your move operators
  * ];
  *
- * // Configure the algorithm
+ * // Configure the algorithm with advanced features
  * const config: SAConfig<MyState> = {
+ *   // Basic parameters
  *   initialTemperature: 1000,
  *   minTemperature: 0.01,
  *   coolingRate: 0.995,
  *   maxIterations: 50000,
  *   hardConstraintWeight: 10000,
  *   cloneState: (state) => JSON.parse(JSON.stringify(state)),
+ *
+ *   // Tabu Search - prevent cycling
+ *   tabuSearchEnabled: true,
+ *   tabuTenure: 50,
+ *   maxTabuListSize: 1000,
+ *
+ *   // Intensification - aggressive hard violation elimination
+ *   enableIntensification: true,
+ *   intensificationIterations: 2000,
+ *   maxIntensificationAttempts: 3,
+ *
+ *   // Reheating - escape local minima
+ *   reheatingThreshold: 2000,
+ *   reheatingFactor: 2.0,
+ *   maxReheats: 3,
  * };
  *
  * // Create solver and run optimization
@@ -40,6 +56,8 @@
  * const solution = solver.solve();
  *
  * console.log(`Fitness: ${solution.fitness}`);
+ * console.log(`Hard violations: ${solution.hardViolations}`);
+ * console.log(`Soft violations: ${solution.softViolations}`);
  * console.log(`Iterations: ${solution.iterations}`);
  * ```
  */

@@ -1,6 +1,17 @@
 /**
  * Configuration for the Simulated Annealing algorithm.
  *
+ * The algorithm uses a multi-phase approach:
+ * - Phase 1: Eliminate hard constraint violations
+ * - Phase 1.5: Intensification (optional) - Aggressively target remaining hard violations
+ * - Phase 2: Optimize soft constraints
+ *
+ * Advanced features:
+ * - Tabu Search: Prevents cycling by tracking visited states
+ * - Reheating: Escapes local minima by temporarily increasing temperature
+ * - Intensification: Focused optimization for stubborn violations
+ * - Adaptive operator selection: Learns effective operators
+ *
  * @template TState - The state type for your problem domain
  */
 export interface SAConfig<TState> {
@@ -122,6 +133,172 @@ export interface SAConfig<TState> {
    * @default 3
    */
   maxReheats?: number;
+
+  // ============================================
+  // TABU SEARCH CONFIGURATION
+  // ============================================
+  //
+  // Tabu Search prevents the algorithm from revisiting recently explored states,
+  // which helps avoid cycling and escape local minima more effectively.
+  //
+  // How it works:
+  // 1. Each state is assigned a lightweight signature (hash)
+  // 2. Signatures are stored in a tabu list with the iteration they were added
+  // 3. Before accepting a move, check if the new state is in the tabu list
+  // 4. States remain tabu for 'tabuTenure' iterations, then are removed
+  // 5. List is automatically trimmed if it exceeds 'maxTabuListSize'
+  //
+  // When to use:
+  // - Problems with many local minima
+  // - Search gets stuck oscillating between similar solutions
+  // - Complex constraint landscapes
+  //
+  // When to skip:
+  // - Simple, convex problems
+  // - Quick testing/prototyping
+  // - Problems with extremely large state spaces
+
+  /**
+   * Enable Tabu Search to prevent cycling back to recently visited states.
+   *
+   * When enabled, the algorithm tracks recent states using lightweight signatures
+   * and prevents revisiting the same solutions, which helps escape local minima.
+   *
+   * This is particularly useful when you observe:
+   * - Fitness oscillating between a few values
+   * - Same violations recurring
+   * - Getting stuck despite having good move operators
+   *
+   * @default false
+   */
+  tabuSearchEnabled?: boolean;
+
+  /**
+   * Number of iterations a state stays in the tabu list (tabu tenure).
+   *
+   * Higher values:
+   * - More diverse search
+   * - Less cycling
+   * - May miss good solutions near tabu states
+   *
+   * Lower values:
+   * - Less diverse search
+   * - Faster convergence
+   * - May still cycle occasionally
+   *
+   * Recommended: 50 for most problems, 100-150 for very complex problems
+   *
+   * @default 50
+   */
+  tabuTenure?: number;
+
+  /**
+   * Maximum size of the tabu list for memory management.
+   *
+   * When the list exceeds this size, oldest entries are removed automatically.
+   * This prevents unbounded memory usage during long optimization runs.
+   *
+   * Larger values allow:
+   * - Better cycling prevention
+   * - More memory usage (~100 bytes per entry)
+   *
+   * Smaller values use less memory but may allow cycling.
+   *
+   * Memory calculation: maxTabuListSize * 100 bytes
+   * - 1000 entries ≈ 100 KB
+   * - 5000 entries ≈ 500 KB
+   *
+   * @default 1000
+   */
+  maxTabuListSize?: number;
+
+  // ============================================
+  // INTENSIFICATION CONFIGURATION
+  // ============================================
+  //
+  // Intensification is an aggressive Phase 1.5 that targets remaining hard violations
+  // when Phase 1 doesn't achieve zero violations. It uses focused operator selection
+  // and multiple restart attempts to eliminate stubborn violations.
+  //
+  // How it works:
+  // 1. Triggered when Phase 1 ends with hardViolations > 0
+  // 2. Each attempt runs for intensificationIterations with focused operator selection
+  // 3. Uses targeted operators (fix/swap/change) 70% of time, all operators 30%
+  // 4. Aggressively accepts moves that reduce hard violations
+  // 5. Reheats if stagnation detected (300 iterations without improvement)
+  // 6. Stops early when all hard violations eliminated
+  // 7. Up to maxIntensificationAttempts restart attempts
+  //
+  // When to use (enabled by default):
+  // - Problems with complex, conflicting constraints
+  // - Hard constraints are difficult to satisfy
+  // - Phase 1 frequently ends with remaining violations
+  //
+  // When to disable:
+  // - Simple problems where Phase 1 consistently reaches zero violations
+  // - Quick approximate solutions are acceptable
+  // - Soft constraints are more important than hard constraint feasibility
+
+  /**
+   * Enable Phase 1.5 Intensification mode.
+   *
+   * When Phase 1 ends with remaining hard violations, this mode
+   * aggressively targets those violations with dedicated iterations and
+   * focused operator selection.
+   *
+   * Intensification features:
+   * - Uses targeted operators (fix/swap/change) 70% of time
+   * - Aggressive acceptance for reducing hard violations
+   * - Multiple restart attempts with temperature reset
+   * - Reheating when stagnation detected
+   * - Early exit when all violations eliminated
+   *
+   * This is particularly helpful for problems with many conflicting constraints
+   * or where reaching feasibility is the main challenge.
+   *
+   * @default true
+   */
+  enableIntensification?: boolean;
+
+  /**
+   * Maximum iterations for each intensification attempt.
+   *
+   * Each intensification attempt runs this many iterations focusing
+   * on eliminating remaining hard violations. If all violations are
+   * eliminated before reaching this limit, the attempt stops early.
+   *
+   * Higher values:
+   * - More thorough search for feasibility
+   * - Slower single attempts
+   *
+   * Lower values:
+   * - Faster attempts
+   * - May miss solutions that require more iterations
+   *
+   * Recommended: 2000 for most problems, 5000+ for very complex problems
+   *
+   * @default 2000
+   */
+  intensificationIterations?: number;
+
+  /**
+   * Maximum number of intensification restart attempts.
+   *
+   * Each attempt resets the temperature and focuses on remaining hard violations.
+   * The process stops when either:
+   * - All hard violations are eliminated (success)
+   * - Maximum attempts reached (may have remaining violations)
+   *
+   * Multiple attempts help because each restart can explore different regions
+   * of the solution space due to the temperature reset.
+   *
+   * Recommended:
+   * - 2-3 attempts for most problems
+   * - 4-5 attempts for very difficult problems
+   *
+   * @default 3
+   */
+  maxIntensificationAttempts?: number;
 
   /**
    * Logging configuration

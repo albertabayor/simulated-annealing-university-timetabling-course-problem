@@ -2,7 +2,7 @@
  * SC2: Prefer lecturer's preferred room
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 
 export class PreferredRoom implements Constraint<TimetableState> {
@@ -35,5 +35,9 @@ export class PreferredRoom implements Constraint<TimetableState> {
     }
 
     return count > 0 ? totalScore / count : 1;
+  }
+
+  describe(): string {
+    return 'Classes not assigned to lecturer\'s preferred room';
   }
 }

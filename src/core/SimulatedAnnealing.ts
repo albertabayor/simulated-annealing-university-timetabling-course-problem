@@ -1,9 +1,16 @@
 /**
  * Generic Simulated Annealing optimizer for constraint satisfaction problems.
  *
- * This class implements a two-phase simulated annealing algorithm:
- * - Phase 1: Eliminate hard constraint violations
+ * This class implements a multi-phase simulated annealing algorithm:
+ * - Phase 1: Eliminate hard constraint violations (60% of maxIterations)
+ * - Phase 1.5: Intensification - Aggressively target remaining hard violations (optional)
  * - Phase 2: Optimize soft constraints while maintaining hard constraint satisfaction
+ *
+ * Features:
+ * - Tabu Search: Prevents cycling by tracking recently visited states
+ * - Adaptive Operator Selection: Learns which operators work best
+ * - Reheating: Escapes local minima by temporarily increasing temperature
+ * - Intensification: Focused optimization to eliminate stubborn hard violations
  *
  * @template TState - The state type for your problem domain
  */
@@ -23,10 +30,19 @@ export class SimulatedAnnealing<TState> {
   private config: SAConfig<TState> & {
     reheatingFactor: number;
     maxReheats: number;
+    tabuSearchEnabled: boolean;
+    tabuTenure: number;
+    maxTabuListSize: number;
+    enableIntensification: boolean;
+    intensificationIterations: number;
+    maxIntensificationAttempts: number;
     logging: Required<NonNullable<SAConfig<TState>['logging']>>;
   };
   // Operator statistics
   private operatorStats: OperatorStats = {};
+
+  // Tabu list: stores move signatures with the iteration they were added
+  private tabuList: Map<string, number> = new Map();
 
   constructor(
     initialState: TState,
@@ -71,7 +87,24 @@ export class SimulatedAnnealing<TState> {
   /**
    * Run the optimization algorithm
    *
-   * @returns Best solution found
+   * Algorithm Phases:
+   * 1. Phase 1: Eliminate hard constraint violations (60% of maxIterations)
+   *    - Focuses on reducing hard violations
+   *    - Uses tabu search if enabled to prevent cycling
+   *    - Reheats if stuck in local minima
+   *
+   * 2. Phase 1.5: Intensification (if enableIntensification = true and hardViolations > 0)
+   *    - Aggressively targets remaining hard violations
+   *    - Uses focused operator selection (70% targeted, 30% random)
+   *    - Multiple restart attempts (maxIntensificationAttempts)
+   *    - Stops early when all hard violations eliminated
+   *
+   * 3. Phase 2: Optimize soft constraints
+   *    - Maintains hard constraint satisfaction (strict enforcement)
+   *    - Optimizes soft constraint satisfaction
+   *    - Uses tabu search if enabled
+   *
+   * @returns Best solution found with detailed statistics
    */
   solve(): Solution<TState> {
     this.log('info', 'Starting optimization...');
@@ -112,6 +145,17 @@ export class SimulatedAnnealing<TState> {
         break;
       }
 
+      // Tabu Search: Check if this state was recently visited
+      if (this.config.tabuSearchEnabled) {
+        const newSignature = this.getStateSignature(newState);
+        if (this.isTabu(newSignature, iteration)) {
+          // Skip tabu states
+          phase1Iteration++;
+          iteration++;
+          continue;
+        }
+      }
+
       this.operatorStats[operatorName]!.attempts++;
 
       const newFitness = this.calculateFitness(newState);
@@ -131,6 +175,12 @@ export class SimulatedAnnealing<TState> {
 
         if (newFitness < currentFitness) {
           this.operatorStats[operatorName]!.improvements++;
+        }
+
+        // Add current state to tabu list (prevent cycling back)
+        if (this.config.tabuSearchEnabled) {
+          const currentSignature = this.getStateSignature(currentState);
+          this.addToTabuList(currentSignature, iteration);
         }
 
         currentState = newState;
@@ -183,6 +233,152 @@ export class SimulatedAnnealing<TState> {
 
     this.log('info', `Phase 1 complete: Hard violations = ${bestHardViolations}`);
 
+  // ============================================
+  // PHASE 1.5: INTENSIFICATION
+  // ============================================
+  // If hard violations remain and intensification is enabled,
+  // aggressively target remaining violations with multiple restart attempts.
+  //
+  // Intensification features:
+  // - Focused operator selection (70% targeted: fix/swap/change, 30% random)
+  // - Aggressive acceptance logic for reducing hard violations
+  // - Multiple restart attempts with temperature reset
+  // - Reheating when stagnation detected (300 iterations without improvement)
+  // - Early exit when all hard violations eliminated
+    
+    if (bestHardViolations > 0 && this.config.enableIntensification) {
+      this.log('info', 'Phase 1.5: Intensification - targeting remaining hard violations');
+      
+      let intensificationAttempt = 0;
+      
+      while (bestHardViolations > 0 && intensificationAttempt < this.config.maxIntensificationAttempts) {
+        intensificationAttempt++;
+        this.log('info', `[Intensification] Attempt ${intensificationAttempt}/${this.config.maxIntensificationAttempts}`);
+        
+        // Reset temperature for fresh exploration
+        let intensificationTemp = this.config.initialTemperature;
+        let intensificationIterations = 0;
+        let stagnationCounter = 0;
+        const stagnationLimit = 300;
+        
+        // Start from best known state
+        currentState = this.config.cloneState(bestState);
+        currentFitness = bestFitness;
+        currentHardViolations = bestHardViolations;
+        
+        while (intensificationIterations < this.config.intensificationIterations && bestHardViolations > 0) {
+          // Include ALL operators during intensification, but weight targeted ones higher
+          // This fixes the bug where ChangeTimeSlotAndRoom (12.8% success rate) was excluded
+          const allGenerators = this.moveGenerators.filter((gen) => gen.canApply(currentState));
+          const targetedGenerators = allGenerators.filter((gen) => {
+            const name = gen.name.toLowerCase();
+            // Include 'change' to capture ChangeTimeSlotAndRoom which is highly effective
+            return name.includes('fix') || name.includes('swap') || name.includes('change');
+          });
+          
+          // Use targeted operators 70% of time, all operators 30% (more exploration)
+          const generators = targetedGenerators.length > 0 && Math.random() < 0.7
+            ? targetedGenerators
+            : allGenerators;
+          
+          if (generators.length === 0) {
+            break;
+          }
+          
+          // Random selection during intensification (more exploration)
+          const selectedGenerator = generators[Math.floor(Math.random() * generators.length)]!;
+          const clonedState = this.config.cloneState(currentState);
+          const newState = selectedGenerator.generate(clonedState, intensificationTemp);
+          
+          if (!newState) {
+            intensificationIterations++;
+            continue;
+          }
+          
+          this.operatorStats[selectedGenerator.name]!.attempts++;
+          
+          const newFitness = this.calculateFitness(newState);
+          const newHardViolations = this.countHardViolations(newState);
+          
+          // Intensification acceptance: heavily favor reducing hard violations
+          let accept = false;
+          
+          if (newHardViolations < currentHardViolations) {
+            // Always accept if hard violations decrease
+            accept = true;
+            this.operatorStats[selectedGenerator.name]!.improvements++;
+            stagnationCounter = 0;
+          } else if (newHardViolations === currentHardViolations) {
+            // Accept with moderate probability if hard violations same
+            if (newFitness < currentFitness) {
+              accept = true;
+              this.operatorStats[selectedGenerator.name]!.improvements++;
+              stagnationCounter = 0;
+            } else {
+              // Accept worse with probability based on temperature
+              const acceptProb = Math.exp((currentFitness - newFitness) / intensificationTemp);
+              accept = Math.random() < acceptProb;
+              stagnationCounter++;
+            }
+          } else {
+            // Occasionally accept worse moves to escape local minima (simulated annealing style)
+            // This helps break out of deadlock situations
+            // Reduced from 5% to 2% to prevent destabilization (saw 1→20 violations in trials)
+            const worsenProb = Math.exp(-1 / (intensificationTemp / 10000));
+            if (Math.random() < worsenProb * 0.02) {
+              accept = true;
+              this.log('debug', '[Intensification] Accepting worsening move to escape local minimum');
+            }
+            stagnationCounter++;
+          }
+          
+          if (accept) {
+            this.operatorStats[selectedGenerator.name]!.accepted++;
+            currentState = newState;
+            currentFitness = newFitness;
+            currentHardViolations = newHardViolations;
+            
+            // Update best if improved
+            if (newHardViolations < bestHardViolations || 
+                (newHardViolations === bestHardViolations && newFitness < bestFitness)) {
+              bestState = this.config.cloneState(currentState);
+              bestFitness = newFitness;
+              bestHardViolations = newHardViolations;
+              
+              this.log('debug', `[Intensification] New best: Hard violations = ${bestHardViolations}, Fitness = ${bestFitness.toFixed(2)}`);
+            }
+          }
+          
+          // Reheat if stagnating
+          if (stagnationCounter >= stagnationLimit) {
+            intensificationTemp = this.config.initialTemperature * 0.5;
+            stagnationCounter = 0;
+            this.log('debug', '[Intensification] Stagnation detected, reheating');
+          }
+          
+          // Cool down (slower than normal)
+          intensificationTemp *= 0.999;
+          intensificationIterations++;
+          iteration++;
+          
+          // Log progress
+          if (intensificationIterations % 500 === 0) {
+            this.log('info', `[Intensification] Iter ${intensificationIterations}: Hard violations = ${currentHardViolations}, Best = ${bestHardViolations}`);
+          }
+        }
+        
+        // If this attempt succeeded, break early
+        if (bestHardViolations === 0) {
+          this.log('info', `[Intensification] SUCCESS! All hard violations eliminated in attempt ${intensificationAttempt}`);
+          break;
+        }
+      }
+      
+      if (bestHardViolations > 0) {
+        this.log('warn', `[Intensification] Could not eliminate all hard violations. Remaining: ${bestHardViolations}`);
+      }
+    }
+
     // Phase 2: Optimize soft constraints
     this.log('info', 'Phase 2: Optimizing soft constraints');
 
@@ -195,6 +391,16 @@ export class SimulatedAnnealing<TState> {
 
       if (!newState) {
         break;
+      }
+
+      // Tabu Search: Check if this state was recently visited
+      if (this.config.tabuSearchEnabled) {
+        const newSignature = this.getStateSignature(newState);
+        if (this.isTabu(newSignature, iteration)) {
+          // Skip tabu states
+          iteration++;
+          continue;
+        }
       }
 
       this.operatorStats[operatorName]!.attempts++;
@@ -216,6 +422,12 @@ export class SimulatedAnnealing<TState> {
 
         if (newFitness < currentFitness) {
           this.operatorStats[operatorName]!.improvements++;
+        }
+
+        // Add current state to tabu list (prevent cycling back)
+        if (this.config.tabuSearchEnabled) {
+          const currentSignature = this.getStateSignature(currentState);
+          this.addToTabuList(currentSignature, iteration);
         }
 
         currentState = newState;
@@ -306,7 +518,7 @@ export class SimulatedAnnealing<TState> {
     // Evaluate hard constraints
     for (const constraint of this.hardConstraints) {
       const score = constraint.evaluate(state);
-      if (score < 1) {
+      if (score < 1) {        
         hardPenalty += (1 - score);
       }
     }
@@ -319,6 +531,7 @@ export class SimulatedAnnealing<TState> {
         softPenalty += (1 - score) * weight;
       }
     }
+
 
     return hardPenalty * this.config.hardConstraintWeight + softPenalty;
   }
@@ -335,6 +548,7 @@ export class SimulatedAnnealing<TState> {
         // If getViolations() is available, count actual violations
         if (constraint.getViolations) {
           const violations = constraint.getViolations(state);
+          
           count += violations.length;
         } else {
           // Fallback: try to infer violation count from score
@@ -365,14 +579,18 @@ export class SimulatedAnnealing<TState> {
 
     // Adaptive selection based on success rates
     const selectedGenerator = this.selectMoveGenerator(applicableGenerators);
-
-    const newState = selectedGenerator.generate(state, temperature);
+    const clonedState = this.config.cloneState(state); 
+    const newState = selectedGenerator.generate(clonedState, temperature);
 
     return { newState, operatorName: selectedGenerator.name };
   }
 
   /**
    * Select move generator adaptively based on success rates
+   * this concept method is inspired by Roulette Wheel Selection
+   * and it's implemented by linear search, why am i not using binary search ?
+   * it's good idea though but i don't want to complicate things, anyway it's so rare that move generators are more than 100 innit ?
+   * @returns Selected MoveGenerator<TState>
    */
   private selectMoveGenerator(generators: MoveGenerator<TState>[]): MoveGenerator<TState> {
     // 30% of the time: random selection (exploration)
@@ -406,8 +624,121 @@ export class SimulatedAnnealing<TState> {
     return generators[generators.length - 1]!;
   }
 
+  // ============================================
+  // TABU SEARCH METHODS
+  // ============================================
+  //
+  // Tabu Search prevents the algorithm from cycling back to recently visited states.
+  // This helps escape local minima by maintaining a short-term memory of the search.
+  //
+  // How it works:
+  // 1. Each state is assigned a lightweight signature (hash)
+  // 2. Signatures are stored in a tabu list with their iteration number
+  // 3. Before accepting a move, check if the new state is tabu
+  // 4. States remain tabu for 'tabuTenure' iterations
+  // 5. Old entries are automatically removed when list exceeds 'maxTabuListSize'
+  //
+  // Configuration:
+  // - tabuSearchEnabled: Enable/disable tabu search (default: false)
+  // - tabuTenure: Number of iterations a state stays tabu (default: 50)
+  // - maxTabuListSize: Maximum tabu entries stored (default: 1000)
+
+  /**
+   * Generate a lightweight signature for a state
+   * Used to track visited states in the tabu list
+   *
+   * Note: This creates a hash based on schedule assignments, not the full state.
+   * This is efficient because we only care about the assignment decisions,
+   * not the entire state object.
+   *
+   * The signature format: "classId:day:startTime:room|classId:day:startTime:room|..."
+   * Sorted for consistency so same assignments produce same signature
+   */
+  private getStateSignature(state: TState): string {
+    // Get schedule from state (generic approach)
+    const schedule = (state as any).schedule;
+    if (!schedule || !Array.isArray(schedule)) {
+      return Math.random().toString(36); // Fallback for non-timetable states
+    }
+
+    // Create a signature based on class assignments (classId -> day+time+room)
+    const assignments: string[] = [];
+    for (const entry of schedule) {
+      if (entry.classId && entry.timeSlot && entry.room) {
+        assignments.push(`${entry.classId}:${entry.timeSlot.day}:${entry.timeSlot.startTime}:${entry.room}`);
+      }
+    }
+    
+    // Sort for consistency and join
+    return assignments.sort().join('|');
+  }
+
+  /**
+   * Check if a state is in the tabu list (recently visited)
+   */
+  private isTabu(signature: string, currentIteration: number): boolean {
+    if (!this.config.tabuSearchEnabled) {
+      return false;
+    }
+
+    const addedAt = this.tabuList.get(signature);
+    if (addedAt === undefined) {
+      return false;
+    }
+
+    // Check if still within tabu tenure
+    return (currentIteration - addedAt) < this.config.tabuTenure;
+  }
+
+  /**
+   * Add a state signature to the tabu list
+   */
+  private addToTabuList(signature: string, iteration: number): void {
+    if (!this.config.tabuSearchEnabled) {
+      return;
+    }
+
+    this.tabuList.set(signature, iteration);
+
+    // Cleanup if list is too large
+    if (this.tabuList.size > this.config.maxTabuListSize) {
+      this.cleanupTabuList(iteration);
+    }
+  }
+
+  /**
+   * Remove expired entries from tabu list
+   */
+  private cleanupTabuList(currentIteration: number): void {
+    const expiredKeys: string[] = [];
+    
+    for (const [key, addedAt] of this.tabuList.entries()) {
+      if ((currentIteration - addedAt) >= this.config.tabuTenure) {
+        expiredKeys.push(key);
+      }
+    }
+
+    for (const key of expiredKeys) {
+      this.tabuList.delete(key);
+    }
+
+    // If still too large, remove oldest entries
+    if (this.tabuList.size > this.config.maxTabuListSize * 0.8) {
+      const entries = [...this.tabuList.entries()].sort((a, b) => a[1] - b[1]);
+      const toRemove = entries.slice(0, Math.floor(entries.length * 0.3));
+      for (const [key] of toRemove) {
+        this.tabuList.delete(key);
+      }
+    }
+  }
+
   /**
    * Phase 1 acceptance probability (prioritize hard constraints)
+   *
+   * Logic:
+   * - Always accept if hard violations decrease
+   * - Standard SA acceptance if hard violations stay the same
+   * - Never accept if hard violations increase
    */
   private acceptanceProbabilityPhase1(
     currentHardViolations: number,
@@ -426,6 +757,11 @@ export class SimulatedAnnealing<TState> {
       if (newFitness < currentFitness) {
         return 1.0;
       }
+      // Standard SA acceptance probability
+      // i.e :
+      // currentFitness = 150, newFitness = 160, temperature = 1000
+      // acceptanceProbability = exp((150 - 160) / 1000) = exp(-10 / 1000) = exp(-0.01) ≈ 0.99005
+      // so the chance of accepting a slightly worse solution is about 99%
       return Math.exp((currentFitness - newFitness) / temperature);
     }
 
@@ -435,6 +771,14 @@ export class SimulatedAnnealing<TState> {
 
   /**
    * Phase 2 acceptance probability (strictly enforce hard constraints)
+   *
+   * Logic:
+   * - NEVER accept if hard violations increase (strict enforcement)
+   * - Always accept if hard violations decrease
+   * - Standard SA acceptance for soft constraint optimization if hard violations stable
+   *
+   * This ensures once a feasible solution is found, we never violate hard constraints
+   * while optimizing soft constraints.
    */
   private acceptanceProbabilityPhase2(
     bestHardViolations: number,
@@ -550,12 +894,26 @@ export class SimulatedAnnealing<TState> {
   private mergeWithDefaults(config: SAConfig<TState>): SAConfig<TState> & {
     reheatingFactor: number;
     maxReheats: number;
+    tabuSearchEnabled: boolean;
+    tabuTenure: number;
+    maxTabuListSize: number;
+    enableIntensification: boolean;
+    intensificationIterations: number;
+    maxIntensificationAttempts: number;
     logging: Required<NonNullable<SAConfig<TState>['logging']>>;
   } {
     return {
       ...config,
       reheatingFactor: config.reheatingFactor ?? 2.0,
       maxReheats: config.maxReheats ?? 3,
+      // Tabu Search defaults
+      tabuSearchEnabled: config.tabuSearchEnabled ?? false,
+      tabuTenure: config.tabuTenure ?? 50,
+      maxTabuListSize: config.maxTabuListSize ?? 1000,
+      // Intensification defaults
+      enableIntensification: config.enableIntensification ?? true,
+      intensificationIterations: config.intensificationIterations ?? 2000,
+      maxIntensificationAttempts: config.maxIntensificationAttempts ?? 3,
       logging: {
         enabled: config.logging?.enabled ?? true,
         level: config.logging?.level ?? 'info',

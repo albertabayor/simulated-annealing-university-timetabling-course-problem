@@ -3,7 +3,7 @@
  * Also checks if lab classes are in lab rooms (bonus for correct placement)
  */
 
-import type { Constraint } from 'timetable-sa';
+import type { Constraint } from '../../../../src/index.js';
 import type { TimetableState } from '../../types/index.js';
 import { LAB_ROOMS } from '../../utils/index.js';
 
@@ -48,5 +48,9 @@ export class OverflowPenalty implements Constraint<TimetableState> {
     }
 
     return count > 0 ? totalScore / count : 1;
+  }
+
+  describe(): string {
+    return 'Lab/room type mismatch (non-lab class in lab room, or lab class not in lab)';
   }
 }

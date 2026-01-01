@@ -1,7 +1,8 @@
 /**
  * Core Simulated Annealing Library
  *
- * A generic, unopinionated constraint-satisfaction solver using Simulated Annealing.
+ * A generic, unopinionated constraint-satisfaction solver using Simulated Annealing
+ * with advanced features including Tabu Search and Intensification.
  *
  * @module core
  */

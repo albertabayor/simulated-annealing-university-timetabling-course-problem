@@ -7,17 +7,19 @@
  * Run with: npm run example:timetabling
  */
 
-import { SimulatedAnnealing } from "timetable-sa";
-import type { SAConfig, Constraint, MoveGenerator } from "timetable-sa";
-import type { TimetableState } from "./types/index.js";
+import type { SAConfig, Constraint, MoveGenerator } from "../../src/index.js";
+import type { TimetableState, ScheduleEntry } from "./types/index.js";
 import { loadDataFromExcel } from "./data/index.js";
 import { generateInitialSolution } from "./utils/initial-solution.js";
 import { NoFridayPrayConflict } from "./constraints/hard/NoFridayPrayConflit.js";
 import fs from "fs";
+import { SimulatedAnnealing } from "../../src/index.js";
+import { getCacheStats } from "./utils/cache.js";
 
 import { NoLecturerConflict, NoRoomConflict, RoomCapacity, NoProdiConflict, MaxDailyPeriods, ClassTypeTime, SaturdayRestriction, FridayTimeRestriction, PrayerTimeStart, ExclusiveRoom } from "./constraints/hard/index.js";
 import { Compactness, EveningClassPriority, OverflowPenalty, PrayerTimeOverlap, PreferredRoom, PreferredTime, ResearchDay, TransitTime } from "./constraints/soft/index.js";
-import { ChangeTimeSlot, ChangeRoom, SwapClasses, ChangeTimeSlotAndRoom, FixFridayPrayerConflict, SwapFridayWithNonFriday, FixLecturerConflict, FixRoomConflict, FixMaxDailyPeriods, FixRoomCapacity } from "./moves/index.js";
+import { ChangeTimeSlot, ChangeRoom, SwapClasses, ChangeTimeSlotAndRoom, FixFridayPrayerConflict, FixLecturerConflict, FixRoomConflict, FixMaxDailyPeriods, FixRoomCapacity } from "./moves/index.js";
+import { SwapFridayWithNonFriday } from "./moves/SwapFridayWithNonFriday.js";
 
 console.log("=".repeat(70));
 console.log("  UNIVERSITY COURSE TIMETABLING - Simulated Annealing v2.0");
@@ -35,7 +37,7 @@ console.log(`   Classes: ${data.classes.length}`);
 
 // 2. Generate initial solution using greedy algorithm
 console.log("\n🏗️  Generating initial timetable (greedy algorithm)...");
-const initialState = generateInitialSolution(data);
+const initialState = generateInitialSolution(data, { randomize: true });
 
 // Save initial solution for comparison
 fs.writeFileSync(
@@ -82,21 +84,21 @@ console.log("\n🔄 Setting up move operators...");
 const moveGenerators: MoveGenerator<TimetableState>[] = [
   // Targeted operators (higher priority - will be selected more often when violations exist)
   new FixFridayPrayerConflict(),
-  new SwapFridayWithNonFriday(), // NEW: Advanced operator to break Friday deadlocks
+  new SwapFridayWithNonFriday(),
   new FixLecturerConflict(),
   new FixRoomConflict(),
   new FixMaxDailyPeriods(),
   new FixRoomCapacity(),
 
   // General operators (for exploration and optimization)
-  new ChangeTimeSlotAndRoom(), // ULTIMATE smart operator - changes both time AND room
+  new ChangeTimeSlotAndRoom(), // BEST operator - 10-13% success rate, changes both time AND room
   new ChangeTimeSlot(),
   new ChangeRoom(),
-  new SwapClasses(),
+  new SwapClasses(), // Low success rate but provides critical search diversity
 ];
 
-console.log(`   Targeted operators: 6 (including Friday swap operator)`);
-console.log(`   General operators: 4 (including smart time+room operator)`);
+console.log(`   Targeted operators: 5 (FixFridayPrayerConflict, FixLecturerConflict, etc.)`);
+console.log(`   General operators: 4 (including high-success ChangeTimeSlotAndRoom)`);
 console.log(`   Total operators: ${moveGenerators.length}`);
 
 // 5. Configure Simulated Annealing
@@ -105,17 +107,35 @@ console.log("\n⚙️  Configuring Simulated Annealing...");
 const config: SAConfig<TimetableState> = {
   initialTemperature: 100000, // Higher for better exploration at start
   minTemperature: 0.0000001,
-  coolingRate: 0.9998, // Slower cooling for thorough search
-  maxIterations: 100000, // Increased for better convergence (15-30 min runtime)
+  coolingRate: 0.9995, // Slower cooling for thorough search
+  maxIterations: 20_000, // Increased for better convergence (15-30 min runtime)
   hardConstraintWeight: 100000, // Very high penalty for hard violations
 
-  // State cloning function
-  cloneState: (state) => JSON.parse(JSON.stringify(state)),
+  // State cloning function - optimized for performance
+  // Only clone schedule array (mutable), keep references to static data (rooms, lecturers, classes)
+  cloneState: (state) => ({
+    ...state,
+    schedule: state.schedule.map((entry: ScheduleEntry) => ({ ...entry }))
+  }),
 
   // Reheating to escape local minima
   reheatingThreshold: 500, // Reheat if no improvement for 500 iterations
   reheatingFactor: 150, // Strong reheating boost
   maxReheats: 10,
+
+  // ============================================
+  // NEW: Tabu Search Configuration
+  // ============================================
+  tabuSearchEnabled: true, // Enable to prevent cycling
+  tabuTenure: 50, // How long a state stays tabu
+  maxTabuListSize: 1000, // Memory limit for tabu list
+
+  // ============================================
+  // NEW: Intensification Configuration
+  // ============================================
+  enableIntensification: true, // Enable Phase 1.5 for stubborn hard violations
+  intensificationIterations: 2000, // Iterations per intensification attempt
+  maxIntensificationAttempts: 3, // Max restart attempts
 
   // Logging
   logging: {
@@ -140,6 +160,7 @@ const solution = solver.solve();
 
 console.log("=".repeat(70));
 console.log("\n✨ OPTIMIZATION COMPLETE!\n");
+console.log("Cache stats:", getCacheStats());
 
 // 7. Display results
 console.log("📊 RESULTS:");
@@ -176,7 +197,6 @@ console.log("✅ Example completed successfully!");
 console.log("=".repeat(70) + "\n");
 
 // Optional: Save results to JSON
-import fs from "fs";
 fs.writeFileSync(
   "timetable-result.json",
   JSON.stringify(

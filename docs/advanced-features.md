@@ -4,7 +4,11 @@ This guide covers advanced features and techniques for using **timetable-sa** ef
 
 ## Table of Contents
 
-- [Two-Phase Optimization](#two-phase-optimization)
+- [Multi-Phase Optimization](#multi-phase-optimization)
+  - [Phase 1: Hard Constraint Satisfaction](#phase-1-hard-constraint-satisfaction)
+  - [Phase 1.5: Intensification](#phase-15-intensification)
+  - [Phase 2: Soft Constraint Optimization](#phase-2-soft-constraint-optimization)
+- [Tabu Search](#tabu-search)
 - [Adaptive Operator Selection](#adaptive-operator-selection)
 - [Reheating Mechanism](#reheating-mechanism)
 - [Custom Violation Reporting](#custom-violation-reporting)
@@ -13,9 +17,9 @@ This guide covers advanced features and techniques for using **timetable-sa** ef
 - [Advanced Constraint Patterns](#advanced-constraint-patterns)
 - [Advanced Move Patterns](#advanced-move-patterns)
 
-## Two-Phase Optimization
+## Multi-Phase Optimization
 
-The algorithm uses a two-phase approach to ensure hard constraints are satisfied before optimizing soft constraints.
+The algorithm uses a multi-phase approach with optional intensification to ensure hard constraints are satisfied before optimizing soft constraints.
 
 ### Phase 1: Hard Constraint Satisfaction
 
@@ -39,6 +43,70 @@ if (newHardViolations < currentHardViolations) {
 }
 ```
 
+### Phase 1.5: Intensification
+
+**Goal:** Aggressively eliminate remaining hard violations when Phase 1 doesn't achieve zero violations.
+
+**When Triggered:**
+- Phase 1 ends with `hardViolations > 0`
+- `enableIntensification` is `true` (default: enabled)
+
+**Behavior:**
+- **Focused Operator Selection**: Uses targeted operators (fix, swap, change) 70% of time
+- **Aggressive Acceptance**: Always accepts moves that reduce hard violations
+- **Multiple Attempts**: Up to `maxIntensificationAttempts` restarts (default: 3)
+- **Reheating**: Reheats after 300 iterations without improvement
+- **Stops Early**: When all hard violations eliminated
+
+**Configuration:**
+```typescript
+const config: SAConfig<MyState> = {
+  // ... other config
+
+  // Enable/disable intensification
+  enableIntensification: true,        // Default: true
+
+  // Iterations per intensification attempt
+  intensificationIterations: 2000,    // Default: 2000
+
+  // Maximum number of restart attempts
+  maxIntensificationAttempts: 3,      // Default: 3
+};
+```
+
+**Acceptance Logic:**
+```typescript
+if (newHardViolations < currentHardViolations) {
+  accept();  // Always accept improvement
+} else if (newHardViolations === currentHardViolations) {
+  if (newFitness < currentFitness) {
+    accept();
+  } else {
+    // Accept worse with small probability (2% at low temp)
+    acceptWithProbability(temperature);
+  }
+} else {
+  // Occasionally accept worse moves to escape local minima (2%)
+  acceptWithSmallProbability();
+}
+```
+
+**Monitoring Intensification:**
+```typescript
+// Log output shows intensification progress
+// [INFO] Phase 1.5: Intensification - targeting remaining hard violations
+// [INFO] [Intensification] Attempt 1/3
+// [DEBUG] [Intensification] New best: Hard violations = 2, Fitness = 2000.00
+// [DEBUG] [Intensification] New best: Hard violations = 1, Fitness = 1000.00
+// [INFO] [Intensification] SUCCESS! All hard violations eliminated in attempt 2
+```
+
+**When to Use Intensification:**
+- **Enable** (default) for problems with complex, conflicting constraints
+- **Disable** for simple problems where Phase 1 consistently reaches zero violations
+- **Increase iterations** if intensification consistently fails to eliminate violations
+- **Increase attempts** for very difficult problems (up to 5 attempts)
+
 ### Phase 2: Soft Constraint Optimization
 
 **Goal:** Find the best feasible solution
@@ -58,7 +126,135 @@ if (newHardViolations > bestHardViolations) {
 }
 ```
 
-### Monitoring Phases
+## Tabu Search
+
+Tabu Search prevents the algorithm from cycling back to recently visited states, helping to escape local minima.
+
+### How It Works
+
+1. **State Signature**: Each state is assigned a lightweight signature (hash)
+2. **Tabu List**: Recently visited signatures are stored in a tabu list
+3. **Tabu Check**: Before accepting a move, check if it's in the tabu list
+4. **Tabu Tenure**: States remain tabu for a fixed number of iterations
+5. **Automatic Cleanup**: Old entries are removed when list size exceeds limit
+
+### Configuration
+
+```typescript
+const config: SAConfig<MyState> = {
+  // ... other config
+
+  // Enable tabu search
+  tabuSearchEnabled: true,        // Default: false
+  tabuTenure: 50,                 // Default: 50 iterations
+  maxTabuListSize: 1000,          // Default: 1000 entries
+};
+```
+
+### Parameters
+
+**tabuSearchEnabled?: boolean**
+- Enable/disable Tabu Search
+- Recommended: `true` for complex problems with many local minima
+- Not needed for simple convex problems
+- Default: `false`
+
+**tabuTenure?: number**
+- Number of iterations a state stays in the tabu list
+- **Higher** (100-200): More diverse search, less cycling, but may miss good solutions
+- **Lower** (20-50): Less diverse, faster convergence, but may cycle
+- Typical values: 30 - 100
+- Default: 50
+
+**maxTabuListSize?: number**
+- Maximum number of tabu entries stored
+- Prevents unbounded memory usage during long runs
+- Larger = better cycling prevention, more memory
+- Typical values: 500 - 5000
+- Default: 1000
+
+### When to Use Tabu Search
+
+**Enable for:**
+- Problems with many local minima
+- Problems where the search tends to cycle
+- Complex constraints that create "traps"
+- Long optimization runs
+
+**Disable for:**
+- Simple, well-behaved problems
+- Quick test runs
+- Problems with very large state spaces (memory concerns)
+
+### Example: Tabu Search in Action
+
+```typescript
+const config: SAConfig<TimetableState> = {
+  initialTemperature: 1000,
+  minTemperature: 0.01,
+  coolingRate: 0.995,
+  maxIterations: 50000,
+  hardConstraintWeight: 10000,
+  cloneState: (state) => /* ... */,
+
+  // Enable tabu search for complex timetabling
+  tabuSearchEnabled: true,
+  tabuTenure: 50,              // Prevent revisiting for 50 iterations
+  maxTabuListSize: 1000,       // Keep up to 1000 signatures
+};
+
+// The algorithm will now track state signatures and avoid cycling
+// This is particularly useful when you see patterns like:
+// - Fitness oscillating between a few values
+// - Same violations recurring
+// - Stuck in local minimum despite reheating
+```
+
+### Tabu Search + Other Features
+
+Tabu Search works well with other advanced features:
+
+**With Intensification:**
+```typescript
+{
+  enableIntensification: true,
+  tabuSearchEnabled: true,  // Prevent cycling during intensification
+}
+```
+
+**With Reheating:**
+```typescript
+{
+  reheatingThreshold: 2000,
+  reheatingFactor: 2.0,
+  tabuSearchEnabled: true,  // Don't revisit states from before reheat
+}
+```
+
+### Performance Considerations
+
+**Memory Usage:**
+- Each tabu entry ~100 bytes
+- With `maxTabuListSize: 1000` ~ 100KB
+- Generally negligible for most problems
+
+**Computation Overhead:**
+- Hash computation per move
+- Tabu list lookup (O(1) average)
+- Typically < 1% performance impact
+
+**State Signature Method:**
+The algorithm generates a lightweight signature based on schedule assignments:
+```typescript
+// Example signature for timetable
+signature = [
+  "class1:Mon:09:00:RoomA",
+  "class2:Tue:14:00:RoomB",
+  // ...
+].join('|')
+```
+
+This is efficient and captures the essential structure without storing the full state.
 
 ```typescript
 // Enable debug logging to see phase transitions
@@ -74,7 +270,11 @@ const config: SAConfig<MyState> = {
 // [INFO] Phase 1: Eliminating hard constraint violations
 // [DEBUG] [Phase 1] New best: Hard violations = 5, Fitness = 5000.00
 // [DEBUG] [Phase 1] New best: Hard violations = 3, Fitness = 3000.00
-// [INFO] Phase 1 complete: Hard violations = 0
+// [INFO] Phase 1 complete: Hard violations = 2
+// [INFO] Phase 1.5: Intensification - targeting remaining hard violations
+// [INFO] [Intensification] Attempt 1/3
+// [DEBUG] [Intensification] New best: Hard violations = 0, Fitness = 0.00
+// [INFO] [Intensification] SUCCESS! All hard violations eliminated in attempt 1
 // [INFO] Phase 2: Optimizing soft constraints
 // [DEBUG] [Phase 2] New best: Fitness = 15.50, Hard violations = 0
 ```
