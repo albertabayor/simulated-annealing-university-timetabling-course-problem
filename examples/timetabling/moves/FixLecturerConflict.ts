@@ -3,53 +3,79 @@
  *
  * This operator specifically targets lecturer conflicts - when the same lecturer
  * is scheduled for multiple classes at overlapping times.
- * UPDATED: Now uses constraint-aware slot+room validation.
+ * 
+ * OPTIMIZED: Now uses O(N log N) group-and-sort pattern instead of O(N²) nested loops.
  */
 
 import type { MoveGenerator } from '../../../src/index.js';
 import type { TimetableState, ScheduleEntry } from '../types/index.js';
-import { getValidTimeSlotAndRoomCombinationsWithPriority, calculateEndTime, timeToMinutes } from '../utils/index.js';
+import {
+  getValidTimeSlotAndRoomCombinationsWithPriority,
+  calculateEndTime,
+  timeToMinutes,
+  groupScheduleByKey,
+  sortEntriesByStartTime,
+  getEndTimeInMinutes,
+  startsAfterEnd,
+} from '../utils/index.js';
 
 export class FixLecturerConflict implements MoveGenerator<TimetableState> {
   name = 'Fix Lecturer Conflict';
 
   /**
-   * Check if two schedule entries have time overlap
-   */
-  private hasTimeOverlap(entry1: ScheduleEntry, entry2: ScheduleEntry): boolean {
-    if (entry1.timeSlot.day !== entry2.timeSlot.day) return false;
-
-    const start1 = timeToMinutes(entry1.timeSlot.startTime);
-    const end1 = timeToMinutes(entry1.timeSlot.endTime);
-    const start2 = timeToMinutes(entry2.timeSlot.startTime);
-    const end2 = timeToMinutes(entry2.timeSlot.endTime);
-
-    return start1 < end2 && start2 < end1;
-  }
-
-  /**
-   * Find all lecturer conflicts in the schedule
+   * Find all lecturer conflicts in the schedule using O(N log N) algorithm
+   * 
+   * Algorithm:
+   * 1. Group entries by lecturer+day - O(N)
+   * 2. Sort each group by start time - O(K log K) per group
+   * 3. Check adjacent entries for overlap - O(K) per group
+   * 
+   * Total: O(N log N) instead of O(N²)
    */
   private findLecturerConflicts(schedule: ScheduleEntry[]): ScheduleEntry[] {
-    const conflicts: ScheduleEntry[] = [];
-
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
-
-        // Check if they share a lecturer and have time overlap
-        const sharedLecturer = entry1.lecturers.some(lec => entry2.lecturers.includes(lec));
-
-        if (sharedLecturer && this.hasTimeOverlap(entry1, entry2)) {
-          // Add both to conflicts if not already there
-          if (!conflicts.includes(entry1)) conflicts.push(entry1);
-          if (!conflicts.includes(entry2)) conflicts.push(entry2);
+    const conflicts = new Set<ScheduleEntry>();
+    
+    // Build index: lecturer+day -> entries
+    // Need to handle multi-lecturer classes
+    const lecturerDayGroups = new Map<string, ScheduleEntry[]>();
+    
+    for (const entry of schedule) {
+      for (const lecturer of entry.lecturers) {
+        const key = `${lecturer}_${entry.timeSlot.day}`;
+        if (!lecturerDayGroups.has(key)) {
+          lecturerDayGroups.set(key, []);
+        }
+        lecturerDayGroups.get(key)!.push(entry);
+      }
+    }
+    
+    // Check each group for conflicts
+    for (const entries of lecturerDayGroups.values()) {
+      if (entries.length < 2) continue;
+      
+      // Sort by start time
+      sortEntriesByStartTime(entries);
+      
+      // Check adjacent and overlapping entries
+      for (let i = 0; i < entries.length; i++) {
+        const entry1 = entries[i]!;
+        const end1 = getEndTimeInMinutes(entry1);
+        
+        for (let j = i + 1; j < entries.length; j++) {
+          const entry2 = entries[j]!;
+          const start2 = timeToMinutes(entry2.timeSlot.startTime);
+          
+          // Short-circuit: if entry2 starts after entry1 ends, no more overlaps
+          if (startsAfterEnd(end1, start2)) break;
+          
+          // Overlap found - add both to conflicts
+          conflicts.add(entry1);
+          conflicts.add(entry2);
         }
       }
     }
-
-    return conflicts;
+    
+    return Array.from(conflicts);
   }
 
   canApply(state: TimetableState): boolean {

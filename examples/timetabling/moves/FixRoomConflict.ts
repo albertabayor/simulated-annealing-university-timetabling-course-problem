@@ -3,11 +3,20 @@
  *
  * This operator specifically targets room conflicts - when the same room
  * is assigned to multiple classes at overlapping times.
+ * 
+ * OPTIMIZED: Now uses O(N log N) group-and-sort pattern instead of O(N²) nested loops.
  */
 
 import type { MoveGenerator } from '../../../src/index.js';
 import type { TimetableState, ScheduleEntry } from '../types/index.js';
-import { timeToMinutes, canUseExclusiveRoom } from '../utils/index.js';
+import {
+  timeToMinutes,
+  canUseExclusiveRoom,
+  groupScheduleByKey,
+  sortEntriesByStartTime,
+  getEndTimeInMinutes,
+  startsAfterEnd,
+} from '../utils/index.js';
 
 export class FixRoomConflict implements MoveGenerator<TimetableState> {
   name = 'Fix Room Conflict';
@@ -27,26 +36,50 @@ export class FixRoomConflict implements MoveGenerator<TimetableState> {
   }
 
   /**
-   * Find all room conflicts in the schedule
+   * Find all room conflicts in the schedule using O(N log N) algorithm
+   * 
+   * Algorithm:
+   * 1. Group entries by room+day - O(N)
+   * 2. Sort each group by start time - O(K log K) per group
+   * 3. Check adjacent entries for overlap - O(K) per group
+   * 
+   * Total: O(N log N) instead of O(N²)
    */
   private findRoomConflicts(schedule: ScheduleEntry[]): ScheduleEntry[] {
-    const conflicts: ScheduleEntry[] = [];
-
-    for (let i = 0; i < schedule.length; i++) {
-      for (let j = i + 1; j < schedule.length; j++) {
-        const entry1 = schedule[i];
-        const entry2 = schedule[j];
-
-        // Check if they share a room and have time overlap
-        if (entry1.room === entry2.room && this.hasTimeOverlap(entry1, entry2)) {
-          // Add both to conflicts if not already there
-          if (!conflicts.includes(entry1)) conflicts.push(entry1);
-          if (!conflicts.includes(entry2)) conflicts.push(entry2);
+    const conflicts = new Set<ScheduleEntry>();
+    
+    // Group by room+day
+    const roomDayGroups = groupScheduleByKey(schedule, (entry) =>
+      `${entry.room}_${entry.timeSlot.day}`
+    );
+    
+    // Check each group for conflicts
+    for (const entries of roomDayGroups.values()) {
+      if (entries.length < 2) continue;
+      
+      // Sort by start time
+      sortEntriesByStartTime(entries);
+      
+      // Check adjacent and overlapping entries
+      for (let i = 0; i < entries.length; i++) {
+        const entry1 = entries[i]!;
+        const end1 = getEndTimeInMinutes(entry1);
+        
+        for (let j = i + 1; j < entries.length; j++) {
+          const entry2 = entries[j]!;
+          const start2 = timeToMinutes(entry2.timeSlot.startTime);
+          
+          // Short-circuit: if entry2 starts after entry1 ends, no more overlaps
+          if (startsAfterEnd(end1, start2)) break;
+          
+          // Overlap found - add both to conflicts
+          conflicts.add(entry1);
+          conflicts.add(entry2);
         }
       }
     }
-
-    return conflicts;
+    
+    return Array.from(conflicts);
   }
 
   canApply(state: TimetableState): boolean {

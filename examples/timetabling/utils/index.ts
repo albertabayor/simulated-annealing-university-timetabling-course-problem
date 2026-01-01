@@ -43,6 +43,7 @@ export {
 export {
   getValidTimeSlots,
   getValidTimeSlotsWithPriority,
+  getValidTimeSlotsWithIndexes,
   getValidTimeSlotAndRoomCombinations,
   getValidTimeSlotAndRoomCombinationsWithPriority,
   isTimeSlotValid,
@@ -63,3 +64,14 @@ export {
   hasTimeOverlap,
   startsAfterEnd,
 } from './constraint-helpers.js';
+
+export {
+  buildLecturerDayIndex,
+  buildRoomDayIndex,
+  buildProdiDayIndex,
+  buildAllIndexes,
+  hasConflictInSortedRanges,
+  findConflictsInSortedRanges,
+  type TimeRange,
+  type ScheduleIndexes,
+} from './index-builders.js';

@@ -6,7 +6,15 @@
  */
 
 import type { TimetableState, ScheduleEntry, TimeSlot as TimeSlotType } from '../types/index.js';
-import { TIME_SLOTS_PAGI, TIME_SLOTS_SORE, calculateEndTime, isValidFridayStartTime, canUseExclusiveRoom } from './index.js';
+import { TIME_SLOTS_PAGI, TIME_SLOTS_SORE, calculateEndTime, isValidFridayStartTime, canUseExclusiveRoom, timeToMinutes } from './index.js';
+import {
+  buildLecturerDayIndex,
+  buildRoomDayIndex,
+  buildProdiDayIndex,
+  hasConflictInSortedRanges,
+  type TimeRange,
+  type ScheduleIndexes,
+} from './index-builders.js';
 
 /**
  * Check if a time slot would violate Friday prayer time (11:40-13:10) overlap
@@ -45,6 +53,7 @@ function wouldViolateFridayTimeRestriction(day: string, startTime: string): bool
 
 /**
  * Check if a time slot would cause lecturer conflict
+ * Uses O(N) loop - use wouldCauseLecturerConflictIndexed for O(1) lookup
  */
 function wouldCauseLecturerConflict(
   state: TimetableState,
@@ -83,7 +92,28 @@ function wouldCauseLecturerConflict(
 }
 
 /**
+ * OPTIMIZED: Check lecturer conflict using pre-built index - O(1) lookup
+ */
+function wouldCauseLecturerConflictIndexed(
+  entry: ScheduleEntry,
+  newTimeSlot: TimeSlotType,
+  newStart: number,
+  newEnd: number,
+  lecturerIndex: Map<string, TimeRange[]>
+): boolean {
+  for (const lecturerCode of entry.lecturers) {
+    const key = `${lecturerCode}_${newTimeSlot.day}`;
+    const ranges = lecturerIndex.get(key);
+    if (hasConflictInSortedRanges(ranges, newStart, newEnd, entry.classId)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Check if a time slot would cause room conflict (if room is specified)
+ * Uses O(N) loop - use wouldCauseRoomConflictIndexed for O(1) lookup
  */
 function wouldCauseRoomConflict(
   state: TimetableState,
@@ -124,7 +154,24 @@ function wouldCauseRoomConflict(
 }
 
 /**
+ * OPTIMIZED: Check room conflict using pre-built index - O(1) lookup
+ */
+function wouldCauseRoomConflictIndexed(
+  entry: ScheduleEntry,
+  newTimeSlot: TimeSlotType,
+  newStart: number,
+  newEnd: number,
+  roomCode: string,
+  roomIndex: Map<string, TimeRange[]>
+): boolean {
+  const key = `${roomCode}_${newTimeSlot.day}`;
+  const ranges = roomIndex.get(key);
+  return hasConflictInSortedRanges(ranges, newStart, newEnd, entry.classId);
+}
+
+/**
  * Check if a time slot would cause prodi conflict (same prodi, same time)
+ * Uses O(N) loop - use wouldCauseProdiConflictIndexed for O(1) lookup
  */
 function wouldCauseProdiConflict(
   state: TimetableState,
@@ -156,6 +203,21 @@ function wouldCauseProdiConflict(
   }
 
   return false;
+}
+
+/**
+ * OPTIMIZED: Check prodi conflict using pre-built index - O(1) lookup
+ */
+function wouldCauseProdiConflictIndexed(
+  entry: ScheduleEntry,
+  newTimeSlot: TimeSlotType,
+  newStart: number,
+  newEnd: number,
+  prodiIndex: Map<string, TimeRange[]>
+): boolean {
+  const key = `${entry.prodi}_${newTimeSlot.day}`;
+  const ranges = prodiIndex.get(key);
+  return hasConflictInSortedRanges(ranges, newStart, newEnd, entry.classId);
 }
 
 /**
@@ -433,6 +495,153 @@ export function getValidTimeSlotsWithPriority(
     acceptable,
     all: allValid,
   };
+}
+
+/**
+ * OPTIMIZED: Get all valid time slots using pre-built indexes
+ * 
+ * This builds indexes once at the start, then uses O(1) lookups for each slot.
+ * Complexity: O(N + S) instead of O(N × S) where S = number of time slots
+ *
+ * @param state - Current timetable state
+ * @param entry - The class entry to find slots for
+ * @param strictMode - If false, relaxes some constraints when no slots found (default: true)
+ * @returns Array of valid time slots
+ */
+export function getValidTimeSlotsWithIndexes(
+  state: TimetableState,
+  entry: ScheduleEntry,
+  strictMode: boolean = true
+): Array<{ day: string; startTime: string; endTime: string; period: number }> {
+  const validSlots: Array<{ day: string; startTime: string; endTime: string; period: number }> = [];
+
+  // Build indexes ONCE - O(N)
+  const lecturerIndex = buildLecturerDayIndex(state.schedule);
+  const prodiIndex = buildProdiDayIndex(state.schedule);
+  
+  // Pre-compute lecturer day periods for max daily check
+  const lecturerDayPeriods = new Map<string, number>();
+  for (const other of state.schedule) {
+    if (other.classId === entry.classId) continue;
+    for (const lec of other.lecturers) {
+      const key = `${lec}_${other.timeSlot.day}`;
+      lecturerDayPeriods.set(key, (lecturerDayPeriods.get(key) || 0) + other.sks);
+    }
+  }
+  const lecturerMap = new Map(state.lecturers.map(l => [l.Code, l]));
+
+  // Get base time slots based on class type
+  const baseSlots = entry.classType === 'sore' ? TIME_SLOTS_SORE : TIME_SLOTS_PAGI;
+
+  for (const slot of baseSlots) {
+    // Calculate end time for this class at this slot
+    const calc = calculateEndTime(slot.startTime, entry.sks, slot.day);
+    const endTime = calc.endTime;
+    
+    // Pre-compute time in minutes for indexed lookups
+    const newStart = timeToMinutes(slot.startTime);
+    const newEnd = timeToMinutes(endTime);
+
+    const newTimeSlot: TimeSlotType = {
+      period: slot.period,
+      day: slot.day,
+      startTime: slot.startTime,
+      endTime: endTime,
+    };
+
+    // Check all hard constraints
+    let isValid = true;
+
+    // 1. Saturday restriction
+    if (wouldViolateSaturdayRestriction(entry.prodi, slot.day)) {
+      isValid = false;
+    }
+
+    // 2. Class type time match
+    if (isValid && wouldViolateClassTypeTime(entry.classType, slot.startTime)) {
+      isValid = false;
+    }
+
+    // 3. Friday time restriction (start time)
+    if (isValid && wouldViolateFridayTimeRestriction(slot.day, slot.startTime)) {
+      isValid = false;
+    }
+
+    // 4. Friday prayer overlap
+    if (isValid && wouldViolateFridayPrayer(slot.day, slot.startTime, endTime)) {
+      isValid = false;
+    }
+
+    // 5. Prayer time start
+    if (isValid && wouldStartDuringPrayerTime(slot.day, slot.startTime)) {
+      isValid = false;
+    }
+
+    // 6. Lecturer conflict - INDEXED O(1) instead of O(N)
+    if (isValid && wouldCauseLecturerConflictIndexed(entry, newTimeSlot, newStart, newEnd, lecturerIndex)) {
+      isValid = false;
+    }
+
+    // 7. Prodi conflict - INDEXED O(1) instead of O(N)
+    if (isValid && wouldCauseProdiConflictIndexed(entry, newTimeSlot, newStart, newEnd, prodiIndex)) {
+      isValid = false;
+    }
+
+    // 8. Max daily periods - uses pre-computed map
+    if (isValid) {
+      let wouldViolate = false;
+      for (const lecturerCode of entry.lecturers) {
+        const lecturer = lecturerMap.get(lecturerCode);
+        if (!lecturer || !lecturer.Max_Daily_Periods) continue;
+        
+        const key = `${lecturerCode}_${slot.day}`;
+        const existingPeriods = lecturerDayPeriods.get(key) || 0;
+        if (existingPeriods + entry.sks > lecturer.Max_Daily_Periods) {
+          wouldViolate = true;
+          break;
+        }
+      }
+      if (wouldViolate) {
+        isValid = false;
+      }
+    }
+
+    // If passed all checks, add to valid slots
+    if (isValid) {
+      validSlots.push({
+        day: slot.day,
+        startTime: slot.startTime,
+        endTime: endTime,
+        period: slot.period,
+      });
+    }
+  }
+
+  // FALLBACK: If no valid slots found and not in strict mode, relax some constraints
+  if (validSlots.length === 0 && !strictMode) {
+    for (const slot of baseSlots) {
+      const calc = calculateEndTime(slot.startTime, entry.sks, slot.day);
+      const endTime = calc.endTime;
+
+      let isValid = true;
+
+      if (wouldViolateSaturdayRestriction(entry.prodi, slot.day)) isValid = false;
+      if (isValid && wouldViolateClassTypeTime(entry.classType, slot.startTime)) isValid = false;
+      if (isValid && wouldViolateFridayPrayer(slot.day, slot.startTime, endTime)) isValid = false;
+      if (isValid && wouldViolateFridayTimeRestriction(slot.day, slot.startTime)) isValid = false;
+
+      if (isValid) {
+        validSlots.push({
+          day: slot.day,
+          startTime: slot.startTime,
+          endTime: endTime,
+          period: slot.period,
+        });
+      }
+    }
+  }
+
+  return validSlots;
 }
 
 /**
