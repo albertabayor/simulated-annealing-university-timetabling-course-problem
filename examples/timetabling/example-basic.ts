@@ -38,6 +38,11 @@ console.log(`   Classes: ${data.classes.length}`);
 // 2. Generate initial solution using greedy algorithm
 console.log("\n🏗️  Generating initial timetable (greedy algorithm)...");
 const initialState = generateInitialSolution(data, { randomize: true });
+console.log(`✅ Initial timetable generated!`);
+fs.writeFileSync(
+  "initial-state.json",
+  JSON.stringify(initialState, null, 2)
+);
 
 // Save initial solution for comparison
 fs.writeFileSync(

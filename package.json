@@ -25,7 +25,7 @@
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "test:verbose": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
     "prepublishOnly": "npm run clean && npm run build",
-    "example:timetabling": "tsx examples/timetabling/example-basic.ts"
+    "example:timetabling": "bun examples/timetabling/example-basic.ts"
   },
   "keywords": [
     "simulated-annealing",
