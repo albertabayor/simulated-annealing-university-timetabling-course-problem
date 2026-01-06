@@ -1,874 +1,427 @@
-# Analisis Paper: A Local Search Approach to Solve Teacher to Examination Sections Scheduling Problem in an Iraqi School
-
-## Informasi Publikasi
-
-- **Judul:** A Local Search Approach to Solve Teacher to Examination Sections Scheduling Problem in an Iraqi School
-- **Penulis:** Dalia Sami Jasim
-- **Email:** daliasami99@gmail.com
-- **Affiliasi:** Tidak disebutkan (Iraqi school context)
-- **Tipe Paper:** Research Article / Case Study
-- **Tahun:** Tidak disebutkan (dari konteks dan referensi, kemungkinan 2023-2024)
-- **Domain:** Examination Timetabling (Proctor Assignment Problem)
-- **Status:** Published journal article
-
----
-
-## Abstrak
-
-Paper ini mempresentasikan pendekatan **local search menggunakan Simulated Annealing** untuk menyelesaikan masalah **Proctor Assignment Problem (PAPt)** - assigning teachers to examination sections.
-
-**Problem:**
-- 43 examination sections vs 50 teachers
-- 10 days of examination
-- Assign teacher untuk setiap section per day
-- Generate list of (teacher-section) dan list of teachers free of duty
-
-**Constraints:**
-- Hard: No teacher twice per day, no same teacher in same section for all 10 days
-- Soft: Each teacher free of duty at least one day
-
-**Results:**
-- Successfully generates required timetable
-- Execution time: **within 2 seconds**
-
-**Keywords:** Timetable scheduling, simulated annealing, local search
-
----
-
-## Latar Belakang
-
-### Konteks: Iraqi Schools
-
-**Situasi saat ini:**
-- Increasing number of students vs fixed number of teachers
-- Manual scheduling: 2-3 hours per day preparation
-- Time-consuming dan inaccurate scheduling
-
-**Examination schedule:**
-- Twice per year
-- Mid-year: 10 days
-- End-year: 10 days
-
-**Problems:**
-- Increasing examination sections
-- Need to assign teacher ke setiap section
-- Staff preparation takes significant time
-
-### Proctor Assignment Problem (PAPt)
-
-**Definisi:**
-Type of assignment problem where university assigns teaching assistants sebagai proctors dalam final exams.
-
-**Karakteristik:**
-- **NP-hard problem**
-- Multidimensional assignment problem
-- Part of Academic Scheduling Problems
-
-**Academic Scheduling Categories:**
-1. **Course timetabling** - Regular class scheduling
-2. **Exam timetabling** - Examination scheduling
-
-### Examination Timetable vs Course Timetable
-
-| Aspect | Course Timetable | Exam Timetable |
-|--------|------------------|----------------|
-| **Concurrent events** | Not allowed | Allowed |
-| **Duration** | Entire semester | Short period (10 days) |
-| **Assignment** | Students, teachers, rooms | Exams, timeslots, rooms, invigilators |
-
----
-
-## Literature Review
-
-### Metaheuristics untuk Timetabling
-
-| Peneliti | Metode | Kontribusi |
-|----------|--------|-----------|
-| **Martí et al.** | Scatter Search | Mixed-integer programming formulation |
-| **Awad & Chinneck** | Hybrid GA | Initial assignment problem |
-| **Koide** | MIP + Spreadsheet | Prototype system untuk proctor assignment |
-| **Zhang et al.** | SA dengan new neighborhood | Series of swaps antar time slots |
-| **Seyyedabbasi et al.** | HBA + SCSO | Hybrid metaheuristics |
-| **Abdullah et al.** | Dual-sequence SA + RR | Round Robin untuk neighborhood selection |
-| **Romaguera et al.** | Enhanced GA | Heuristic mutation untuk infeasible genes |
-| **Jafari & Salmasi** | SA untuk Nurse Scheduling | Accurate solutions dalam reasonable time |
-
-### Key Findings
-
-1. **SA effective** untuk nurse scheduling dan timetabling
-2. **Neighborhood structure** critical untuk SA performance
-3. **Hybrid approaches** superior untuk NP-hard problems
-4. **Dual-sequence SA** dengan Round Robin competitive
-
----
-
-## Problem Description
-
-### Dataset: Babylon Province School
-
-**Scale:**
-- **43 examination sections**
-- **50 teachers**
-- **10 examination days**
-
-**Output requirements:**
-1. List of (teacher-section) assignments
-2. List of teachers free of duty per day
-
-### Constraints
-
-#### Hard Constraints (Wajib)
-
-1. **No duplicate teacher per day**
-   - Teacher name must NOT appear twice in a single day
-
-2. **No same teacher untuk same section**
-   - Exact teacher name must NOT appear in same section for all 10 days
-
-#### Soft Constraints
-
-1. **Minimum one day off**
-   - Every teacher must be free of duty for at least one day
-
-**Objective function:**
-
-$$\min \sum (\text{repetition of exact teacher for all ten days}) \leq 9$$
-
----
-
-## Metodologi
-
-### Simulated Annealing Parameters
-
-Based on Abdullah & Burke (2006):
-
-| Parameter | Value |
-|-----------|-------|
-| **Initial temperature (T0)** | 5000 |
-| **Final temperature (Tf)** | 0.05 |
-| **Iterations (NumOfIte)** | 10,000,000 |
-| **Cooling formula** | $a = (\log(T) - \log(0.05)) / \text{NumOfIte}$ |
-
-### SA Pseudocode
-
-```
-ALGORITMA Simulated Annealing untuk Teacher-Section Assignment:
-
-INPUT: Sections (43), Teachers (50), Days (10)
-OUTPUT: Assignment matrix
-
-1. Generate initial solution (satisfy hard constraints)
-2. Set T = T0 = 5000
-3. Set Tf = 0.05
-4. Set NumOfIte = 10,000,000
-
-5. WHILE T > Tf:
-   a. Generate neighbor:
-      - Find teacher appearing 10 times (no day off)
-      - Find teacher appearing < 9 times
-      - Exchange their assignments
-      - Check hard constraints
-
-   b. Calculate Δ = f(neighbor) - f(current)
-
-   c. IF Δ < 0 OR random() < e^(-Δ/T):
-        current = neighbor
-
-   d. T = T - a (decrease temperature)
-
-6. RETURN current solution
-```
-
-### Solution Structure
-
-**Matrix representation:**
-```
-        Day 0  Day 1  Day 2  ...  Day 9
-Sec 0: [  5  ][  12 ][  47 ] ... [  23 ]
-Sec 1: [  15 ][  3  ][  31 ] ... [  8  ]
-...
-Sec 42:[  49 ][  21 ][  7  ] ... [  35 ]
-
-Values: Teacher IDs (0-49)
-```
-
-**Conversion:**
-- Integer values → Teacher names via lookup file
-- Matrix → Text file ready untuk use
-
----
-
-## Neighborhood Structure
-
-### Key Innovation
-
-**Problem-specific neighborhood:**
-Exchange values that make solution **far from feasible** dengan values that make solution **near to optimality**
-
-### Algorithm
-
-```
-GENERATE NEIGHBOR:
-
-1. Identify problem:
-   - Find teacher T1 appearing 10 times (no day off)
-   - This violates soft constraint
-
-2. Find solution:
-   - Find teacher T2 appearing < 9 times (has day off)
-   - Can substitute T1 with T2
-
-3. Exchange:
-   - Replace some T1 assignments dengan T2
-
-4. Validate:
-   - Check hard constraints not violated
-   - If violated, find alternative T2
-
-5. Return new solution
-```
-
-### Heuristic Behavior
-
-- **Targeted exchange** - Only swap problematic assignments
-- **Constraint-aware** - Validates hard constraints after swap
-- **Soft-constraint focused** - Specifically addresses day-off requirement
-
----
-
-## Fitness Function
-
-### Objective
-
-Minimize number of teachers assigned to examination sections untuk 10 times (no day off).
-
-### Calculation
-
-```
-f(solution) = Σ (teachers with 10 assignments)
-
-Ideal: f(solution) = 0
-Every teacher has ≤ 9 assignments (at least 1 day off)
-```
-
-### Penalty Structure
-
-| Teacher assignments | Penalty |
-|---------------------|---------|
-| **10 times** | 1 (violates soft constraint) |
-| **≤ 9 times** | 0 (satisfies soft constraint) |
-
----
-
-## Hasil Eksperimen
-
-### Implementation
-
-**Platform:**
-- Language: Java
-- IDE: NetBeans IDE 8.2
-- Algorithm: Simulated Annealing
-
-### Performance
-
-| Metric | Value |
-|--------|-------|
-| **Execution time** | Within 2 seconds untuk 10 days |
-| **Solution quality** | Optimal (all teachers get day off) |
-| **Iterations** | Up to 10,000,000 |
-| **Convergence** | Successful |
-
-### Visualization
-
-**Figure 3:** Result of multiple executions vs iterations
-- Shows convergence pattern
-- Demonstrates escape dari local optimum
-
-**Figure 4:** Resulted integer matrix
-- Example output matrix
-- 43 rows × 10 columns
-
-**Figure 5:** Text file output (single day example)
-- Section numbers
-- Teacher names
-- List of out-of-duty teachers
-
-### User Satisfaction
-
-> "Our result satisfies all the persons in charge and it is very practical"
-
-**Benefits:**
-1. **Fast** - 2 seconds vs 2-3 hours manual
-2. **Accurate** - No human errors
-3. **Flexible** - Different distribution every execution
-4. **Practical** - Ready-to-use text file output
-
----
-
-## Implikasi untuk Proyek Ini
-
-### Relevansi
-
-Paper ini sangat relevan karena:
-
-1. **Direct SA application** untuk timetabling
-2. **Specific neighborhood structure** design
-3. **Real-world validation** dengan actual school data
-4. **Fast execution** - 2 seconds untuk complete solution
-
-### Rekomendasi untuk Proyek
-
-#### 1. Neighborhood Structure Design
-
-Paper ini menunjukkan importance dari problem-specific neighborhood:
-
-```javascript
-/**
- * Problem-Specific Neighborhood untuk UCTP
- * Berdasarkan Jasim (2024)
- */
-
-class ProblemSpecificNeighborhood {
-  constructor(problem) {
-    this.problem = problem;
-    this.violationAnalyzers = [
-      new TeacherConflictAnalyzer(),
-      new StudentConflictAnalyzer(),
-      new RoomConflictAnalyzer()
-    ];
-  }
-
-  /**
-   * Generate targeted neighbor
-   * Focus pada resolving specific violations
-   */
-  generateTargetedNeighbor(solution) {
-    // Step 1: Analyze current solution untuk violations
-    const violations = this.analyzeViolations(solution);
-
-    if (violations.length === 0) {
-      // No violations, generate random neighbor
-      return this.generateRandomNeighbor(solution);
-    }
-
-    // Step 2: Select most critical violation
-    const criticalViolation = this.selectMostCritical(violations);
-
-    // Step 3: Generate neighbor yang addresses this violation
-    return this.generateRepairingNeighbor(solution, criticalViolation);
-  }
-
-  /**
-   * Analyze solution untuk constraint violations
-   */
-  analyzeViolations(solution) {
-    const violations = [];
-
-    for (const analyzer of this.violationAnalyzers) {
-      const found = analyzer.find(solution);
-      violations.push(...found);
-    }
-
-    return violations;
-  }
-
-  /**
-   * Select most critical violation
-   * Priority: Hard > Soft, Severity, Frequency
-   */
-  selectMostCritical(violations) {
-    // Sort by priority
-    const sorted = violations.sort((a, b) => {
-      // Hard constraints first
-      if (a.type === 'hard' && b.type === 'soft') return -1;
-      if (a.type === 'soft' && b.type === 'hard') return 1;
-
-      // Then by severity
-      return b.severity - a.severity;
-    });
-
-    return sorted[0];
-  }
-
-  /**
-   * Generate neighbor yang repairs specific violation
-   */
-  generateRepairingNeighbor(solution, violation) {
-    const neighbor = solution.clone();
-
-    switch (violation.type) {
-      case 'teacher_conflict':
-        return this.repairTeacherConflict(neighbor, violation);
-
-      case 'student_conflict':
-        return this.repairStudentConflict(neighbor, violation);
-
-      case 'room_conflict':
-        return this.repairRoomConflict(neighbor, violation);
-
-      case 'no_day_off':
-        return this.repairDayOff(neighbor, violation);
-
-      default:
-        return this.generateRandomNeighbor(solution);
-    }
-  }
-
-  /**
-   * Repair: Teacher has no day off (seperti dalam paper)
-   */
-  repairDayOff(solution, violation) {
-    const teacherId = violation.teacherId;
-    const assignments = solution.getAssignmentsForTeacher(teacherId);
-
-    // Teacher appears every day (10 assignments)
-    // Need to replace one assignment dengan teacher who has day off
-
-    // Find teacher dengan < 9 assignments (has day off)
-    const availableTeachers = this.findTeachersWithDayOff(solution);
-
-    for (const replacementId of availableTeachers) {
-      // Try replacing each assignment
-      for (const assignment of assignments) {
-        const neighbor = solution.clone();
-
-        // Replace assignment
-        neighbor.assignments[assignment.day][assignment.section] = replacementId;
-
-        // Check hard constraints
-        if (!this.hasHardConflicts(neighbor)) {
-          return neighbor; // Valid neighbor found
-        }
-      }
-    }
-
-    // No valid replacement found
-    return solution;
-  }
-
-  /**
-   * Find teachers dengan day off (less than max assignments)
-   */
-  findTeachersWithDayOff(solution) {
-    const maxAssignments = solution.days; // e.g., 10
-    const teachers = [];
-
-    for (const teacherId of solution.teacherIds) {
-      const count = solution.countAssignmentsForTeacher(teacherId);
-
-      if (count < maxAssignments) {
-        teachers.push(teacherId);
-      }
-    }
-
-    return teachers;
-  }
-
-  /**
-   * Check hard constraints
-   */
-  hasHardConflicts(solution) {
-    // HC1: No teacher twice per day
-    for (const day of solution.days) {
-      const teachers = new Set();
-      for (const section of solution.sections) {
-        const teacher = solution.assignments[day][section];
-        if (teachers.has(teacher)) return true;
-        teachers.add(teacher);
-      }
-    }
-
-    // HC2: No same teacher in same section untuk all days
-    for (const section of solution.sections) {
-      const teachers = new Set();
-      for (const day of solution.days) {
-        const teacher = solution.assignments[day][section];
-        teachers.add(teacher);
-      }
-      if (teachers.size === 1) return true; // Same teacher
-    }
-
-    return false;
-  }
-}
-
-/**
- * Violation Analyzer untuk Teacher Conflicts
- */
-class TeacherConflictAnalyzer {
-  find(solution) {
-    const violations = [];
-
-    for (const day of solution.days) {
-      const teacherMap = new Map(); // teacher -> list of sections
-
-      for (const section of solution.sections) {
-        const teacher = solution.assignments[day][section];
-
-        if (!teacherMap.has(teacher)) {
-          teacherMap.set(teacher, []);
-        }
-
-        teacherMap.get(teacher).push(section);
-      }
-
-      // Check conflicts
-      for (const [teacher, sections] of teacherMap) {
-        if (sections.length > 1) {
-          violations.push({
-            type: 'teacher_conflict',
-            severity: sections.length,
-            teacher: teacher,
-            day: day,
-            sections: sections
-          });
-        }
-      }
-    }
-
-    return violations;
-  }
-}
-```
-
-#### 2. Fast SA dengan Smart Initialization
-
-Paper ini menggunakan smart initialization yang satisfies hard constraints:
-
-```javascript
-/**
- * Smart Initial Solution Generator
- * Berdasarkan Jasim (2024)
- */
-
-class SmartInitialSolution {
-  constructor(problem) {
-    this.sections = problem.sections;
-    this.teachers = problem.teachers;
-    this.days = problem.days;
-  }
-
-  /**
-   * Generate initial solution satisfying hard constraints
-   */
-  generate() {
-    const solution = this.createEmptySolution();
-
-    for (const day of this.days) {
-      for (const section of this.sections) {
-        let assigned = false;
-
-        // Try assign teacher
-        while (!assigned) {
-          const teacher = this.selectRandomTeacher();
-
-          // Check hard constraints
-          if (this.satisfiesHardConstraints(solution, teacher, day, section)) {
-            solution.assign(teacher, day, section);
-            assigned = true;
-          }
-        }
-      }
-    }
-
-    return solution;
-  }
-
-  /**
-   * Check if assignment satisfies hard constraints
-   */
-  satisfiesHardConstraints(solution, teacher, day, section) {
-    // HC1: Teacher not already assigned di this day
-    if (solution.isTeacherAssignedOnDay(teacher, day)) {
-      return false;
-    }
-
-    // HC2: Teacher not already assigned di this section
-    // (untuk all days - need to check)
-    // Note: This is simplified - real implementation more complex
-
-    return true;
-  }
-
-  /**
-   * Optimized SA untuk timetabling
-   */
-  optimize(initialSolution) {
-    let current = initialSolution;
-    let T = 5000;
-    const Tf = 0.05;
-    const maxIterations = 10000000;
-    const alpha = (Math.log(T) - Math.log(Tf)) / maxIterations;
-
-    while (T > Tf) {
-      // Generate targeted neighbor
-      const neighbor = this.generateTargetedNeighbor(current);
-
-      // Evaluate
-      const delta = this.evaluate(neighbor) - this.evaluate(current);
-
-      // Accept or reject
-      if (delta < 0 || Math.random() < Math.exp(-delta / T)) {
-        current = neighbor;
-      }
-
-      // Cool down
-      T -= alpha;
-    }
-
-    return current;
-  }
-
-  /**
-   * Generate targeted neighbor (problem-specific)
-   */
-  generateTargetedNeighbor(solution) {
-    // Find teachers violating soft constraint (no day off)
-    const overworked = this.findOverworkedTeachers(solution);
-
-    if (overworked.length > 0) {
-      // Try to fix overworked teacher
-      return this.fixOverworkedTeacher(solution, overworked[0]);
-    }
-
-    // No violations, random move
-    return this.generateRandomNeighbor(solution);
-  }
-
-  /**
-   * Find teachers dengan no day off
-   */
-  findOverworkedTeachers(solution) {
-    const overworked = [];
-    const maxDays = this.days.length;
-
-    for (const teacher of this.teachers) {
-      const assignedDays = solution.getAssignedDaysForTeacher(teacher);
-
-      if (assignedDays.length >= maxDays) {
-        overworked.push(teacher);
-      }
-    }
-
-    return overworked;
-  }
-}
-```
-
-#### 3. Output Conversion untuk Practical Use
-
-```javascript
-/**
- * Solution Converter untuk Practical Output
- * Berdasarkan text file output dari paper
- */
-
-class SolutionConverter {
-  constructor(teacherNames, sectionNames) {
-    this.teacherNames = teacherNames; // Map ID -> Name
-    this.sectionNames = sectionNames; // Map ID -> Name
-  }
-
-  /**
-   * Convert integer matrix to text file
-   */
-  convertToTextFile(solutionMatrix) {
-    const lines = [];
-
-    for (let day = 0; day < solutionMatrix[0].length; day++) {
-      lines.push(`=== DAY ${day + 1} ===`);
-      lines.push('');
-      lines.push('ASSIGNMENTS:');
-      lines.push('Section | Teacher');
-
-      const assignedTeachers = new Set();
-
-      for (let section = 0; section < solutionMatrix.length; section++) {
-        const teacherId = solutionMatrix[section][day];
-        const teacherName = this.teacherNames[teacherId];
-        const sectionName = this.sectionNames[section];
-
-        lines.push(`${sectionName} | ${teacherName}`);
-        assignedTeachers.add(teacherId);
-      }
-
-      lines.push('');
-      lines.push('FREE DUTY TEACHERS:');
-
-      for (const [id, name] of Object.entries(this.teacherNames)) {
-        if (!assignedTeachers.has(parseInt(id))) {
-          lines.push(name);
-        }
-      }
-
-      lines.push('');
-      lines.push(''.repeat(50));
-    }
-
-    return lines.join('\n');
-  }
-
-  /**
-   * Generate summary statistics
-   */
-  generateStatistics(solutionMatrix) {
-    const stats = {
-      totalAssignments: 0,
-      assignmentsPerTeacher: new Map(),
-      dayOffsPerTeacher: new Map(),
-      sectionAssignmentsPerDay: []
-    };
-
-    // Count assignments per teacher
-    for (const teacherId of Object.keys(this.teacherNames)) {
-      stats.assignmentsPerTeacher.set(teacherId, 0);
-      stats.dayOffsPerTeacher.set(teacherId, 0);
-    }
-
-    for (let day = 0; day < solutionMatrix[0].length; day++) {
-      const dayAssignments = [];
-
-      for (let section = 0; section < solutionMatrix.length; section++) {
-        const teacherId = solutionMatrix[section][day];
-        dayAssignments.push(teacherId);
-        stats.assignmentsPerTeacher.set(
-          teacherId,
-          stats.assignmentsPerTeacher.get(teacherId) + 1
-        );
-      }
-
-      stats.sectionAssignmentsPerDay.push(dayAssignments);
-    }
-
-    // Calculate day offs
-    const totalDays = solutionMatrix[0].length;
-    for (const [teacherId, assignments] of stats.assignmentsPerTeacher) {
-      const dayOffs = totalDays - assignments;
-      stats.dayOffsPerTeacher.set(teacherId, dayOffs);
-    }
-
-    stats.totalAssignments = solutionMatrix.length * totalDays;
-
-    return stats;
-  }
-}
-```
-
----
-
-## Kekurangan dan Keterbatasan Paper
-
-### 1. Limited Dataset
-
-- Hanya satu school (43 sections, 50 teachers)
-- Tidak ada generalization ke other schools
-- Tidak ada benchmark comparisons
-
-### 2. Simple Problem Instance
-
-- Hanya 2 hard constraints
-- Hanya 1 soft constraint
-- Real-world UCTP biasanya jauh lebih complex
-
-### 3. Parameter Values Tidak Dioptimasi
-
-- Menggunakan parameters dari Abdullah & Burke (2006)
-- Tidak ada sensitivity analysis
-- 10 million iterations mungkin excessive
-
-### 4. Kurang Detail dalam Implementasi
-
-- Tidak ada pseudocode lengkap
-- Cooling formula tidak jelas
-- Neighborhood generation tidak detail
-
-### 5. Tidak Ada Statistical Validation
-
-- Hanya "satisfies all persons in charge"
-- Tidak ada quantitative comparison
-- Tidak ada variance analysis
-
----
-
-## Arah Penelitian Lanjutan
-
-### Research Gaps
-
-#### 1. Extended Neighborhood Structures
-
-**Gap:**
-Hanya simple exchange strategy.
-
-**Research direction:**
-- Multiple neighborhood structures
-- Adaptive neighborhood selection
-- Complex moves (Kempe chains, swap multiple)
-
-#### 2. Multi-Objective Optimization
-
-**Gap:**
-Hanya single objective (minimize teachers with no day off).
-
-**Research direction:**
-- Balance teacher preferences
-- Minimize total assignments variance
-- Maximize fairness
-
-#### 3. Dynamic Constraints Handling
-
-**Gap:**
-Static constraints throughout search.
-
-**Research direction:**
-- Weighted constraints yang adapt
-- Priority-based constraint handling
-- Real-time constraint updates
-
-#### 4. Scalability Analysis
-
-**Gap:**
-Hanya one instance size tested.
-
-**Research direction:**
-- Performance scaling dengan size
-- Large instances (hundreds of sections/teachers)
-- Distributed SA approaches
-
----
-
-## Kesimpulan
-
-### Summary Temuan
-
-1. **SA effective** untuk teacher-section assignment (PAPt)
-2. **Problem-specific neighborhood** critical untuk performance
-3. **Fast execution** - 2 seconds untuk complete solution
-4. **Smart initialization** satisfies hard constraints
-5. **Real-world validation** - Practical use di Iraqi school
-
-### Rekomendasi untuk Proyek
-
-1. **Design problem-specific neighborhood** - Target constraint violations
-2. **Smart initialization** - Start dengan feasible solution
-3. **Fast SA implementation** - 2 seconds achievable
-4. **Practical output** - Ready-to-use text format
-5. **Test dengan real data** - Validate dengan actual institutions
-
-### Research Questions untuk Thesis
-
-1. Dapatkah problem-specific neighborhood SA mengungguli generic SA untuk UCTP?
-2. Bagaimana mengoptimasi neighborhood selection strategy secara adaptive?
-3. Apakah smart initialization menghasilkan better final solutions?
-4. Bagaimana scaling SA performance untuk larger instances?
-
----
-
-## Referensi
-
-- Jasim, D.S. "A Local Search Approach to Solve Teacher to Examination Sections Scheduling Problem in an Iraqi School."
-- Abdullah, S., Burke, E.K. (2006). "A Multi-start Very Large Neighbourhood Search Approach with Local Search Methods for Examination Timetabling." ICAPS 2006.
-- Zhang, D., et al. (2010). "A Simulated Annealing with a New Neighborhood Structure Based Algorithm for High School Timetabling Problems." *European Journal of Operational Research*, 203, 550-558.
-
----
-
-*Analisis ini ditulis untuk mendukung penelitian tesis tentang University Course Timetabling Problem menggunakan Simulated Annealing.*
+A Local Search Approach to Solve Teacher to Examination Sections
+Scheduling Problem in an Iraqi School
+Dalia Sami Jasim
+Daliasami99@gmail.com
+
+,
+
+Abstract : assigning teachers to examination sections is a type of Proctor Assignment Problem (PAPt) that require scheduled
+a timetable. assigning teachers to examination sections involves assign a teacher for each section and finally come up with
+list of ( teacher-section) and list of teachers names that free of duty for same day Taking into consideration hard and soft
+constraints . To solve this problem we proposed a simulated annealing local base technique. we proposed an appropriate
+neighborhood structure for our problem by searching the problem space to exchange the values that make the solution far
+from feasible with values that make the solution near to optimality this heuristic behavior of our neighborhood structure is
+the main factors leads us an optimal solution. The performance of our approach is tested over one of biggest schools in
+Babylon province , Iraq ,this school contains 43 sections versus 50 teachers . Experimental results show that our approach is
+able to generate successfully the required timetable.
+Keywords- timetable scheduling; simulated annealing; local search.
+
+INTRODUCTION
+The development of the personal computer in terms of
+software and hardware and its entry into all institutions in
+Iraq including schools, at the same time , the presence of
+researchers as teachers in Iraqi schools all this made the
+problems in Iraqi schools a new fields for research. One of
+the nowadays problems in Iraqi schools is the increasing
+number of students versus an almost fixed number of
+teachers, this issue led to many problems that the staff
+suffers from.
+One of these problems is assigning teachers to examination
+sections. What complicated the problem is the increasing
+number of examination sections to fit the increasing
+number of students and we have to assign a teacher to
+every section. Hence, we are confronting a timetable
+scheduling problem , scheduling is characterized as the
+
+allocation of resources over time to carry out a collection of
+tasks [1] and the objective is to allocate a set of entities to
+a limited number of resources over time, in such a way to
+meet a set of predefined schedule requirements. Our
+problem belongs to Academic Scheduling Problems that
+can be categorized into two different types which are either
+course or exam timetabling [2].examination timetable is a
+multidimensional assignment problem that educational
+institutions necessity to solve orderly. They need to assign
+exams to time slots in a particular interval and at the same
+time assign rooms as well as invigilators to exams to satisfy
+diverse and complex constraints [3]. This problem is a type
+of Proctor Assignment Problem (PAPt) where a university
+assigning teaching assistants to serve as a proctor in final
+exams. A (PAPt) problem is an NP-hard problem [4]. Nearly
+the optimization techniques have been adopted in all
+
+1
+
+domains to discover best solution from the feasible
+solutions.
+It is NP-hard to solve problems with partial information and
+few assumptions. Different meta-heuristic techniques are
+utilized to optimize the solution of NP-hard problems [4].
+Many papers described the usage of meta-heuristics
+methods to solve the Academic Scheduling Problems, in [5]
+researcher formulated the problem as a mixed-integer
+program with a single objective and carried out a scatter
+search solution procedure. [6] Developed a hybrid genetic
+algorithm (GA) solution for the initial assignment problem.
+Also [7] used a mixed integer programming to formulate
+the assignment problem, and to derive an optimal
+assignment the researcher developed a prototype system
+based on spreadsheet software.
+In Iraqi schools, the exam is conducted twice a year in the
+middle of the academic year for ten days and in the end of
+the academic year also for ten days. Scheduling teachers to
+sections are carried out by the school staff before starting
+the exam in a short time to update the list of teachers to
+record changes in the teaching staff. According to the
+opinion of experts in this field, every day takes between
+two to three hours of preparation, all this lead to timeconsuming and inaccurate scheduling.
+In this paper, we propose a local search approach using
+Simulated Annealing algorithm to solve teachers to
+sections scheduling problem.
+several researchers used Simulated Annealing to solve
+timetable scheduling problem, [8] came up with an
+approach includes instead of swapping two assignments as
+in a standard Simulated Annealing, a series of swaps
+between pairs of time slots performed heuristically. A new
+structure of the neighborhood solution was proposed to
+find the best neighbor. This experiment using the proposed
+heuristic show that this strategy is better than existing
+approaches.
+the researcher in [9], Integrate the Honey Badger Algorithm
+(HBA) with sand cat swarm optimization (SCSO) to address
+the limitations of the HBA, thereby enhancing the quality of
+the solutions. The SCSO is capable of efficiently identifying
+optimal solutions.
+[10] Employed a Dual-sequence Simulated Annealing
+algorithm as an improvement algorithm. To control the
+selection of neighborhood structures within the Dualsequence Simulated Annealing. The Round Robin (RR)
+algorithm was utilized. The performance of the proposed
+approach is tested over 11 benchmark datasets.
+Experimental results show that this approach is able to
+generate competitive results when compared with other
+state-of-the-art techniques.
+[11] outlines the creation of a web-based course scheduling
+system that employs an advanced genetic algorithm. The
+improved approach incorporates a heuristic mutation that
+specifically targets the alteration of infeasible genes,
+
+thereby enhancing the algorithm's ability to explore and
+exploit solutions effectively.
+[12] Applied the Simulated Annealing algorithm for the
+nurse scheduling problem. The results of experiments
+showed that more accurate solutions can be obtained from
+Simulated Annealing algorithm. Also, applied SA offers
+meaningfully better solutions in a reasonable time
+compared to other methods.
+In the same context, we used Simulated Annealing
+algorithm to convert manually scheduling of assigning
+teachers to examination sections to a computer problem
+gives us an accurate result for all ten days of the exam
+within 2 seconds.
+Transforming manually problems into computer problem in
+Iraq schools is a new step toward Exploit time and
+experiences that already exist in Iraqi schools, what is
+important here is the right accomplishment to these
+problems in an efficient way by computer programming
+and artificial intelligence tools to be a compelling reason for
+this transformation.
+
+MATERIALS AND METHODS
+1. PROBLEM DESCRIPTION
+In this study we examined one of biggest schools in Babylon
+province, Iraq ,this school contains 43 examination
+sections versus 50 teachers; we have ten days of exam
+every day we have to assign a teacher to each section and
+at the same time every teacher have to be out of duty for
+at least one day. Finally come up with list of
+(teachersection) and a list of teachers names that free of duty for
+same day.
+For this problem we have two type of constraint hard
+constraint that is :
+1- Teacher name must not appear twice in a single day.
+2- Exact teacher name must not appear in the same
+section for all ten days.
+And we have a soft constraint that is every teacher has to
+be free of duty for one day at least. An improvement in the
+quality of any solution for the timetabling problem is
+concerned with the minimization of soft constraint
+violations, which includes the number of teachers affected
+by the violations. The objective cost function is calculated
+as the sum of the number of violations of the soft
+constraints, in our problem it will be:
+∑ (reptetion_exact_teacher_name_for_all_ten_days)<= 9.
+2. META-HEURISTIC
+Solving hard problems considerable a research challenge
+which could not be effectively addressed by the exact or
+heuristic methods. This lead to the application of meta2
+
+heuristic or hybrid meta-heuristic approaches in the recent
+past. These hybrid meta-heuristic approaches are said to be
+superior in giving an optimal or at least feasible results
+within a specific time period [13]. Meta-heuristic
+techniques are divided into two classes:
+First one is the local search based methods that deals with
+a single object in one iteration .local search based
+techniques are also called single solution based techniques.
+In this approach, a single solution is created, and then
+modified using local search. Simulated Annealing is one of
+the local search based method [14]
+The second one is local search with population based
+search: Population-based optimization algorithms are
+nature-inspired usually locate a near-optimal solution to
+optimization problems. Every population-based algorithm
+has the common characteristics of finding out a global
+solution to the problem. A population begins with initial
+solutions and gradually moves toward a better solution
+area of search space based on the information of their
+fitness [15].
+
+Fig2 the example of solution structure
+
+3. SIMULATED ANNEALING
+Simulated Annealing is a local search method and was first
+introduced by [16] which mimic the principles of the
+metallurgy of metals boiling and cooling to achieve a fixed
+crystal lattice structure with lower energy state. The
+algorithm initializes by generating an initial random
+solution. After that, an adjacent solution is being generated
+and these two solutions will be evaluated by an objective
+function. If the cost of the neighbor is lower than the cost
+of the initial solution and lowers the energy of the system,
+the neighbor will be accepted as an improved solution. As
+for a non-improving solution, it will gradually be accepted
+with a probability value given by a probability function. In
+SA, the performance of the algorithm is highly dependent
+on its parameters.
+Well explored neighborhood gives us the chance to good
+quality solutions to be obtained as demonstrated in the
+works of [17].We used the Simulated Annealing algorithm
+that presented in [18] and the pseudo code for the used
+Simulated Annealing algorithm is illustrated in figure 1.
+We use the same parameters as in [18] where the initial
+temperature T0 is equal to 5000 and the final temperature
+Tf is equal to 0.05. The number of iterations, NumOfIte is
+set to be 10000000 at every iteration, T is decreased by a
+where a is defined as:
+
+Fig1 the pseudo code for Simulated Annealing
+
+In the do-while loop, a neighbor is defined by exchange the
+number (represent teacher) that repeated for ten times
+with numbers that repeated less than 9 times. A worse
+candidate solution is accepted if the randomly generated
+number, Random Number, is less then e-d/T where is a
+difference between the quality of the old and new solutions
+(i.e. d = f(Sol*) – f(Sol)). The process continues until the
+temperature T is less than the final temperature Tf.
+
+5. SOLUTION STRUCTURE
+In this paper, to generate an initial solution we follow a
+strategy that leads us to satisfy hard constraint , so with
+consideration of not violated the hard constraint with every
+new assignment we check if it violates the hard constraint
+to replace this assignment with another randomly initiate
+assignment and so on until finish all the assignment matrix,
+finally we will get a solution that satisfies hard constraint
+and ready to put it in Simulated Annealing algorithm trying
+to satisfy soft constraints and reach an optimal solution.
+
+a = (log (T) – log (0.05)) / NumOfIte
+
+3
+
+We represent our solution as a two-dimensional matrix
+that it is columns from 0 to nine refer to the ten days of the
+exam, the rows from 0 to 42 refer to the sections and the
+cells of this matrix is the teacher's ID numbers that
+represented as integers from 0 to 49.
+
+Fig3 the result of many times execution versus the
+
+number of iteration for each implementation
+
+Fig2 solution structure
+
+6. FITNESS FUNCTION
+The objective function considered in this paper minimizes
+the number of teachers that assign to examination sections
+for 10 times, because every teacher has to be out of duty
+at least for one day ,we solved this issue by generating
+neighborhood solution with this consideration.
+In order to generate a neighborhood that trying to satisfies
+the soft constraint, we presented an approach to deal with
+this problem by exchanging the teacher ID that we
+represent it as a numbers from 0 to 49,so if it repeated for
+ten times (there is no out of duty day for this teacher ), we
+explore our solution to find a teacher that repeated less
+than nine times to replace it with this teacher ID that
+appears for ten times ,and at same time not violated the
+hard constraint, if this replacing process come up with
+violated the hard constraint ,we have to find another
+teacher ID to replace it with the present ID , in this way we
+may reach the optimality or not , because for some
+implementations we cannot find teacher ID that not
+violated the hard constraint so in this way we cannot reach
+a feasible solution .
+7. RESULTS and DISCUSSION
+We built our program step by step using JAVA language by
+NetBeans IDE 8.2 Platform, we used a local search
+algorithm Simulated Annealing to deal with assigning
+teachers to examination sections problem, the result of
+many times execution versus the number of iteration for
+each implementation represented in the figure3:
+
+The behavior of Simulated Annealing algorithm that it is
+able to escape local optimum by allowing some “bad”
+moves make our program reach an optimal solution for
+some implementations, at same time The choice of an
+appropriate neighborhood structure is crucial for the
+performance of the local search algorithm and has to be
+done in a specific way.
+The problem key-specific choice concerns the
+neighborhood function definition. The efficiency of
+Simulated Annealing is highly influenced by the
+neighborhood function used. In this work we proposed an
+appropriate neighborhood structure in order to solve this
+problem by searching the problem space to exchange the
+values that make the solution far from feasible with values
+that make the solution near to optimality this heuristic
+behavior of our neighborhood structure is the main factor
+leads us to an optimal solution. The designated program
+produce a matrix that represents the solution (figure 4 give
+an example of this result) .we design a function that
+converts every integer value to a Corresponding text.
+every column in the matrix refers to an examination day,
+every row in the matrix represent an examination section
+and every cell in matrix represent a teacher id, after
+reading a file of all teachers names we can Match every id
+to a teacher.
+In this way The final step of our program is the came up
+with a text file that contains a schedule for all ten days of
+exam, this text file contains: sections numbers, teacher
+names for every section and a list of out of duty teachers
+names for every day, figure 5 shows an example of a single
+day from the text file that our program come up with.
+In our approach, we found an optimal solution with the
+Simulated Annealing algorithm, and this solution used to
+solve real life problem of assigning teachers to examination
+sectors. We presented our result to the staff of the school
+that responsible for preparing the schedule of the teachers
+to examination sections in this school and our result
+satisfies all the persons in charge and it is very practical
+because of the Indiscriminate nature of the solution we can
+get a different teachers list every time of execution.
+4
+
+our program came up with an optimal solution represented
+via an integer matrix. Last part of our program converted
+the integer solution to a text file that is ready to use in the
+targeted school (as presented in figure 5), and the random
+approach give us the opportunity to get different
+distribution for names every execution, this consider
+another positive point for this work.
+Converted this problem from a manual solution that needs
+a lot of efforts to a computer problem is a good leap. In the
+Same context presented a good solution within 2 seconds
+considered a qualitative change in Iraqi schools.
+As a future work, we need to work on course timetable
+scheduling for schools that take about two months to
+complete it, and schedule examination timetable the mid
+and final year exams.
+
+REFERENCES
+
+Fig4 the resulted integer matrix
+
+CONCLUSION
+This paper presented a local search algorithm for the
+teachers to examination sections assignment problem. We
+examined this problem on a dataset from one of the biggest
+Iraqi schools, we designed a program using JAVA language
+to solve this problem using Simulated Annealing algorithm,
+the program start with generating a new solution that
+satisfy the hard constraint then we adjust simulated
+annealing parameters to increase our chance to get fast
+feasible solution. In this work we adopted a sophisticated
+neighborhood structure that try to meet soft Constraint,
+
+[1] Martín-Santamaría, Raúl,López-Ibáñez, Manuel,Stützle,
+Thomas, On the automatic generation of metaheuristic
+algorithms for combinatorial optimization problems,
+European Journal of Operational Research,vol328,2024.
+[2] Sara Ceschia, Luca Di Gaspero, Andrea Schaerf,
+Educational timetabling: Problems, benchmarks, and stateof-the-art results,European Journal of Operational
+Research,Volume 308, Issue 1,2023.
+[3] Atiyeh Modirkhorasani, Pooya Hoseinpour,
+Decentralized exam timetabling: A solution for conducting
+exams during pandemics,Socio-Economic Planning
+Sciences,Volume 92,2024.
+[4] A. Amuthan ; K. D.Thilak, Survey on Tabu Search metaheuristic optimization, Signal Processing, Communication,
+Power and Embedded System (SCOPES), 2016 International
+Conference on,2017.
+[5] R. Martí, H. Lourenço and M. Laguna, Assigning
+Proctors to Exams with Scatter Search, Operations
+Research/Computer Science Interfaces Series book series
+(ORCS, volume 12),2001.
+[6] R. M. Awad, J. W. Chinneck , Proctor Assignment at
+Carleton University, INTERFACES 28: 2 March–April (pp.
+58–71), 1998.
+[7] T. Koide , Mixed integer programming approach on
+examination proctor assignment problem , 19th
+International Conference on Knowledge Based and
+Intelligent Information and Engineering Systems,2015.
+[8] D. Zhang , Y. Liu , R. M’Hallah , S. C.H. Leung , A simulated
+annealing with a new neighborhood structure based
+algorithm for high school timetabling problems , European
+Journal of Operational Research 203 550–558,2010.
+
+5
+
+[9] Seyyedabbasi, A., Tareq Tareq, W.Z. & Bacanin, N. An
+Effective Hybrid Metaheuristic Algorithm for Solving Global
+Optimization Algorithms. Multimed Tools Appl 83, 85103–
+85138 (2024).
+[10] S. Abdullah, K. Shaker, B. McCollum, and P. McMullan,
+Dual Sequence Simulated Annealing with Round-Robin
+Approach for University Course Timetabling , P. Cowling
+and P. Merz (Eds.): EvoCOP LNCS 6022, pp. 1–10, 2010.
+[11] Dexter Romaguera, Jenie Plender-Nabas, Junrie
+Matiasa, Lea Austero, Development of a Web-based
+Course Timetabling System based on an Enhanced Genetic
+Algorithm, Seventh Information Systems International
+Conference (ISICO 2023).
+[12] H. Jafari d an N. Salmasi, Maximizing the nurses’
+preferences in nurse scheduling problem: mathematical
+modeling and a meta-heuristic algorithm , J Ind Eng 11:439–
+458 DOI 10.1007/s40092- 015-0111-0, Int 2015 .
+[13] S. Muthuraman and V. P. Venkatesan , A
+Comprehensive Study on Hybrid Meta-Heuristic
+Approaches Used for Solving Combinatorial Optimization
+
+Problems , Computing and Communication Technologies
+(WCCCT), World Congress on,2017 .
+[14] R. Ilyas and Z. Iqbal , Study of hybrid approaches used
+for university course timetable problem (UCTP) , Industrial
+Electronics and Applications (ICIEA), IEEE 10th Conference
+on,2015.
+[15] S. Satapathy and A. Naik, Social group optimization
+(SGO): a new population evolutionary optimization
+technique , Complex Intell. Syst. 2:173–203 DOI
+10.1007/s40747-016-0022-8 , 2016.
+[16] S. Kirkpatrick , C. D. Gelatt and M. P. Vecchi,
+Optimization by Simulated Annealing, Science , New Series,
+Vol. 220, No. 4598. , pp. 671-680, 1983.
+[17] M. M. Mafarja and Seyedali Mirjalili , Hybrid Whale
+Optimization Algorithm with simulated annealing for
+feature selection, Neurocomputing Volume 260, Pages
+302-312, 18 October 2017.
+[18] S. Abdullah and E. K. Burke , A Multi-start Very Large
+Neighbourhood Search Approach with Local Search
+Methods for Examination Timetabling , Conference:
+Proceedings of the Sixteenth International Conference on
+Automated Planning and Scheduling, ICAPS 2006, Cumbria,
+UK, June 6-10, 2006.
+
+6
+
+

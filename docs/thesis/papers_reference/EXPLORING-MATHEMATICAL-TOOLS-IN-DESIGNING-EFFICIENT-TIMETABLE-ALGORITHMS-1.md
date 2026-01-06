@@ -1,762 +1,1036 @@
-# Analisis Paper: Exploring Mathematical Tools in Designing Efficient Timetable Algorithms
-
-## Informasi Publikasi
-
-- **Judul:** Exploring Mathematical Tools in Designing Efficient Timetable Algorithms
-- **Penulis:** Poonam Kumari, Dr. Vineeta Basotia, Dr. Harmendra Kumar Mandia
-- **Affiliasi:** Shri JJT University, Rajasthan, India
-- **Jurnal:** Anveshana's International Journal of Research in Engineering and Applied Sciences (AIJREAS)
-- **Volume/Issue:** Vol. 9, Issue 08
-- **Bulan/Tahun:** August 2024
-- **ISSN:** 2455-6300 (Online)
-- **Email:** anveshanaindia@gmail.com
-- **Website:** www.anveshanaindia.com
-- **Halaman:** 30-37
-- **Tipe Paper:** Review / Case Study
-
----
-
-## Abstrak
-
-Paper ini mengeksplorasi **mathematical tools** untuk merancang efficient timetable algorithms. Fokus pada:
-
-1. Mathematical models dan algorithms untuk faculty course assignment
-2. Integer programming sebagai tools untuk academic course assignments
-3. Fuzzy preferences-based method untuk faculty course scheduling
-4. Optimization resource timetables untuk faculty course schedules
-
-**Keywords:** Mathematical models, algorithms, timetables, educational institutions
-
----
-
-## Latar Belakang
-
-### University Course Timetabling Problem (UCTP)
-
-**Definisi:**
-Assignment of specified events (lessons, exams) into time slots or classes.
-
-**Karakteristik:**
-- **NP-hard problem**
-- No deterministic polynomial time algorithm known
-- Traditional computer-based methods fall short
-- Knowledge-based atau OR-based methodologies: slow dan rigid
-
-### Jenis Timetabling di Universitas
-
-| Tipe | Deskripsi |
-|------|-----------|
-| **Course Planning** | Hanya satu group course dan satu course per timeslot |
-| **Exam Planning** | Multiple events dapat scheduled concurrently |
-
-### Perbedaan Utama
-
-**Course Planning:**
-- Hanya satu group course per timeslot
-- Hanya satu course total per timeslot
-
-**Exam Planning:**
-- Multiple events dapat scheduled concurrently
-- Common periods dan classes dapat digunakan bersama
-
----
-
-## Literature Review
-
-### Algethami & Laesanklang (2021)
-
-**Fokus:** Multi-objective mixed-integer programming model untuk preregistration UCTP dengan faculty-related constraints
-
-**Objective:**
-- Maximize faculty members' happiness
-- Follow university standards
-- Minimize unscheduled activities
-- Minimize student learning days
-
-**Validation:** 8 various real-world scenarios
-
-### AbdoulRjoub (2020)
-
-**Fokus:** Automated school scheduling menggunakan improved Hill Climbing algorithms
-
-**Hasil:**
-- Initial solution improved by **72%** dalam 5 seconds
-- **50%** improvement dalam second iteration
-- Optimal solution setelah 15 iterations
-
-### Anderson Goes (2019)
-
-**Fokus:** School timetabling dengan operational research methodology
-
-**Methods:**
-- Non Linear Binary Integer Programming (NLBIP)
-- Local Search (LS)
-- Iterated Local Search (ILS)
-
-**Hasil:**
-- ILS: 3.5-7.7% lower dispersion than best solution
-- ILS: 15-338 times quicker computational time
-
-### Mohd Rahman (2018)
-
-**Fokus:** Evaluation of optimization algorithms untuk course scheduling
-
-**Classification:**
-1. Hard Constraints vs Soft Constraints
-2. Optimization Methods
-
-**Finding:** Meta-heuristics adalah most frequently used method
-
----
-
-## Mathematical Tools yang Dibahas
-
-### 1. Linear Programming (LP)
-
-**Application:** Faculty course assignment activities
-
-**Formulation:**
-Activities untuk faculty course assignment dilakukan sebagai linear programmers.
-
-**Use case:** Creating mathematical models atau algorithms untuk solve faculty course assignment problem.
-
-### 2. Integer Programming (IP)
-
-**Application:** Academic course assignments
-
-**Status:** One of the newest tools untuk dealing dengan academic course assignment problems.
-
-**Advantage:** Can handle discrete decisions (assign atau tidak assign).
-
-### 3. Fuzzy Preferences-Based Method
-
-**Application:** Faculty course scheduling difficulties
-
-**Approach:** Method based pada fuzzy preferences untuk handle faculty-related constraints.
-
-**Use case:** Mengoptimasi resource timetables dan producing course schedules untuk faculty members.
-
----
-
-## University Timetabling Regulations
-
-### Hard Constraints (Wajib)
-
-1. **No teacher conflicts:** Setiap teacher hanya satu class per timeslot
-2. **All classes scheduled:** Semua classes harus mengikuti plan
-3. **Room concordance:** Semua planned rooms harus concordance dengan guidance
-4. **Teaching load limits:** Teacher's teaching load tidak boleh exceed established limit
-5. **Course hours completion:** Total hours untuk course harus established
-
-**Scheduling conflicts terjadi jika:**
-- Two atau lebih classes untuk same teacher di same time
-- Two atau lebih classrooms assigned ke same course dan group di same time
-- Two atau lebih teachers assigned ke same group untuk independent courses di same time
-
-### Soft Constraints (Preferensi)
-
-1. **Teacher time preferences** dihormati sebisa mungkin
-2. **Subject preferences:** Setiap faculty dapat name favorite subject area
-
----
-
-## Genetic Algorithms untuk UCTP
-
-### Prinsip Dasar
-
-GA berdasarkan ideas of genetics dan natural selection:
-- Healthiest population members chosen
-- Mix dengan population lain (crossover)
-- Mutate into new forms (mutation)
-- Establish new groups
-
-### Penerapan pada Timetabling
-
-```
-GA untuk UCTP:
-├── Population of solutions
-├── Fitness evaluation (constraint satisfaction)
-├── Selection (fittest chosen)
-├── Crossover (mix solutions)
-├── Mutation (random changes)
-└── New generation
-```
-
-### Karakteristik UCTP
-
-- Memerlukan instructors dan students bekerja sama
-- Arrange scheduling multiple classes dalam limited time
-- Adhere berbagai regulations
-- Complexity meningkat dengan school size
-
----
-
-## Memetic Algorithm untuk UCTP
-
-### Konsep
-
-Memetic Algorithm = **Genetic Algorithm + Local Search**
-
-Kombinasi global search (GA) dan local optimization (LS) untuk:
-- Better convergence
-- Escape local optima
-- Balance exploration dan exploitation
-
-### Keunggulan
-
-- GA provides global exploration
-- LS provides local exploitation
-- Hybrid approach lebih effective dari masing-masing secara terpisah
-
----
-
-## Case Study: XYZ Institution
-
-### Dataset
-
-- **8 tenured faculty members**
-- **4 new faculty members**
-- **Total:** 12 faculty members
-- **Courses:** 20 courses untuk di-assign
-
-### Administrator Preferences
-
-**Preference levels:** 1 (highest) sampai 4 (lowest)
-
-**Contoh interpretation:**
-- Course 3 → 3rd option untuk faculty
-- Course 6 → 4th choice
-- Course 13 → 1st choice untuk F' faculty
-- Blank → course tidak akan assigned ke faculty tersebut
-
-### Implementation Details
-
-**Hardware:**
-- Intel(R) Core(TM) i3-7100 CPU @ 2.50GHz
-- 32GB Hard Disk
-- 4GB RAM
-- Windows 7, 32-bit
-
-**Software:**
-- Matrix Laboratory 8.6 (MATLAB)
-- LINGO software untuk optimization
-
-**Methods:**
-1. Mixed Integer Linear Programming (MILP)
-2. Enhanced Simulated Annealing (ESA)
-3. SA + GA hybrid
-
-### Mathematical Formulation
-
-#### Variables
-
-$x_{ij}$ = assignment dari course $i$ ke faculty $j$
-
-$x_r$ = new variables untuk computational simplicity
-- Contoh: $x_1$ = 1st course ke 2nd faculty
-- Contoh: $x_{45}$ = 9th course ke 6th faculty
-
-#### Objective Functions
-
-$f_k$ = faculty preference levels untuk courses yang di-assign
-
-**Goal:** Minimize total preference violations
-
-### Hasil Komputasi
-
-#### Table 3: Courses Assigned to Faculty
-
-Setiap faculty mendapat course assignments sesuai dengan preference levels.
-
-**Interpretasi:**
-- $x_{14}$ = 3rd course ke 1st faculty, ideal value = 1
-- Semua courses assigned dengan similar fashion
-
-#### Table 4: Objective Function Values (menggunakan Linear Membership Function)
-
-| Objective | $f_1$ | $f_2$ | $f_3$ | ... | $f_{15}$ |
-|-----------|-------|-------|-------|-----|---------|
-| **Values** | 1 | 1 | 2 | ... | 2 |
-
-**O, M, P values:** Not clearly explained dalam paper
-
----
-
-## Methodology
-
-### Two-Phase Approach
-
-Paper ini menggunakan **two-phase technique**:
-
-**Rationale:**
-- Memberikan algorithms bigger search field di first phase
-- Meet hard constraints sambil ignoring soft constraints
-- Solve timetabling issues secara structured
-
-#### Phase 1: Hard Constraint Satisfaction
-
-- Focus pada meeting mandatory constraints
-- Ignore soft constraints temporarily
-- Generate feasible solutions
-
-#### Phase 2: Soft Constraint Optimization
-
-- Optimize soft constraints
-- Improve solution quality
-- Incorporate preferences
-
-### Metaheuristic-Based Solutions
-
-Paper ini mengusulkan metaheuristic-based solutions:
-
-1. **Evolutionary Algorithms** (termasuk GA)
-2. **Simulated Annealing**
-3. **Tabu Search**
-4. **Ant Colony Optimization**
-5. **Honey Bee Algorithms**
-
-**Universal algorithmic framework** yang dapat dimodifikasi untuk:
-- Timetabling challenges
-- Combinatorial optimization issues
-- Various problem domains
-
----
-
-## Implikasi untuk Proyek Ini
-
-### Relevansi
-
-Paper ini relevan untuk proyek Anda karena:
-
-1. **Comprehensive overview** dari mathematical tools untuk timetabling
-2. **Two-phase approach** yang dapat diadaptasi untuk SA
-3. **Metaheuristics comparison** termasuk SA
-4. **Real case study** dengan faculty preferences
-
-### Rekomendasi untuk Proyek
-
-#### 1. Two-Phase SA Implementation
-
-```javascript
-/**
- * Two-Phase Simulated Annealing
- * Berdasarkan framework dari Kumari et al. (2024)
- */
-
-class TwoPhaseSA {
-  constructor(config) {
-    // Phase 1: Hard constraint satisfaction
-    this.phase1Config = config.phase1 || {
-      T0: 1000,
-      Tf: 0.1,
-      alpha: 0.99,
-      focus: 'hard'
-    };
-
-    // Phase 2: Soft constraint optimization
-    this.phase2Config = config.phase2 || {
-      T0: 100,
-      Tf: 0.01,
-      alpha: 0.995,
-      focus: 'soft'
-    };
-  }
-
-  /**
-   * Phase 1: Hard Constraint Satisfaction
-   * Focus: Feasible solution generation
-   */
-  phase1(instance) {
-    const sa = new SimulatedAnnealing({
-      ...this.phase1Config,
-      fitnessFunction: (solution) => {
-        // Heavy penalty untuk hard constraint violations
-        return this.hardConstraintPenalty(solution);
-      }
-    });
-
-    // Generate feasible solution
-    const feasible = sa.optimize(instance);
-
-    console.log('Phase 1 complete: Feasible solution found');
-    return feasible;
-  }
-
-  /**
-   * Phase 2: Soft Constraint Optimization
-   * Focus: Quality improvement
-   */
-  phase2(feasibleSolution) {
-    const sa = new SimulatedAnnealing({
-      ...this.phase2Config,
-      initialState: feasibleSolution,
-      fitnessFunction: (solution) => {
-        // Soft constraints (preferences)
-        return this.softConstraintPenalty(solution);
-      }
-    });
-
-    // Optimize soft constraints
-    const optimized = sa.optimize();
-
-    console.log('Phase 2 complete: Soft constraints optimized');
-    return optimized;
-  }
-
-  /**
-   * Hard constraint penalty
-   */
-  hardConstraintPenalty(solution) {
-    let penalty = 0;
-
-    // HC1: Teacher conflicts
-    penalty += this.countTeacherConflicts(solution) * 1000;
-
-    // HC2: Student conflicts
-    penalty += this.countStudentConflicts(solution) * 1000;
-
-    // HC3: Room conflicts
-    penalty += this.countRoomConflicts(solution) * 1000;
-
-    // HC4: Teaching load limits
-    penalty += this.checkLoadViolations(solution) * 1000;
-
-    return penalty;
-  }
-
-  /**
-   * Soft constraint penalty
-   */
-  softConstraintPenalty(solution) {
-    let penalty = 0;
-
-    // SC1: Teacher time preferences
-    penalty += this.calculateTimePreferenceViolation(solution);
-
-    // SC2: Subject preferences
-    penalty += this.calculateSubjectPreferenceViolation(solution);
-
-    // SC3: Compactness
-    penalty += this.calculateCompactnessPenalty(solution);
-
-    return penalty;
-  }
-
-  /**
-   * Solve UCTP menggunakan two-phase approach
-   */
-  solve(instance) {
-    console.log('Starting two-phase SA...');
-
-    // Phase 1: Generate feasible solution
-    const feasible = this.phase1(instance);
-
-    if (feasible.penalty > 0) {
-      console.warn('Phase 1 failed to find feasible solution');
-      return feasible;
-    }
-
-    // Phase 2: Optimize soft constraints
-    const optimized = this.phase2(feasible);
-
-    return optimized;
-  }
-}
-```
-
-#### 2. Faculty Preference Modeling
-
-```javascript
-/**
- * Faculty Preference System
- * Berdasarkan case study dari Kumari et al. (2024)
- */
-
-class FacultyPreferenceModel {
-  constructor() {
-    // Preference levels: 1 (highest) to 4 (lowest)
-    this.preferenceLevels = {
-      P1: 1, // First choice
-      P2: 2, // Second choice
-      P3: 3, // Third choice
-      P4: 4, // Fourth choice
-      NONE: null // Not assigned
-    };
-  }
-
-  /**
-   * Calculate preference score untuk assignment
-   */
-  calculatePreferenceScore(facultyId, courseId) {
-    const preference = this.getPreference(facultyId, courseId);
-
-    if (preference === null) {
-      return 1000; // High penalty jika tidak preferred
-    }
-
-    // Lower preference level = higher penalty
-    return preference * 10;
-  }
-
-  /**
-   * Get preference level untuk faculty-course pair
-   */
-  getPreference(facultyId, courseId) {
-    // Check preference table
-    return this.preferenceTable[facultyId]?.[courseId] || null;
-  }
-
-  /**
-   * Calculate total preference violation untuk solution
-   */
-  calculateTotalPreferenceViolation(solution) {
-    let totalPenalty = 0;
-
-    for (const [facultyId, assignments] of solution.facultyAssignments) {
-      for (const course of assignments) {
-        totalPenalty += this.calculatePreferenceScore(facultyId, course.id);
-      }
-    }
-
-    return totalPenalty;
-  }
-
-  /**
-   * Linear membership function (seperti dalam paper)
-   */
-  linearMembershipFunction(value, min, max) {
-    if (value <= min) return 1;
-    if (value >= max) return 0;
-    return (max - value) / (max - min);
-  }
-}
-```
-
-#### 3. Hybrid SA-GA (Memetic Algorithm)
-
-```javascript
-/**
- * Memetic Algorithm: SA + GA Hybrid
- * Berdasarkan konsep dari Kumari et al. (2024)
- */
-
-class MemeticAlgorithm {
-  constructor(config) {
-    this.gaConfig = config.ga || {};
-    this.saConfig = config.sa || {};
-    this.lsConfig = config.ls || {}; // Local Search
-  }
-
-  /**
-   * Memetic algorithm: GA + SA + LS
-   */
-  solve(instance) {
-    // Phase 1: GA untuk global exploration
-    const ga = new GeneticAlgorithm(this.gaConfig);
-    let population = ga.initializePopulation(instance);
-
-    // Evolve population
-    for (let generation = 0; generation < ga.maxGenerations; generation++) {
-      population = ga.evolve(population);
-
-      // Apply SA ke setiap individual (local improvement)
-      population = population.map(individual => {
-        return this.localSearchSA(individual, instance);
-      });
-    }
-
-    // Select best
-    const best = this.selectBest(population);
-
-    return best;
-  }
-
-  /**
-   * Local search menggunakan SA
-   */
-  localSearchSA(individual, instance) {
-    const sa = new SimulatedAnnealing({
-      ...this.saConfig,
-      initialState: individual,
-      iterations: 100 // Short SA untuk local search
-    });
-
-    return sa.optimize();
-  }
-
-  /**
-   * Memetic SA dengan periodic local search
-   */
-  memeticSA(instance) {
-    let current = this.generateInitialSolution(instance);
-    let best = current.clone();
-    let T = this.saConfig.T0 || 1000;
-
-    while (T > this.saConfig.Tf) {
-      // Standard SA move
-      const neighbor = this.generateNeighbor(current);
-      const delta = this.evaluate(neighbor) - this.evaluate(current);
-
-      if (delta < 0 || Math.random() < Math.exp(-delta / T)) {
-        current = neighbor;
-
-        // Periodic local search enhancement
-        if (this.shouldApplyLocalSearch()) {
-          current = this.localSearch(current);
-        }
-
-        if (this.evaluate(current) < this.evaluate(best)) {
-          best = current.clone();
-        }
-      }
-
-      T *= this.saConfig.alpha;
-    }
-
-    return best;
-  }
-
-  /**
-   * Local search (hill climbing style)
-   */
-  localSearch(solution) {
-    let current = solution.clone();
-    let improved = true;
-
-    while (improved) {
-      improved = false;
-
-      // Try all neighboring moves
-      const neighbors = this.generateAllNeighbors(current);
-      const bestNeighbor = this.findBest(neighbors);
-
-      if (this.evaluate(bestNeighbor) < this.evaluate(current)) {
-        current = bestNeighbor;
-        improved = true;
-      }
-    }
-
-    return current;
-  }
-}
-```
-
----
-
-## Kekurangan dan Keterbatasan Paper
-
-### 1. Kurang Detail dalam Penjelasan
-
-- Mathematical formulation tidak lengkap
-- Objective functions tidak jelas definisinya
-- Variabel $x_r$ tidak dijelaskan secara menyeluruh
-
-### 2. Case Study Terbatas
-
-- Hanya satu institution
-- Dataset kecil (12 faculty, 20 courses)
-- Tidak ada generalization ke larger instances
-
-### 3. Hasil Tidak Komprehensif
-
-- Tidak ada performance metrics yang jelas
-- Tidak ada comparison dengan baseline
-- Tidak ada statistical analysis
-
-### 4. Review Section Singkat
-
-- Literature review sangat ringkas
-- Tidak ada critical analysis
-- Tidak ada gap identification yang jelas
-
-### 5. Metodologi Tidak Detail
-
-- Tidak ada pseudocode atau algoritma detail
-- Implementation specifics tidak jelas
-- Parameter values tidak dijelaskan
-
----
-
-## Arah Penelitian Lanjutan
-
-### Research Gaps
-
-#### 1. SA dengan Faculty Preferences
-
-**Gap:**
-Paper menyebutkan SA tetapi tidak implement secara detail untuk faculty preferences.
-
-**Research direction:**
-- SA dengan preference-based objective function
-- Adaptive weights untuk faculty preferences
-- Multi-objective SA untuk balance preferences
-
-#### 2. Scalability untuk Large Institutions
-
-**Gap:**
-Case study hanya 12 faculty, 20 courses.
-
-**Research direction:**
-- SA untuk hundreds of faculty dan courses
-- Hierarchical decomposition untuk large-scale UCTP
-- Parallel SA untuk speedup
-
-#### 3. Dynamic Preferences Handling
-
-**Gap:**
-Static preferences dalam model.
-
-**Research direction:**
-- SA dengan dynamic preference updates
-- Real-time preference incorporation
-- Negotiation mechanisms untuk conflicts
-
-#### 4. Integration dengan Other Tools
-
-**Gap:**
-Paper fokus mathematical tools saja.
-
-**Research direction:**
-- SA + machine learning untuk demand forecasting
-- SA + constraint programming untuk hybrid solving
-- SA + user interfaces untuk interactive scheduling
-
----
-
-## Kesimpulan
-
-### Summary Temuan
-
-1. **Mathematical tools overview** - LP, IP, fuzzy preferences untuk UCTP
-2. **Two-phase approach** - Hard constraints dulu, soft constraints kemudian
-3. **Metaheuristics dominance** - GA, SA, TS, ACO, honey bee algorithms
-4. **Faculty preferences matter** - Perlu diintegrasikan ke objective function
-5. **Case study validation** - XYZ institution dengan 12 faculty, 20 courses
-
-### Rekomendasi untuk Proyek
-
-1. **Implement two-phase SA** - Hard constraints → Soft constraints
-2. **Incorporate faculty preferences** - Weighted objective function
-3. **Consider memetic algorithm** - SA + GA + LS hybrid
-4. **Validate dengan real data** - Faculty preferences dari actual institution
-5. **Document clearly** - Provide comprehensive mathematical formulation
-
-### Research Questions untuk Thesis
-
-1. Bagaimana SA dengan two-phase approach performs untuk UCTP dengan faculty preferences?
-2. Dapatkah memetic SA (SA+GA) mengungguli pure SA atau GA?
-3. Bagaimana mengoptimasi trade-off antara faculty preferences dan institutional constraints?
-4. Apakah two-phase approach menghasilkan better solutions dibanding single-phase?
-
----
-
-## Referensi
-
-- Kumari, P., Basotia, V., Mandia, H.K. (2024). "Exploring Mathematical Tools in Designing Efficient Timetable Algorithms." *Anveshana's International Journal of Research in Engineering and Applied Sciences*, 9(8), 30-37.
-- Algethami, H., Laesanklang, W. (2021). "A Mathematical Model for Course Timetabling Problem With Faculty-Course Assignment Constraints." *IEEE Access*.
-- AbdoulRjoub, A. (2020). "Courses Timetabling Based on Hill Climbing Algorithm." *International Journal of Electrical and Computer Engineering*, 10(6), 6558-6573.
-- Goes, A. (2019). "Optimization in Timetabling in Schools Using a Mathematical Model, Local Search and Iterated Local Search." *Gestão & Produção*, 26.
-
----
-
-*Analisis ini ditulis untuk mendukung penelitian tesis tentang University Course Timetabling Problem menggunakan Simulated Annealing.*
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+
+EXPLORING MATHEMATICAL TOOLS IN DESIGNING EFFICIENT
+TIMETABLE ALGORITHMS
+
+Poonam Kumari
+Research Scholar
+Shri JJT University
+Rajasthan.
+
+Dr. Vineeta Basotia
+Research Guide
+Shri JJT University
+Rajasthan.
+
+ABSTRACT
+
+Dr. Harmendra Kumar
+Mandia
+Co-Guide
+Shri JJT University
+Rajasthan.
+
+INTRODUCTION
+Timetabling can be characterized as the
+task of certain people to explicit timeframes
+to accomplish a bunch of goals. Because of
+the uncertainty in settling on the goal
+capability, an ideal answer for timetabling
+is trying with just a single imaginative
+strategy. Subsequently, a method is
+important to address every one of the
+pertinent limitations to get a nearby answer
+for the enhancement. Since making a course
+of events is a troublesome and tedious
+activity for the dependable staff, having it
+done naturally can diminish their
+responsibility. Because of the expanded
+number of courses, scholastic subjects, and
+booked courses in a college, designating a
+reasonable site without programming is
+very
+difficult
+because
+of
+space
+requirements, client area, suitable time, and
+Teacher. There are generally two sorts of
+cutoff points with these issues: serious and
+delicate requirements. Under all conditions,
+serious constraints can be given. Serious
+limitations are conditions that should be
+seen to have exact and adequate plans. In
+every timeframe, every teacher is simply
+expected to show one class. All classes that
+are being considered should stick to the
+plan. As far as subject, all planned rooms
+ought to be in concurrence with the
+guidance.
+
+The problems that can be caused by having too many
+soft limitations in a timetable should be minimized
+as much as possible by a university's course
+schedule. Even though UCTP is widely considered
+to be one of the most intriguing difficulties that
+schools are currently facing, some of them are still
+generating their timetables manually using basic
+office software like spreadsheets. A large number of
+educational establishments at the higher education
+level employ a varied teaching staff that works
+together to accomplish the educational goals.
+However, one of the challenges that is faced by the
+majority of educational institutions is developing a
+schedule for these lecturers that is free from any
+potential conflicts. A table that details several events
+along with the times at which they take place is
+called a schedule. The curriculum for the
+forthcoming semester is something that the teaching
+staff and administrative staff at a variety of
+educational institutions spend a significant amount
+of time planning each year. The activities that must
+be accomplished for the faculty course assignment,
+for instance, are laid out as linear programmers.
+Linear programming, which entails the creation of
+mathematical models or algorithms, can be used to
+solve the problem of the faculty course assignment.
+One of the newest tools for dealing with problems
+that come up with academic course assignments is
+integer programming. For the purpose of this study,
+we dealt with the difficulties that arose from faculty
+course scheduling by employing a method that was
+based on fuzzy preferences. As a consequence of
+this, the objective of this research is to build
+algorithms that may be utilized to optimize resource
+timetables while producing course schedules for
+faculty members.
+Key words: mathematical models, algorithms,
+timetables, educational institutions
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+30
+
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+The planning required for university on a
+weekly basis is difficult. As a direct
+consequence of this, the courses need to
+have their timing adjusted in accordance
+with the relaxed and strict limits. The
+purpose of this exercise is to identify soft
+limitations, but the idea is to identify severe
+constraints (some of which may be
+reversible under specific conditions and at
+a significant cost). Due to the fact that both
+students and teachers are placed in certain
+courses, course groups, or classes, the
+process of weekly planning takes on
+multiple dimensions. After the issue has
+been resolved, there are a few constraints
+concerning the level of customer demand
+that need to be taken into consideration. It
+is a task that entails dividing up specified
+activities (such lessons and tests) into a
+number of time slots or classes. The
+following might serve as a simple definition
+of university course scheduling:it is a task
+that involves the assignment of specified
+events. According to this interpretation, the
+process of scheduling university classes can
+be broken down into two distinct
+categories: course planning and test
+planning. Exam planning and course
+planning share some similarities in terms of
+the nature of the considerations that
+universities take into account, but the most
+significant distinction lies in the fact that in
+exam planning, multiple events can be
+scheduled concurrently in common periods
+and classes, whereas in course planning,
+this is not possible. When constructing
+courses, only one group course and one
+course in total can be allotted to each period
+of time.
+LITERATURE REVIEW
+Algethami, Haneen (2021) the challenge
+of developing an automated schedule for
+classes within the confines of a university's
+limited resources is referred to as the
+
+university course timetabling problem
+(UCTP) Timetables that are generated
+manually are prone to inaccuracies and
+need a significant amount of effort to
+produce workable solutions. As a
+consequence of this, solutions that are both
+effective and rapid to implement are
+necessary. The complexity of the
+timetabling task is increased when dealing
+with limits connected to the faculty, such as
+their requirements, preferences, and
+availability. This can make the challenge
+feel even more insurmountable. As a
+consequence of this, the solutions that are
+developed by UCTP concentrate on the
+limits that are associated with the students,
+while the faculty members' limitations are
+restricted to their teaching schedules or
+preferences. This work provides a multiobjective mixed-integer programming
+model for a preregistration UCTP with
+faculty-related restrictions. When arranging
+event assignments, the goal is to maximise
+faculty
+members'
+happiness
+while
+following university standards. The
+quantity of unscheduled activities and
+student learning days is being reduced at the
+same time. We employ a total of eight
+various real-world scenarios for assessing
+the model. Computational experiments are
+performed in order to show the model's
+utility.
+AbdoulRjoub (2020) Manual school
+timetable scheduling is not only timeconsuming and tedious, but it also
+frequently results in the assignment of the
+same teacher to multiple classes, the
+assignment of multiple teachers to the same
+classroom at the same slot time, or even the
+exercise of deliberate partialities in favour
+of a particular group of teachers. All of
+these circumstances are bad for the
+following reasons, but not only those listed
+below: In order to help with the settlement
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+31
+
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+of the customary conflicts that arise from
+human scheduling, this research proposes a
+method for the automated scheduling of
+school schedules. In order to get beyond the
+method's inherent hard and soft restrictions,
+hill climbing algorithms have been
+improved. In the majority of cases, it will
+be challenging to follow lax regulations, yet
+severe rules must be followed anyway. This
+approach has been used in a variety of
+educational contexts and has proven
+beneficial, although there are a number of
+limitations. Within the first five seconds
+and the second iteration, the initial answer
+can be improved by 72% and 50%,
+respectively, toward the ideal solution, with
+the optimal solution being attained after 15
+iterations.
+Anderson Goes (2019) This article covers
+the subject of school timetabling, which is
+the process of choosing the day and time
+that instructors will teach lessons at
+educational institutions. In order to produce
+and optimise Elementary and High School
+schedules while taking into account
+instructors' preferences for certain days or
+sequenced (twinned) lessons, a tool based
+on operational research (OR) methodology
+was developed. The following is how the
+document is set up. In addition to the Local
+Search (LS) and Iterated Local Search
+(ILS) techniques, a mathematical model
+known as Non Linear Binary Integer
+Programming (NLBIP) was used to solve
+the problem. Araucária, a city in the state of
+Paraná, Brazil, underwent an inquiry into a
+severe issue regarding the daily schedules
+of 14 public schools. The results show that
+the computational time demanded by the
+mathematical model is feasible under the
+current conditions. The ILS approach can
+test bigger scale issues since it has a
+dispersion that is between 3.5 percent and
+7.7 percent lower than the best solution
+
+(which was generated by the NLBIP) and a
+computation time that is between 15 and
+338 times quicker.
+Mohd Rahman (2018) Course scheduling
+is one of the most time-consuming and
+important jobs that any educational
+institution must complete. The process of
+course scheduling, on the other hand, takes
+a lot of time and can be very taxing due to
+the fact that it needs to be done for every
+typical semester. This study's objective is to
+evaluate several optimization algorithms
+that can be used to address the challenge of
+successfully scheduling classes. A
+classification of Hard Constraints and Soft
+Constraints, in addition to a classification of
+Optimization Methods, is used to collect
+and distribute the information. According
+to the findings, the use of meta-heuristics is
+the method that is put into practise the most
+frequently in order to solve the problem of
+course scheduling. When compared to the
+other processes that were examined, it was
+determined that this method should be
+regarded appropriate for use in the future.
+An examination and a close watch will be
+maintained for the continuation of the
+investigation.
+Genetic Algorithms
+The university course scheduling problem
+must first be resolved in order for
+scheduling algorithms to discover a
+solution that satisfies a set of constraints.
+Depending on the circumstances, these
+restrictions are either required or optional.
+The definition of an essential limitation is
+one that, if not met, would lead to an
+impractical timetable. The ones that aren't
+necessary, on the other hand, raise the
+standard of the framework. GAs, a type of
+technique, may be used to quickly identify
+answers to certain difficulties. They are
+founded on the ideas of genetics and natural
+selection, and their main tenet is that the
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+32
+
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+healthiest members of a population are
+chosen, who later mix with other members
+of the population or mutate into new forms
+to establish new groups. The challenge of
+timetabling is that it calls for instructors and
+students to work together to arrange the
+scheduling of several classes within a
+limited period of time while adhering to a
+variety of regulations. Any educational
+institution can experience this difficulty,
+but as a school's size grows, the intricacy of
+the problem also rises.
+
+solution relies on certain limitations that
+might be required in a given instance of the
+issue, it might not be applicable to other
+instances of the problem. It is essential to
+schedule activities (subjects, courses) into a
+number of time slots while following to a
+number of restrictions in order to resolve
+the university course scheduling problem,
+commonly known as UCTP. Each
+university has a varied class schedule
+because of its unique set of resources and
+limitations. For the UCTP, no deterministic
+polynomial time method is currently known
+to exist. The UCTP issue is an NP-hard
+problem, to put it another way. Traditional
+computer-based timetabling techniques
+primarily concentrate on creating the
+schedule; nevertheless, these approaches
+fall short of meeting all essential
+requirements It might be difficult to come
+up with answers utilising knowledge-based
+or
+operations
+research-based
+methodologies when dealing with such
+problems. Due to the unique assumptions
+about the nature of the problem on which
+they are based, these approaches are often
+characterised by their slowness and rigidity.
+Mathematical Model for an Educational
+Institution's
+Timetable
+Scheduling
+Problem Optimization
+Concerns pertaining to scheduling
+constitute an important tactic that have to be
+implemented in virtually every sector of the
+economy in the present day. Problems with
+scheduling can manifest in a variety of
+contexts, including the departure times of
+flights, the shift schedules of nurses or
+doctors, factory shift plans, course
+timetables, and test schedules at
+educational institutions. In this study, we
+take a look at one of the time scheduling
+approaches that were discussed earlier,
+namely the educational time scheduling
+approach. The assignment of courses that
+
+University timetabling regulations
+The key scheduling requirements of the
+university are considered to be stringent
+limits.
+a. When two or more classes for the same
+teacher are scheduled at the same time in
+the same classroom for the same group of
+students, there is a scheduling conflict.
+Finally, when two or more classrooms are
+assigned to the same course and group of
+students at the same time; when two or
+more teachers are assigned to the same
+group of students in order to teach two
+independent courses at the same time.b. A
+timetable is considered to be finished when
+the total number of hours for the course has
+been established and the teacher's teaching
+load has not surpassed a limit that was
+previously established. There are also
+regulations that are considered soft
+limitations; examples of them are as
+follows:· Preferences for teachers in the
+allotted time intervals are honoured to the
+best of our ability. Every member of the
+faculty has the ability to name their
+favourite subject area.
+Mimetic Algorithm for the University
+Course Timetabling Problem
+It's feasible that a work's specifics will
+make scheduling issues considerably more
+challenging. If a general algorithmic
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+33
+
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+belong to teacher and student groups to
+classrooms of appropriate capacity at
+appropriate time intervals in educational
+institutions is the focus of the education
+time scheduling problem. The overarching
+goal of this problem is to make the best
+possible assignments given the resources,
+needs, and expectations of the educational
+institution.
+METHODOLOGY
+
+Random Access Memory and 32-bit
+Operating System, with the Window 7
+operating system, and validated using a
+highly constrained high school dataset.
+The implemented algorithms were
+evaluated using constraints violation,
+simulation time and solution cost as
+performance metrics.
+RESULTS AND DISCUSSIONS
+For the remaining courses, the XYZ
+institution has 8 tenured faculty members
+mixed
+integer
+linear programming
+and 4 new faculty members. Table 1 shows
+technique was used to formulate the
+the administrator preferences for twelve
+mathematical programming model of the
+faculty members and the remaining course
+school timetabling problem for the high
+teaching load that can be assigned. For school system. An Enhanced Simulated
+assigning courses to faculty, the
+Annealing (ESA) algorithm for solving the
+administrator preference levels are 1, 2, 3,
+school timetabling
+problem
+was
+and 4. The table of interpretation is as
+formulated, which incorporates specific
+follows: Course 3 is 3rdoption, course 6 is
+features of Simulated Annealing(SA) and
+4thchoice, and course 13 is 1stchoice for F'
+Genetic Algorithms(GA). The formulated
+faculty given preferences by the
+mathematical model with ESA algorithm
+administration, whereas the rest of our
+and SA algorithm were implemented
+blanks signify those courses will not be
+using Matrix Laboratory 8.6 software on
+assigned to him/her. In the same way, the
+an Intel(R) Core(TM) i3-7100 CPU with
+administrator's other faculty course
+2.50GHz speed, 32GB Hard Disk, 4GB
+preferences are listed in Table.1:
+Table 1: Administrator preferences level for assigning courses to the faculty
+Course(𝑖)
+tenured faculty(𝑗)
+new faculty(𝑗)
+1 2 3 4 5 6 7
+1
+
+4 4 4 4 4 4
+
+2
+
+4 2
+
+3
+
+3 3
+
+8
+
+2 2 3 4
+
+3
+
+5
+
+4
+
+4
+
+6
+
+4 2
+
+4
+
+7
+
+2
+
+8
+
+1
+
+1
+1
+
+4
+
+10
+
+12
+
+2
+
+1
+
+2
+
+1
+
+1
+
+1
+2
+
+1
+
+1
+
+11
+
+1
+
+1 4
+
+4(2)
+
+9
+
+1
+
+2
+1
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+34
+
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+9
+
+1 3 4 2 4 4
+
+2
+
+10
+
+3 1
+
+2
+
+11
+
+3
+
+2
+
+12
+13
+
+3 3 2
+3
+
+1
+
+3
+
+2
+
+15
+
+2
+
+4 2 4 3
+
+16
+
+3
+
+4
+
+17
+
+2
+
+18
+19
+
+2
+
+2
+
+2
+
+2
+2
+
+1
+3
+
+3
+
+3
+
+1 4
+
+3
+
+3
+
+1
+
+4
+
+1 3 2 2 2 2 2
+
+2
+
+3
+
+20
+Number of
+courses
+
+2
+
+4
+
+1
+
+14
+
+1
+
+<=
+2
+
+<=
+2
+
+<=
+2
+
+<=
+2
+
+are assigned
+
+The goal functions 𝑓𝑘 for the faculty
+preference levels for the courses to be
+assigned for 12 faculty and 20 courses
+utilizing this data are as follows; The
+remaining 20 courses to be assigned to the
+faculty member in the faculty course
+assignment problem We've introduced new
+variables𝑥𝑟 . in our approach for
+computational simplicity. This 𝑥𝑟 is used to
+substitute 𝑥𝑖𝑗 for the straightforward
+calculation of professor assignments.The
+variable 𝑥𝑙 indicates the 1stcourse to the
+2ndfaculty, while variable; 𝑥45 indicates the
+9thcourse to the 6thfaculty, according to the
+table. Similarly, all additional faculty
+courses are listed in Table.2 as variables.
+
+Table 2: New variables given for the
+preferences of faculty courses
+assignment
+co
+tenured faculty(j)
+new
+ur
+faculty (j)
+se
+(i)
+1 2 3 4 5 6 7 8 9 1 1 1
+0 1 2
+1
+𝑥1 𝑥2 𝑥3 𝑥4 𝑥5 𝑥6
+𝑥7
+2
+𝑥8 𝑥9
+𝑥10𝑥11 𝑥12𝑥13
+3 𝑥14𝑥15
+𝑥16𝑥17
+𝑥18𝑥19
+4(
+𝑥20𝑥21𝑥22𝑥23 𝑥24𝑥25 𝑥26𝑥27𝑥28
+2)
+5
+𝑥29
+𝑥30
+𝑥31
+𝑥32
+6 𝑥33𝑥34
+𝑥35
+7
+𝑥36
+𝑥37
+𝑥38
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+35
+
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+values are documented in Table 4.Faculty
+8
+𝑥39
+𝑥40
+course assignment is provided in Table 3,
+9
+𝑥41𝑥42𝑥43𝑥44𝑥45𝑥46 𝑥47
+which was derived using the linear
+10
+𝑥48𝑥49 𝑥50𝑥51𝑥52 𝑥53𝑥54
+membership function. The value 𝑥14 in
+11
+𝑥55 𝑥56
+𝑥57
+𝑥58
+Table 3 denotes the 3rdcourse to the
+12
+𝑥59 𝑥60
+1stfaculty, with an ideal value of 1. All other
+13 𝑥61
+𝑥62
+𝑥63
+courses are assigned to the faculty in the
+14
+𝑥64 𝑥65𝑥66
+𝑥67
+same fashion, as stated below:
+When we use LINGO software to solve this
+model of the first stage, the allocation plan
+is indicated in Table3, and the objective
+Table 3: Courses assigned to the faculty according to preference levels
+Facult
+y (j)
+
+Course
+(i)
+assigne
+d
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+𝑥14 𝑥34 𝑥41 𝑥36 𝑥39 𝑥56 𝑥82 𝑥85 𝑥60 𝑥78 𝑥72 𝑥80 𝑥62 𝑥76 𝑥7
+
+10
+
+𝑥11 𝑥54
+
+11
+
+1
+2
+
+𝑥27 𝑥27 𝑥32 𝑥67
+
+We utilized a linear membership function to
+solve the model for the first stage. Table 4
+shows the obtained objective values.
+Table 4: The computational result of objective functions using LMF
+Objectiv
+e
+function
+
+Objectiv
+e values
+
+𝑓1 𝑓2 𝑓3 𝑓4
+
+𝑓5 𝑓6 𝑓7 𝑓8 𝑓9 𝑓10 𝑓11 𝑓12
+
+𝑓13
+
+𝑓14
+
+𝑂
+𝑓15
+
+𝑀
+𝑓15
+
+1 2
+
+1
+
+39.0
+0
+
+3.0
+0
+
+4.6
+0
+
+6.7 8
+0 .
+8
+0
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+In the second stage, the output of the first
+stage, as shown in Table , is used to
+determine
+faculty
+course
+timeslot
+preferences for each course.
+CONCLUSION
+This study made use of a random
+mathematical algorithm (RMA) and a
+
+1
+
+2
+
+2
+
+𝑃
+𝑓15
+
+probabilistic mathematical timetabling
+algorithm in order to answer the problem of
+faculty subject assignment in educational
+timetabling. Both of these algorithms are
+mathematical (PMTA). Because of the
+algorithms, the allocation of subjects is fair
+among all of the faculty members. The
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+36
+
+AIJREAS
+
+VOLUME 9, ISSUE 08 (2024, AUG)
+
+(ISSN-2455-6300)ONLINE
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+Iterated Local Search procedures. Gestão
+& Produção. 26. 10.1590/0104-530x324119.
+4. Kanmani, Selvadurai. (2011). Design of
+GAmut-Lssahc: A solver for course
+timetabling problem. International Journal
+of Mathematics in Operational Research.
+3. 10.1504/IJMOR.2011.043012.
+5. Nordin, Syarifah. (2018). Mathematical
+model for timetabling problem in
+maximizing the preference level. AIP
+Conference Proceedings. 1974. 020037.
+10.1063/1.5041568.
+6. Rahman, Mohd. (2018). A study on
+optimization methods for solving course
+timetabling problem in university.
+International Journal of Engineering and
+Technology(UAE).
+7.
+196-200.
+10.14419/ijet.v7i2.14.12824.
+7. Rjoub,
+Abdoul.
+(2020).
+Courses
+timetabling based on hill climbing
+algorithm. International Journal of
+Electrical and Computer Engineering
+(IJECE).
+10.
+6558.
+10.11591/ijece.v10i6.pp6558-6573.
+8. SagirOzdemir, Mujgan. (2019). A New
+Mathematical Model And Random Key
+Based Metaheuristic Solution Approach
+For
+Course-Room-Time
+Assignment
+Problem.
+Eskişehir
+Osmangazi
+Üniversitesi
+MühendislikveMimarlık
+Fakültesi
+Dergisi.
+27.
+10.31796/ogummf.549986.
+9. Sajadi, Seyed. (2013). A mathematical
+model for university course timetabling
+problems by considering multi functions.
+Int. J. of Modelling in Operations
+Management.
+3.
+282
+295.
+10.1504/IJMOM.2013.058336.
+10. Sherali, Hanif. (2015). Mathematical
+models and algorithms for a high school
+timetabling problem. Computers &
+Operations Research. 61. 10.1016/j.cor.20
+15.02.011.
+
+challenge of developing an automated
+schedule for classes within the confines of
+a university's limited resources is referred
+to as the university course timetabling
+problem (UCTP). When prepared by hand,
+timetables run the risk of being inaccurate
+and require a significant amount of time
+before they can deliver useful results.
+Because it provides algorithms with a
+bigger search field in the first phase,
+allowing them to meet hard constraints
+while disregarding soft constraints, we
+decided to go with and implement a twophase technique to solve the timetabling
+issues we encountered in this article. In
+order to solve the issue of timetabling, we
+proposed metaheuristic-based solutions. As
+a result, the majority of our conversation
+was devoted to discussing metaheuristicbased algorithms, such as evolutionary
+algorithms, simulated annealing, tabu
+search, ant colony optimization, and honey
+bee algorithms. In addition to the
+challenges associated with timetabling,
+these methods have been used to the
+resolution of a large number of additional
+combinatorial optimization issues by
+modifying an algorithmic framework
+designed for universal use.
+REFERENCE
+1.
+
+2.
+
+3.
+
+Algethami,
+Haneen&Laesanklang,
+Wasakorn. (2021). A Mathematical Model
+for Course Timetabling Problem With
+Faculty-Course Assignment Constraints.
+IEEE
+Access.
+PP.
+1-1.
+10.1109/ACCESS.2021.3103495.
+Almutairi, Badr. (2020). An Integer Linear
+Programming Model for Solving Radio
+Mean Labeling Problem. IEEE Access. 8.
+162343
+162349.
+10.1109/
+ACCESS.2020.3021896.
+Anderson. Goes, (2019). Optimization in
+timetabling
+in
+schools
+using
+a
+mathematical model, local search and
+
+Anveshana’s International Journal of Research in Engineering and Applied Sciences
+EMAILID:anveshanaindia@gmail.com,WEBSITE:www.anveshanaindia.com
+37
+
+
