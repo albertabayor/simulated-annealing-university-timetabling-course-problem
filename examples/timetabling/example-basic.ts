@@ -131,14 +131,14 @@ const config: SAConfig<TimetableState> = {
   // ============================================
   // NEW: Tabu Search Configuration
   // ============================================
-  tabuSearchEnabled: true, // Enable to prevent cycling
+  tabuSearchEnabled: false, // Enable to prevent cycling
   tabuTenure: 50, // How long a state stays tabu
   maxTabuListSize: 1000, // Memory limit for tabu list
 
   // ============================================
   // NEW: Intensification Configuration
   // ============================================
-  enableIntensification: true, // Enable Phase 1.5 for stubborn hard violations
+  enableIntensification: false, // Enable Phase 1.5 for stubborn hard violations
   intensificationIterations: 2000, // Iterations per intensification attempt
   maxIntensificationAttempts: 3, // Max restart attempts
 
