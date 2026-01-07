@@ -11,7 +11,7 @@ Simulated Annealing (SA) pertama kali diperkenalkan oleh Kirkpatrick, Gelatt, da
 
 Dalam konteks UCTP, penelitian oleh Wiktasari dan Suseno (2016) mendemonstrasikan penerapan SA dengan lima variabel utama: dosen, mata kuliah, slot waktu, hari, dan ruang kelas. Penelitian tersebut menunjukkan bahwa SA mampu menghasilkan jadwal dengan rata-rata 77,791% dari data dapat mencapai solusi optimal dengan standar deviasi 3,93, memvalidasi efektivitas metode ini untuk masalah penjadwalan perkuliahan di Indonesia (Wiktasari & Suseno, 2016). Studi serupa oleh Sukhoco et al. (2024) memperkuat temuan ini dengan membuktikan bahwa SA sangat sesuai diterapkan pada studi kasus penjadwalan akademik di lingkungan kampus dengan kompleksitas data yang tinggi.
 
-Tabu Search sebagai algoritma metaheuristik dikembangkan oleh Fred Glover dan colleagues pada tahun 1980an. Berbeda dengan SA yang menggunakan probabilitas untuk menghindari local optimum, Tabu Search menggunakan struktur memori berupa tabu list untuk mengarahkan pencarian ke solusi-solusi yang belum dieksplorasi (Glover et al., 1993). Komponen utama Tabu Search adalah tabu list yang menyimpan informasi tentang solusi atau move yang telah dikunjungi recently dan tidak boleh dikunjungi kembali dalam beberapa iterasi berikutnya. Keunggulan Tabu Search terletak pada kemampuannya untuk melakukan eksploitasi yang intensif pada daerah solusi yang menjanjikan, menjadikannya komplementer dengan SA yang lebih kuat dalam eksplorasi.
+Tabu Search sebagai algoritma metaheuristik dikembangkan oleh Fred Glover dan colleagues pada tahun 1980an. Berbeda dengan SA yang menggunakan probabilitas untuk menghindari local optimum, Tabu Search menggunakan struktur memori berupa tabu list untuk mengarahkan pencarian ke solusi-solusi yang belum dieksplorasi (Glover et al., 2007). Komponen utama Tabu Search adalah tabu list yang menyimpan informasi tentang solusi atau move yang telah dikunjungi recently dan tidak boleh dikunjungi kembali dalam beberapa iterasi berikutnya. Keunggulan Tabu Search terletak pada kemampuannya untuk melakukan eksploitasi yang intensif pada daerah solusi yang menjanjikan, menjadikannya komplementer dengan SA yang lebih kuat dalam eksplorasi.
 
 Pendekatan hybrid yang menggabungkan SA dan Tabu Search telah menunjukkan performansi yang sangat kompetitif dalam menyelesaikan UCTP. Penelitian Muklason, Marom, dan Premananda (2024) mengembangkan algoritma Tabu-Simulated Annealing Hyper-Heuristics yang menggabungkan kedua metode tersebut dengan konsep hyper-heuristics. Studi mereka menggunakan Socha Dataset sebagai benchmark dan hasilnya menunjukkan bahwa algoritma yang dikembangkan menduduki peringkat kedua dari sepuluh algoritma yang diuji, dengan solusi terbaik pada 6 dari 11 dataset yang diuji. Hasil eksperimen menunjukkan bahwa algoritma hibrida SA-TS mampu menghasilkan penalty score yang rendah, dengan rata-rata penalty 0 untuk small instances dan rata-rata penalty di bawah 200 untuk medium instances (Muklason et al., 2024).
 
@@ -28,7 +28,7 @@ Ringkasan penelitian-penelitian terdahulu yang relevan dapat dilihat pada tabel 
 | No. | Peneliti (Tahun) | Metode | Jenis Masalah | Dataset/Benchmark | Hasil Utama | Keterangan |
 |-----|------------------|--------|---------------|-------------------|-------------|------------|
 | 1 | Kirkpatrick et al. (1983) | Simulated Annealing | Optimasi Kombinatorial General | - | Memperkenalkan konsep SA yang terinspirasi proses annealing dalam metalurgi | Paper seminal SA |
-| 2 | Glover et al. (1993) | Tabu Search | Optimasi Kombinatorial General | - | Memperkenalkan konsep tabu list dan strategi intensification/diversification | Paper seminal TS |
+| 2 | Glover et al. (2007) | Tabu Search | Optimasi Kombinatorial General | - | Memperkenalkan konsep tabu list dan strategi intensification/diversification | Paper seminal TS |
 | 3 | Metropolis et al. (1953) | Metropolis Criterion | Statistical Mechanics | - | Mengembangkan kriteria penerimaan probabilistik untuk SA | Dasar teoretis SA |
 | 4 | Geman & Geman (1984) | Stochastic Relaxation | Image Restoration | - | Menurunkan fungsi Boltzmann untuk penerimaan solusi worse | Dasar teoretis SA |
 | 5 | Wiktasari & Suseno (2016) | Simulated Annealing | UCTP Indonesia | Data perguruan tinggi Indonesia | 77.791% data mencapai solusi optimal, SD=3.93 | Validasi SA untuk konteks Indonesia |
@@ -188,7 +188,7 @@ Kelemahan SA meliputi:
 
 ### 2.4.2 Tabu Search
 
-Tabu Search adalah algoritma metaheuristik yang dikembangkan oleh Fred Glover pada tahun 1986. Berbeda dengan Simulated Annealing yang menggunakan probabilitas untuk menghindari local optimum, Tabu Search menggunakan struktur memori untuk mengarahkan pencarian solusi-solusi yang belum dieksplorasi. Tabu Search secara sistematis mengeksplorasi ruang solusi dengan mempertimbangkan solusi-solusi tetangga dan menggunakan memori untuk menghindari kunjungan berulang ke solusi yang sama (Glover, 1986).
+Tabu Search adalah algoritma metaheuristik yang dikembangkan oleh Fred Glover pada tahun 1986. Berbeda dengan Simulated Annealing yang menggunakan probabilitas untuk menghindari local optimum, Tabu Search menggunakan struktur memori untuk mengarahkan pencarian solusi-solusi yang belum dieksplorasi. Tabu Search secara sistematis mengeksplorasi ruang solusi dengan mempertimbangkan solusi-solusi tetangga dan menggunakan memori untuk menghindari kunjungan berulang ke solusi yang sama (Glover et al., 2007).
 
 #### 2.4.2.1 Komponen Utama Tabu Search
 
@@ -200,7 +200,7 @@ Di mana $|unplaced\_events|$ adalah jumlah event yang belum ditempatkan.
 
 **Aspiration Criteria**: Mekanisme yang memungkinkan mengunjungi kembali solusi yang berada dalam tabu list jika solusi tersebut cukup menjanjikan, yaitu kualitasnya lebih baik dari solusi terbaik yang pernah ditemukan. Aspiration criteria membantu algoritma untuk tidak melewatkan solusi yang sangat baik hanya karena tabu status.
 
-**Intensification dan Diversification**: Tabu Search menggunakan dua strategi pencarian. Intensification mendorong pencarian lebih intensif di area solusi yang menjanjikan, sementara diversification mendorong eksplorasi area baru dari ruang solusi yang belum dieksplorasi (Glover et al., 1993).
+**Intensification dan Diversification**: Tabu Search menggunakan dua strategi pencarian. Intensification mendorong pencarian lebih intensif di area solusi yang menjanjikan, sementara diversification mendorong eksplorasi area baru dari ruang solusi yang belum dieksplorasi (Glover et al., 2007).
 
 #### 2.4.2.2 Algoritma Tabu Search
 
