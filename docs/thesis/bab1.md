@@ -78,23 +78,3 @@ Manfaat dari penelitian ini adalah:
 6. Memberikan proof-of-concept implementasi DSS untuk UCTP dengan arsitektur REST API dan web.
 
 7. Berguna sebagai referensi pada penelitian di masa depan.
-
-## Daftar Pustaka
-
-Bashab, A., Ibrahim, A. O., Hashem, I. A. T., Aggarwal, K., Mukhlif, F., Ghaleb, F. A., & Abdelmaboud, A. (2023). Optimization Techniques in University Timetabling Problem: Constraints, Methodologies, Benchmarks, and Open Issues. Computers, Materials & Continua, 74(3), 6461-6484. https://doi.org/10.32604/cmc.2023.034051
-
-Coşar, B., Say, B., & Dökeroğlu, T. (2022). A New Greedy Algorithm for the Curriculum-based Course Timetabling Problem. Düzce Üniversitesi Bilim ve Teknoloji Dergisi, 10(4), 2022-2024.
-
-Kaviani, M. A., Abbasi, M., Rahpeyma, B., & Yusefi, M. M. (2014). A hybrid Tabu search-simulated annealing method to solve quadratic assignment problem. Decision Science Letters, 3(3), 391-396.
-
-Latpate, A., Sayyad, N., Bargal, C., Sawant, A., & Choudhari, J. S. (2024). AI Based Automatic Timetable Generator Using React. International Journal of Creative Research Thoughts, 12(4), 136-142.
-
-Muklason, A., Marom, A., & Premananda, I. G. A. (2024). Automated Course Timetabling Optimization Using Tabu-Simulated Annealing Hyper-Heuristics Algorithm. Khazanah Informatika, 10(1), 15-29.
-
-Romaguera, D., Plender-Nabasa, J., Matias, J., & Austero, L. (2023). Development of a Web-based Course Timetabling System based on an Enhanced Genetic Algorithm. Procedia Computer Science, 234, 1714-1721.
-
-Sukhoco, A. Y., Lanvino, F., Yudhistyra, E., Permana, B., & Ukar, K. (2024). Optimasi Penjadwalan Mata Kuliah Menggunakan Algoritma Simulated Annealing. Media Informatika, 23(1), 45-58.
-
-Uysal, M., Ceran, O., Tanrıverdi, M., Özdoğan, E., & Üstündağ, M. T. (2025). A Web-based Decision Support System for Managing Course Timetabling in Online Education. Journal of Polytechnic, 28(3), 923-934. https://doi.org/10.2339/politeknik.1517479
-
-Wiktasari, & Suseno, J. E. (2016). Metode Simulated Annealing untuk Optimasi Penjadwalan Perkuliahan Perguruan Tinggi. Jurnal Sistem Informasi Bisnis, 6(2), 133-143. https://doi.org/10.21456/vol6iss2pp133-143
