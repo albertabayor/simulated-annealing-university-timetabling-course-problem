@@ -1,0 +1,228 @@
+"""Move generator: Swap Classes.
+
+Swaps the time slots and rooms of two classes.
+"""
+
+import random
+from typing import Optional, Tuple
+
+from timetable_sa.core.interfaces import MoveGenerator
+from timetable_sa.examples.timetabling.domain_types.state import TimetableState, ScheduleEntry
+from timetable_sa.examples.timetabling.domain_types.domain import TimeSlot
+from timetable_sa.examples.timetabling.utils.time import calculate_end_time
+
+
+class SwapClasses(MoveGenerator):
+    """Move generator that swaps two classes' assignments.
+    
+    This is a powerful move that can quickly resolve multiple conflicts
+    by exchanging the schedules of two classes.
+    
+    Temperature-dependent behavior:
+        - High temperature: Any two classes
+        - Medium temperature: Same prodi classes
+        - Low temperature: Classes with similar characteristics
+    """
+    
+    name: str = "Swap Classes"
+
+    def can_apply(self, state: TimetableState) -> bool:
+        """Check if this move can be applied."""
+        return len(state.schedule) >= 2
+
+    def _select_classes_to_swap(
+        self, state: TimetableState, temperature: float
+    ) -> Tuple[Optional[ScheduleEntry], Optional[ScheduleEntry]]:
+        """Select two classes to swap based on temperature.
+
+        Temperature-dependent selection:
+        - High temp (>10000): Random any two classes
+        - Medium temp (>1000): Prefer same prodi
+        - Low temp (<=1000): Prefer similar classes
+        """
+        if len(state.schedule) < 2:
+            return None, None
+
+        # High temperature: pure random selection
+        if temperature > 10000:
+            entry1, entry2 = random.sample(state.schedule, 2)
+            return entry1, entry2
+
+        # Medium temperature: prefer same prodi
+        if temperature > 1000:
+            # Try to find same prodi classes (50% chance)
+            if random.random() < 0.5:
+                entry1 = random.choice(state.schedule)
+                same_prodi = [
+                    e for e in state.schedule
+                    if e.class_id != entry1.class_id and e.prodi == entry1.prodi
+                ]
+                if same_prodi:
+                    entry2 = random.choice(same_prodi)
+                    return entry1, entry2
+            # Fallback to random
+            entry1, entry2 = random.sample(state.schedule, 2)
+            return entry1, entry2
+
+        # Low temperature: prefer similar classes (same prodi, similar SKS)
+        entry1 = random.choice(state.schedule)
+        candidates = [
+            e for e in state.schedule
+            if e.class_id != entry1.class_id and e.prodi == entry1.prodi
+        ]
+        if candidates:
+            # Prefer similar SKS
+            candidates.sort(key=lambda x: abs(x.sks - entry1.sks))
+            # Pick from top 3 most similar
+            entry2 = random.choice(candidates[:min(3, len(candidates))])
+            return entry1, entry2
+
+        # Fallback to random if no candidates
+        entry1, entry2 = random.sample(state.schedule, 2)
+        return entry1, entry2
+
+    def generate(self, state: TimetableState, temperature: float) -> Optional[TimetableState]:
+        """Generate a new state with two classes swapped.
+        
+        Temperature-dependent behavior matching TypeScript:
+        - High temp (>10000): Prefer full swaps for exploration
+        - Medium temp (>1000): Same prodi preference  
+        - Low temp (<=1000): Prefer similar classes for exploitation
+        """
+        if not self.can_apply(state):
+            return None
+        
+        # Select two different classes to swap
+        entry1, entry2 = self._select_classes_to_swap(state, temperature)
+        
+        if entry1 is None or entry2 is None:
+            return None
+        
+        # Temperature-dependent swap type selection
+        # High temp: Any two classes (random)
+        # Medium temp: Same prodi classes preferred
+        # Low temp: Similar classes preferred
+        
+        swap_time = random.random() < 0.5 if temperature > 1000 else random.random() < 0.4
+        swap_room = random.random() < 0.3 if temperature > 10000 else random.random() < 0.4
+        
+        from timetable_sa.examples.timetabling.utils.time import calculate_end_time
+        
+        # Create new state
+        from timetable_sa.examples.timetabling.utils.initial_solution import clone_state
+        new_state = clone_state(state)
+        
+        # Swap entries
+        for i, e in enumerate(new_state.schedule):
+            if e.class_id == entry1.class_id and e.kelas == entry1.kelas:
+                if swap_time:
+                    temp_slot = entry2.time_slot
+                    new_state.schedule[i] = self._create_swapped_entry(e, entry2, temp_slot, None)
+                break
+            elif e.class_id == entry2.class_id and e.kelas == entry2.kelas:
+                if swap_time:
+                    temp_slot = entry1.time_slot
+                    new_state.schedule[i] = self._create_swapped_entry(e, entry1, temp_slot, None)
+                break
+        
+        for i, e in enumerate(new_state.schedule):
+            if e.class_id == entry1.class_id and e.kelas == entry1.kelas:
+                if swap_room:
+                    temp_room = entry2.room
+                    new_state.schedule[i] = self._create_swapped_entry(e, entry2, None, temp_room)
+                break
+            elif e.class_id == entry2.class_id and e.kelas == entry2.kelas:
+                if swap_room:
+                    temp_room = entry1.room
+                    new_state.schedule[i] = self._create_swapped_entry(e, entry1, None, temp_room)
+                break
+        
+        # Recalculate end times for swapped entries
+        for i, e in enumerate(new_state.schedule):
+            if e.class_id in [entry1.class_id, entry2.class_id]:
+                end_time, _ = calculate_end_time(
+                    e.time_slot.start_time,
+                    e.sks,
+                    e.time_slot.day
+                )
+                new_state.schedule[i] = ScheduleEntry(
+                    class_id=e.class_id,
+                    class_name=e.class_name,
+                    kelas=e.kelas,
+                    prodi=e.prodi,
+                    lecturers=e.lecturers,
+                    room=e.room,
+                    time_slot=TimeSlot(
+                        day=e.time_slot.day,
+                        start_time=e.time_slot.start_time,
+                        end_time=end_time,
+                        period=e.time_slot.period
+                    ),
+                    sks=e.sks,
+                    needs_lab=e.needs_lab,
+                    participants=e.participants,
+                    class_type=e.class_type,
+                    prayer_time_added=e.prayer_time_added,
+                    is_overflow_to_lab=e.is_overflow_to_lab,
+                )
+        
+        return new_state
+    
+    def _create_swapped_entry(
+        self,
+        source_entry: ScheduleEntry,
+        target_entry: ScheduleEntry,
+        new_slot: TimeSlot | None = None,
+        new_room: str | None = None
+    ) -> ScheduleEntry:
+        """Create a new entry with swapped time slot and/or room."""
+        time_slot = new_slot if new_slot else source_entry.time_slot
+        room = new_room if new_room else source_entry.room
+        
+        end_time, _ = calculate_end_time(
+            time_slot.start_time,
+            target_entry.sks,
+            time_slot.day
+        )
+        
+        return ScheduleEntry(
+            class_id=target_entry.class_id,
+            class_name=target_entry.class_name,
+            kelas=target_entry.kelas,
+            prodi=target_entry.prodi,
+            lecturers=target_entry.lecturers,
+            room=room,
+            time_slot=TimeSlot(
+                day=time_slot.day,
+                start_time=time_slot.start_time,
+                end_time=end_time,
+                period=time_slot.period
+            ),
+            sks=target_entry.sks,
+            needs_lab=target_entry.needs_lab,
+            participants=target_entry.participants,
+            class_type=target_entry.class_type,
+            prayer_time_added=target_entry.prayer_time_added,
+            is_overflow_to_lab=target_entry.is_overflow_to_lab,
+        )
+        
+        return ScheduleEntry(
+            class_id=target_entry.class_id,
+            class_name=target_entry.class_name,
+            kelas=target_entry.kelas,
+            prodi=target_entry.prodi,
+            lecturers=target_entry.lecturers,
+            room=source_entry.room,
+            time_slot=TimeSlot(
+                day=source_entry.time_slot.day,
+                start_time=source_entry.time_slot.start_time,
+                end_time=end_time,
+                period=source_entry.time_slot.period
+            ),
+            sks=target_entry.sks,
+            needs_lab=target_entry.needs_lab,
+            participants=target_entry.participants,
+            class_type=target_entry.class_type,
+            prayer_time_added=target_entry.prayer_time_added,
+            is_overflow_to_lab=target_entry.is_overflow_to_lab,
+        )

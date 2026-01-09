@@ -1,6 +1,11 @@
 # Dependencies
 node_modules/
 
+# Python virtual environment
+python/venv/
+python/.venv/
+python/env/
+
 # Build outputs (will be generated)
 dist/
 out/
@@ -35,13 +40,6 @@ data_uisi.xlsx
 Thumbs.db
 .DS_Store
 
-# Development examples (keep in git for development, but not in npm)
-# Examples are kept in git but excluded from npm package
-# /examples  # Commented out - keep examples in git for development
-
-# Legacy/old files
-/src/examples/result
-
 # Test coverage
 coverage/
 .nyc_output/
@@ -50,3 +48,15 @@ coverage/
 *.tmp
 *.temp
 .cache/
+.pytest_cache/
+
+# Python cache (root level)
+__pycache__/
+*.pyc
+*.pyo
+
+# Legacy/old files
+/src/examples/result
+
+# See python/.gitignore for Python-specific ignores
+

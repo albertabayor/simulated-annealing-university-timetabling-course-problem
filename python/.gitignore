@@ -1,0 +1,195 @@
+# Python development .gitignore
+# For /home/emmanuelabayor/projects/timetable-sa/python/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# pytest
+.pytest_cache/
+.coverage
+.coverage.*
+cover/
+htmlcov/
+.tox/
+.nox/
+.coverage_history/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json/
+*.pyi
+
+# ruff
+.ruff_cache/
+.ruff_history/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.log
+sa-optimization.log
+
+# Generated/Temporary
+*.tmp
+*.temp
+tmp/
+temp/
+*.py.bak
+
+# Jupyter Notebooks (optional - uncomment if you want to ignore)
+# .ipynb_checkpoints/
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+build/
+dist/
+*.egg-info/
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+cover/
+htmlcov/
+.tox/
+.nox/
+
+# Translations
+*.mo
+*.pot
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask
+instance/
+.webassets-cache
+
+# Scrapy
+.scrapy
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+.poetry/
+
+# pdm
+.pdm.toml
+
+# uv
+.uv/
+
+# pyright
+.pyright/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# IntelliJ
+*.iml
+
+# Eric
+*.prj
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# Qt Creator
+*.pro
+*.pro.user*
+
+# CLion
+.cproject
+.settings/
+
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
