@@ -57,6 +57,7 @@ __pycache__/
 
 # Legacy/old files
 /src/examples/result
+/.venv
 
 # See python/.gitignore for Python-specific ignores
 
