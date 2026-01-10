@@ -32,6 +32,9 @@ from timetable_sa.examples.timetabling.moves.swap_classes import (
 from timetable_sa.examples.timetabling.moves.swap_friday_with_non_friday import (
     SwapFridayWithNonFriday,
 )
+from timetable_sa.examples.timetabling.moves.fix_class_type_time import (
+    FixClassTypeTime,
+)
 
 __all__ = [
     "ChangeRoom",
@@ -44,4 +47,5 @@ __all__ = [
     "FixRoomConflict",
     "SwapClasses",
     "SwapFridayWithNonFriday",
+    "FixClassTypeTime",
 ]

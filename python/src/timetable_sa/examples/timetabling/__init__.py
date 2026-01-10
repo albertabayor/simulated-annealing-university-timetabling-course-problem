@@ -52,6 +52,7 @@ from timetable_sa.examples.timetabling.moves import (
     SwapFridayWithNonFriday,
     FixFridayPrayerConflict,
     FixMaxDailyPeriods,
+    FixClassTypeTime,
 )
 from timetable_sa.examples.timetabling.utils.time import (
     time_to_minutes,
@@ -132,6 +133,7 @@ __all__ = [
     "SwapFridayWithNonFriday",
     "FixFridayPrayerConflict",
     "FixMaxDailyPeriods",
+    "FixClassTypeTime",
     # Utilities
     "time_to_minutes",
     "minutes_to_time",

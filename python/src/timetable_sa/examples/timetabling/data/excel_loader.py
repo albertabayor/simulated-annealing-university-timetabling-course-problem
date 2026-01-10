@@ -134,7 +134,14 @@ def load_class_requirements(df: pd.DataFrame) -> list[ClassRequirement]:
         kode_dosen_prodi_lain2 = row.get("Kode_Dosen_Prodi_Lain2")
         if pd.isna(kode_dosen_prodi_lain2):
             kode_dosen_prodi_lain2 = None
-        
+
+        # Handle NaN/empty class_type: default to "pagi"
+        raw_class_type = row.get("Class_Type", "")
+        if pd.isna(raw_class_type) or not raw_class_type or str(raw_class_type).lower() == "nan":
+            class_type = "pagi"
+        else:
+            class_type = str(raw_class_type)
+
         class_req = ClassRequirement(
             prodi=str(row.get("Prodi", "")),
             kelas=str(row.get("Kelas", "")),
@@ -147,7 +154,7 @@ def load_class_requirements(df: pd.DataFrame) -> list[ClassRequirement]:
             kode_dosen2=kode_dosen2,
             kode_dosen_prodi_lain1=kode_dosen_prodi_lain1,
             kode_dosen_prodi_lain2=kode_dosen_prodi_lain2,
-            class_type=str(row.get("Class_Type", "")),
+            class_type=class_type,
             should_on_the_lab=str(row.get("should_on_the_lab", "")),
             rooms=str(row.get("rooms", "")),
         )

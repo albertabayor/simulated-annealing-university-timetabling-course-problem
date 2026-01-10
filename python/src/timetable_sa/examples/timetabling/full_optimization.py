@@ -38,6 +38,7 @@ from timetable_sa.examples.timetabling import (
     FixRoomCapacity,
     FixMaxDailyPeriods,
     FixFridayPrayerConflict,
+    FixClassTypeTime,
     SwapFridayWithNonFriday,
 )
 from timetable_sa.examples.timetabling.domain_types.domain import (
@@ -62,13 +63,14 @@ def create_greedy_initial_state_v2(
     rooms: list[Room],
     lecturers: list[Lecturer],
     time_slots: list[TimeSlot],
-    random_seed: int = 42
+    random_seed: int | None = None
 ) -> TimetableState:
     """Create initial state using greedy assignment (matches TypeScript approach exactly).
-    
+
     This version exactly matches the TypeScript initial-solution.ts.
     """
-    random.seed(random_seed)
+    if random_seed is not None:
+        random.seed(random_seed)
     
     # Generate pagi and sore slots like TypeScript's initializeTimeSlots
     from timetable_sa.examples.timetabling.utils.time import time_to_minutes
@@ -471,6 +473,7 @@ def main():
         FixRoomCapacity(),
         FixMaxDailyPeriods(),
         FixFridayPrayerConflict(),
+        FixClassTypeTime(),
         SwapFridayWithNonFriday(),
     ]
     print(f"   Added {len(move_generators)} move generators")
@@ -479,6 +482,8 @@ def main():
     print("\n6. Configuring Simulated Annealing...")
     from timetable_sa.core.interfaces.config import LoggingConfig
     config = SAConfig(
+        tabu_search_enabled=True,
+        tabu_tenure=500,
         initial_temperature=100000.0,
         min_temperature=0.0000001,
         cooling_rate=0.9995,
@@ -490,8 +495,8 @@ def main():
             lecturers=s.lecturers,
         ),
         reheating_threshold=2000,
-        reheating_factor=1.5,
-        max_reheats=10,
+        reheating_factor=2.0,
+        max_reheats=3,
         logging=LoggingConfig(
             enabled=True,
             level="info",  # Reduce logging to info for faster execution
@@ -534,11 +539,66 @@ def main():
         violations = constraint.get_violations(result['state'])
         if violations:
             print(f"  {constraint.name}: {len(violations)} violations")
+            # Show details for hard constraint violations
+            if constraint.type == "hard" and len(violations) > 0:
+                for v in violations[:5]:  # Show first 5
+                    print(f"    - {v}")
+                if len(violations) > 5:
+                    print(f"    ... and {len(violations) - 5} more")
     
     print("\n" + "=" * 60)
     print("Optimization completed successfully!")
     print("=" * 60)
-    
+
+    # Save final result to JSON file (matching TypeScript format)
+    print("\nSaving final result to timetable-result.json...")
+    final_state = result['state']
+
+    # Calculate prayer time additions for entries that need it
+    schedule_result = []
+    for entry in final_state.schedule:
+        end_time, prayer_time_added = calculate_end_time(
+            entry.time_slot.start_time, entry.sks, entry.time_slot.day
+        )
+
+        # Check if this is an overflow to lab (room has 'lab' but class doesn't need it)
+        is_overflow = False
+        if not entry.needs_lab and 'lab' in entry.room.lower():
+            is_overflow = True
+
+        schedule_result.append({
+            "classId": entry.class_id,
+            "className": entry.class_name,
+            "class": entry.kelas,
+            "prodi": entry.prodi,
+            "lecturers": entry.lecturers,
+            "room": entry.room,
+            "timeSlot": {
+                "period": entry.time_slot.period,
+                "day": entry.time_slot.day,
+                "startTime": entry.time_slot.start_time,
+                "endTime": entry.time_slot.end_time,
+            },
+            "sks": entry.sks,
+            "needsLab": entry.needs_lab,
+            "participants": entry.participants,
+            "classType": entry.class_type,
+            "prayerTimeAdded": prayer_time_added,
+            "isOverflowToLab": is_overflow,
+        })
+
+    final_result = {
+        "fitness": result['fitness'],
+        "hardViolations": result['hard_violations'],
+        "softViolations": result['soft_violations'],
+        "iterations": result['iterations'],
+        "schedule": schedule_result,
+    }
+
+    with open('timetable-result.json', 'w') as f:
+        json.dump(final_result, f, indent=2, ensure_ascii=False)
+    print("   Result saved successfully!")
+
     return result
 
 
