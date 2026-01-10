@@ -23,6 +23,7 @@ from timetable_sa.examples.timetabling.utils.prayer_times import (
 )
 from timetable_sa.examples.timetabling.utils.timeslot_generator import (
     TimeSlotGenerator,
+    generate_ts_slots,
     generate_default_time_slots,
     generate_morning_slots,
     generate_evening_slots,
@@ -30,6 +31,7 @@ from timetable_sa.examples.timetabling.utils.timeslot_generator import (
 from timetable_sa.examples.timetabling.utils.initial_solution import (
     create_initial_state,
     create_greedy_initial_state,
+    create_greedy_initial_state_v2,
     clone_state,
 )
 from timetable_sa.examples.timetabling.utils.constraint_helpers import (
@@ -107,12 +109,14 @@ __all__ = [
     "EVENING_CLASS",
     # Time slot generation
     "TimeSlotGenerator",
+    "generate_ts_slots",
     "generate_default_time_slots",
     "generate_morning_slots",
     "generate_evening_slots",
     # Initial state
     "create_initial_state",
     "create_greedy_initial_state",
+    "create_greedy_initial_state_v2",
     "clone_state",
     # Constraint helpers
     "group_by_room",

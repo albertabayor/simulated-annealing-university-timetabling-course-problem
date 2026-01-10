@@ -60,10 +60,12 @@ from timetable_sa.examples.timetabling.utils.time import (
     calculate_end_time,
 )
 from timetable_sa.examples.timetabling.utils.timeslot_generator import (
+    generate_ts_slots,
     generate_default_time_slots,
 )
 from timetable_sa.examples.timetabling.utils.initial_solution import (
     create_initial_state,
+    create_greedy_initial_state_v2,
     clone_state,
 )
 from timetable_sa.examples.timetabling.utils.constraint_helpers import (
@@ -138,8 +140,10 @@ __all__ = [
     "time_to_minutes",
     "minutes_to_time",
     "calculate_end_time",
+    "generate_ts_slots",
     "generate_default_time_slots",
     "create_initial_state",
+    "create_greedy_initial_state_v2",
     "clone_state",
     "group_by_room",
     "group_by_lecturer",

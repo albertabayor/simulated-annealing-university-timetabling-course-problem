@@ -181,7 +181,7 @@ def generate_morning_slots() -> List[TimeSlot]:
 
 def generate_evening_slots() -> List[TimeSlot]:
     """Generate evening time slots (17:00 - 21:00).
-    
+
     Returns:
         List of evening time slots
     """
@@ -193,3 +193,73 @@ def generate_evening_slots() -> List[TimeSlot]:
         days=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     )
     return generator.generate()
+
+
+def generate_ts_slots(start_time: str, end_time: str, slot_duration: int = 50) -> List[TimeSlot]:
+    """Generate time slots matching TypeScript implementation.
+
+    This function replicates the exact logic from the TypeScript timeslot-generator.ts,
+    including prayer time breaks and specific time boundary handling.
+
+    Args:
+        start_time: Start time in "HH:MM" format (e.g., "07:30")
+        end_time: End time in "HH:MM" format (e.g., "15:30")
+        slot_duration: Duration of each slot in minutes (default: 50)
+
+    Returns:
+        List of TimeSlot objects covering the specified time range
+
+    Example:
+        >>> slots = generate_ts_slots("07:30", "15:30")
+        >>> len(slots)
+        54  # 9 slots/day x 6 days
+    """
+    slots = []
+    end_min = time_to_minutes(end_time)
+
+    for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]:
+        hour = time_to_minutes(start_time) // 60
+        minute = time_to_minutes(start_time) % 60
+        period = 1
+
+        while True:
+            current_min = hour * 60 + minute
+            if current_min >= end_min:
+                break
+
+            slot_start = f"{hour:02d}:{minute:02d}"
+            end_min_calc = minute + slot_duration
+            end_hour = hour + end_min_calc // 60
+            end_minute = end_min_calc % 60
+
+            end_time_calc = end_hour * 60 + end_minute
+            if end_time_calc > end_min:
+                break
+
+            slot_end = f"{end_hour:02d}:{end_minute:02d}"
+
+            if hour == 19 and minute == 20:
+                slots.append(TimeSlot(day=day, start_time=slot_start,
+                                     end_time=slot_end, period=period))
+                break
+
+            slots.append(TimeSlot(day=day, start_time=slot_start,
+                                 end_time=slot_end, period=period))
+
+            minute = end_minute
+            hour_adjusted = False
+            if minute == 50 and hour == 15:
+                minute -= 20
+            elif hour == 18 and minute == 50:
+                minute -= 20
+                hour_adjusted = True
+
+            if minute >= 60:
+                hour += minute // 60
+                minute = minute % 60
+            elif not hour_adjusted:
+                hour = end_hour
+
+            period += 1
+
+    return slots
