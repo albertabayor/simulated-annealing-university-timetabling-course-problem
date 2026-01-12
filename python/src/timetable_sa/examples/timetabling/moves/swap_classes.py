@@ -160,33 +160,32 @@ class SwapClasses(MoveGenerator):
         new_state = clone_state(state)
 
         # Swap entries
+        # Process time swap for both entries (no break - need to process BOTH entry1 AND entry2)
         for i, e in enumerate(new_state.schedule):
-            if e.class_id == entry1.class_id and e.kelas == entry1.kelas:
-                if swap_time:
+            if swap_time:
+                if e.class_id == entry1.class_id and e.kelas == entry1.kelas:
                     temp_slot = entry2.time_slot
                     new_state.schedule[i] = self._create_swapped_entry(e, entry2, temp_slot, None)
-                break
-            elif e.class_id == entry2.class_id and e.kelas == entry2.kelas:
-                if swap_time:
+                elif e.class_id == entry2.class_id and e.kelas == entry2.kelas:
                     temp_slot = entry1.time_slot
                     new_state.schedule[i] = self._create_swapped_entry(e, entry1, temp_slot, None)
-                break
 
+        # Process room swap for both entries (no break - need to process BOTH entry1 AND entry2)
         for i, e in enumerate(new_state.schedule):
-            if e.class_id == entry1.class_id and e.kelas == entry1.kelas:
-                if swap_room:
+            if swap_room:
+                if e.class_id == entry1.class_id and e.kelas == entry1.kelas:
                     temp_room = entry2.room
                     new_state.schedule[i] = self._create_swapped_entry(e, entry2, None, temp_room)
-                break
-            elif e.class_id == entry2.class_id and e.kelas == entry2.kelas:
-                if swap_room:
+                elif e.class_id == entry2.class_id and e.kelas == entry2.kelas:
                     temp_room = entry1.room
                     new_state.schedule[i] = self._create_swapped_entry(e, entry1, None, temp_room)
-                break
 
         # Recalculate end times for swapped entries
+        # IMPORTANT: Match on BOTH class_id AND kelas to uniquely identify entries
+        # This prevents modifying all entries with the same class_id (e.g., IF-1A and IF-1B both having IF13P114)
         for i, e in enumerate(new_state.schedule):
-            if e.class_id in [entry1.class_id, entry2.class_id]:
+            if (e.class_id == entry1.class_id and e.kelas == entry1.kelas) or \
+               (e.class_id == entry2.class_id and e.kelas == entry2.kelas):
                 end_time, _ = calculate_end_time(
                     e.time_slot.start_time,
                     e.sks,
