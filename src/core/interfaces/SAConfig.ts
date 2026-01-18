@@ -301,6 +301,22 @@ export interface SAConfig<TState> {
   maxIntensificationAttempts?: number;
 
   /**
+   * Operator selection mode
+   *
+   * - 'hybrid': 30% random + 70% weighted by success rate (default, more robust)
+   * - 'roulette-wheel': 100% fitness-proportionate selection (pure Muklason formula)
+   *
+   * @default 'hybrid'
+   *
+   * @remarks
+   * - 'hybrid': Guaranteed exploration at all stages, prevents over-exploitation
+   * - 'roulette-wheel': Pure data-driven, good for research/comparison
+   * 
+   * Reference: Muklason et al. (2024), Cowling et al. (2002)
+   */
+  operatorSelectionMode?: 'hybrid' | 'roulette-wheel';
+
+  /**
    * Logging configuration
    */
   logging?: LoggingConfig;

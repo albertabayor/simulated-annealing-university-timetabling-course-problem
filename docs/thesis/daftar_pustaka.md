@@ -6,6 +6,8 @@ Bashab, A., Ibrahim, A. O., Hashem, I. A. T., Aggarwal, K., Mukhlif, F., Ghaleb,
 
 Burke, E. K., & Petrovic, S. (2002). Recent research directions in automated timetabling. European Journal of Operational Research, 140(2), 266-290. https://doi.org/10.1016/S0377-2217(02)00130-2
 
+Cowling, P., Kendall, G., & Soubeiga, E. (2002). A hyperheuristic approach to scheduling a sales summit. In E. K. Burke & W. Erben (Eds.), Practice and Theory of Automated Timetabling III (pp. 176-190). Springer. https://doi.org/10.1007/978-3-540-45157-0_11
+
 Coşar, B., Say, B., & Dökeroğlu, T. (2022). A New Greedy Algorithm for the Curriculum-based Course Timetabling Problem. Düzce Üniversitesi Bilim ve Teknoloji Dergisi, 10(4), 2022-2024.
 
 Cruz-Rosales, M. H., Cruz-Chávez, M. A., Alonso-Pecina, F., Peralta-Abarca, J. d. C., Ávila-Melgar, E. Y., Martínez-Bahena, B., & Enríquez-Urbano, J. (2022). Metaheuristic with cooperative processes for the university course timetabling problem. Applied Sciences, 12(2), 542. https://doi.org/10.3390/app12020542

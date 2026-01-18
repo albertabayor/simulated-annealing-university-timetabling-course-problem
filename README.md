@@ -36,7 +36,8 @@ v2.0 is a complete rewrite that transforms `timetable-sa` from a university-spec
 
 - **Multi-Phase Optimization**: Phase 1 (hard constraints), Phase 1.5 (intensification), Phase 2 (soft constraints)
 - **Tabu Search**: Prevents cycling and escapes local minima by tracking visited states
-- **Adaptive Operator Selection**: Learns which operators work best and uses them more frequently
+- **Adaptive Operator Selection**: Learns which operators work best and uses them more frequently (hybrid or roulette-wheel mode)
+- **Configurable Selection Modes**: Choose between hybrid (30% random + 70% weighted) or pure roulette-wheel selection
 - **Reheating Mechanism**: Escapes local minima by temporarily increasing temperature
 - **Intensification**: Aggressively targets remaining hard violations with focused search
 - **Performance Optimized**: Unified fitness calculation, efficient constraint evaluation
@@ -284,6 +285,9 @@ interface SAConfig<TState> {
     output?: 'console' | 'file' | 'both';
     filePath?: string;
   };
+
+  // Optional: Operator Selection Mode
+  operatorSelectionMode?: 'hybrid' | 'roulette-wheel';  // Default: 'hybrid'
 }
 ```
 
@@ -311,7 +315,12 @@ This ensures hard constraints are satisfied before optimizing for preferences, w
 
 ## Adaptive Operator Selection
 
-The solver tracks success rates of each move operator and adaptively selects the most effective ones. Operators with higher success rates are selected more frequently (70% weighted selection + 30% random exploration).
+The solver tracks success rates of each move operator and adaptively selects the most effective ones. Two selection modes are available:
+
+- **hybrid (default)**: 70% weighted selection by success rate + 30% random exploration (balanced, more robust)
+- **roulette-wheel**: 100% fitness-proportionate selection (pure theoretical formula, higher exploitation)
+
+Configure via `operatorSelectionMode` config option.
 
 ## Documentation
 

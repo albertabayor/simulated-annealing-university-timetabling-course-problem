@@ -13,6 +13,7 @@ This guide helps you configure the Simulated Annealing algorithm for optimal res
 - [Tabu Search](#tabu-search)
 - [Intensification](#intensification)
 - [Logging](#logging)
+- [Operator Selection](#operator-selection)
 - [Tuning Guide](#tuning-guide)
 
 ## Basic Configuration
@@ -575,6 +576,68 @@ logging: { logInterval: 5000 }
 
 ```typescript
 logging: { enabled: false }
+```
+
+## Operator Selection
+
+The algorithm uses adaptive operator selection to choose which move generator to apply at each iteration. Two selection modes are available.
+
+### Selection Modes
+
+**hybrid (default)**
+- 30% random selection for exploration
+- 70% weighted selection by success rate for exploitation
+- More robust, balances exploration and exploitation
+- Based on research by Cowling et al. (2002)
+
+**roulette-wheel**
+- 100% fitness-proportionate selection
+- Pure Roulette Wheel Selection matching the Muklason et al. (2024) thesis formula
+- Higher exploitation, less exploration
+- May converge faster but risks missing good solutions
+
+```typescript
+const config: SAConfig<MyState> = {
+  // ... other config
+  operatorSelectionMode: 'hybrid',  // Default - balanced exploration/exploitation
+};
+
+// Use pure roulette-wheel for higher exploitation
+const config2: SAConfig<MyState> = {
+  // ... other config
+  operatorSelectionMode: 'roulette-wheel',
+};
+```
+
+### When to Use Each Mode
+
+**Use hybrid when:**
+- Problem has many local minima
+- You want robust performance across different instances
+- Exploration is more important than rapid convergence
+
+**Use roulette-wheel when:**
+- Problem is well-understood with smooth fitness landscape
+- Rapid convergence is important
+- You want strict adherence to the theoretical formula
+
+### How Operator Success is Tracked
+
+The algorithm tracks success rate for each operator:
+- A move is "successful" if it produces a better solution OR is accepted despite being worse
+- Success rates are updated continuously during optimization
+- More successful operators get higher selection probability
+
+```typescript
+// Example: After solving, check operator performance
+const solver = new SimulatedAnnealing(initialState, constraints, moveGenerators, config);
+const solution = solver.solve();
+
+const stats = solver.getStats();
+console.log('Operator performance:');
+for (const [name, data] of Object.entries(stats)) {
+  console.log(`${name}: ${data.successRate.toFixed(2)} success rate`);
+}
 ```
 
 ## Tuning Guide

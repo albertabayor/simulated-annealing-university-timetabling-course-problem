@@ -588,44 +588,98 @@ export class SimulatedAnnealing<TState> {
     return { newState, operatorName: selectedGenerator.name };
   }
 
-  /**
-   * Select move generator adaptively based on success rates
-   * this concept method is inspired by Roulette Wheel Selection
-   * and it's implemented by linear search, why am i not using binary search ?
-   * it's good idea though but i don't want to complicate things, anyway it's so rare that move generators are more than 100 innit ?
-   * @returns Selected MoveGenerator<TState>
-   */
-  private selectMoveGenerator(generators: MoveGenerator<TState>[]): MoveGenerator<TState> {
-    // 30% of the time: random selection (exploration)
-    if (Math.random() < 0.3) {
-      return generators[Math.floor(Math.random() * generators.length)]!;
-    }
+   /**
+    * Pure Roulette Wheel Selection (100% fitness-proportionate)
+    *
+    * Formula: P(i) = fitness(i) / Σ fitness(j)
+    *
+    * Reference: Muklason et al. (2024) - Tabu-Simulated Annealing Hyper-Heuristics
+    *
+    * @param generators - All applicable move generators
+    * @returns Selected generator
+    */
+   private selectGeneratorRouletteWheel(generators: MoveGenerator<TState>[]): MoveGenerator<TState> {
+     // Use success rate as fitness
+     const fitnesses = generators.map(gen =>
+       this.operatorStats[gen.name]?.successRate || 1.0 / generators.length
+     );
 
-    // 70% of the time: weighted selection based on success rates
-    const weights = generators.map((gen) => {
-      const stats = this.operatorStats[gen.name]!;
-      return stats.successRate || 0.5; // Default to 0.5 if no data yet
-    });
+     const totalFitness = fitnesses.reduce((sum, f) => sum + f, 0);
 
-    const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+     if (totalFitness === 0) {
+       // Uniform random if no data
+       return generators[Math.floor(Math.random() * generators.length)]!;
+     }
 
-    if (totalWeight === 0) {
-      // No successful operators yet, random selection
-      return generators[Math.floor(Math.random() * generators.length)]!;
-    }
+     // Pure Roulette Wheel selection
+     let random = Math.random() * totalFitness;
+     for (let i = 0; i < generators.length; i++) {
+       random -= fitnesses[i]!;
+       if (random <= 0) {
+         return generators[i]!;
+       }
+     }
 
-    // Weighted random selection
-    let random = Math.random() * totalWeight;
+     return generators[generators.length - 1]!;
+   }
 
-    for (let i = 0; i < generators.length; i++) {
-      random -= weights[i]!;
-      if (random <= 0) {
-        return generators[i]!;
-      }
-    }
+   /**
+    * Hybrid Selection (30% random + 70% weighted)
+    *
+    * Modification from Roulette Wheel to guarantee exploration
+    *
+    * Reference: Cowling et al. (2002) - Hyper-heuristics with diversity preservation
+    *
+    * @param generators - All applicable move generators
+    * @returns Selected generator
+    */
+   private selectGeneratorHybrid(generators: MoveGenerator<TState>[]): MoveGenerator<TState> {
+     // 30%: forced random (exploration)
+     if (Math.random() < 0.3) {
+       return generators[Math.floor(Math.random() * generators.length)]!;
+     }
 
-    return generators[generators.length - 1]!;
-  }
+     // 70%: weighted based on success rates
+     const weights = generators.map((gen) => {
+       const stats = this.operatorStats[gen.name]!;
+       return stats.successRate || 0.5; // Default to 0.5 if no data yet
+     });
+
+     const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+
+     if (totalWeight === 0) {
+       return generators[Math.floor(Math.random() * generators.length)]!;
+     }
+
+     // Weighted random selection
+     let random = Math.random() * totalWeight;
+     for (let i = 0; i < generators.length; i++) {
+       random -= weights[i]!;
+       if (random <= 0) {
+         return generators[i]!;
+       }
+     }
+
+     return generators[generators.length - 1]!;
+   }
+
+   /**
+    * Select move generator based on configured mode
+    *
+    * Delegates to either hybrid (default) or roulette-wheel selection.
+    *
+    * @param generators - All applicable move generators
+    * @returns Selected generator
+    */
+   private selectMoveGenerator(generators: MoveGenerator<TState>[]): MoveGenerator<TState> {
+     const mode = this.config.operatorSelectionMode ?? 'hybrid';
+
+     if (mode === 'roulette-wheel') {
+       return this.selectGeneratorRouletteWheel(generators);
+     } else {
+       return this.selectGeneratorHybrid(generators);
+     }
+   }
 
   // ============================================
   // TABU SEARCH METHODS

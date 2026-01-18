@@ -337,6 +337,35 @@ Pseudo-code Roulette Wheel Selection dapat dituliskan sebagai berikut:
 
 Keunggulan Roulette Wheel Selection dalam hyper-heuristic adalah kemampuannya untuk menyeimbangkan antara exploitation (memilih operator yang terbukti efektif) dan exploration (memberikan kesempatan kepada operator lain). Hal ini sangat relevan dalam konteks UCTP di mana karakteristik ruang solusi dapat berubah seiring proses optimasi berlangsung (Muklason et al., 2024).
 
+#### 2.4.5.1 Modifikasi Hybrid Selection
+
+Implementasi dalam penelitian ini mengadopsi modifikasi dari Roulette Wheel Selection murni yang disebut Hybrid Selection, yang terinspirasi oleh penelitian Cowling et al. (2002). Modifikasi ini bertujuan untuk meningkatkan robustnes algoritma dengan mempertahankan tingkat exploration yang memadai bahkan ketika beberapa operator mendominasi dalam hal success rate.
+
+Hybrid Selection menggabungkan dua mekanisme:
+- **70% Weighted Selection**: Pemilihan operator berdasarkan probabilitas proporsional dengan success rate (mirip Roulette Wheel murni)
+- **30% Random Selection**: Pemilihan operator secara acak untuk mempertahankan diversitas pencarian
+
+Formula untuk Hybrid Selection:
+
+$$
+P(i) = 
+\begin{cases} 
+0.7 \times \frac{success\_rate(i)}{\sum_{j=1}^{n} success\_rate(j)} + 0.3 \times \frac{1}{n} & \text{if selected} \\
+0 & \text{otherwise}
+\end{cases}
+$$
+
+Keunggulan modifikasi Hybrid Selection:
+1. Mencegah konvergensi prematur ke lokal optimum
+2. Memberikan kesempatan kepada operator yang kurang efektif untuk pulih ketika kondisi berubah
+3. Lebih robust terhadap variasi dalam karakteristik masalah
+
+Implementasi menyediakan dua mode seleksi yang dapat dikonfigurasi pengguna:
+- `hybrid` (default): Modifikasi Hybrid Selection dengan 70% weighted + 30% random
+- `roulette-wheel`: Roulette Wheel Selection murni sesuai formula teoritis
+
+Pemilihan mode bergantung pada karakteristik masalah dan prioritas optimasi. Untuk masalah dengan lanskap solusi yang kompleks dan banyak lokal optimum, mode hybrid direkomendasikan. Untuk masalah yang well-understood dengan konvergensi cepat sebagai prioritas, mode roulette-wheel dapat digunakan.
+
 ## 2.5 Greedy Algorithm sebagai Initial Solution
 
 Greedy Algorithm adalah pendekatan algoritma yang membuat pilihan optimal lokal pada setiap langkah dengan harapan dapat mencapai solusi optimal global. Dalam konteks UCTP, Greedy Algorithm dapat digunakan untuk menghasilkan solusi awal yang berkualitas tinggi sebelum dilakukan optimasi dengan algoritma metaheuristik seperti SA-TS hybrid. Penggunaan Greedy Algorithm sebagai initial solution memberikan beberapa keuntungan, yaitu memberikan titik awal yang berkualitas yang dapat mempercepat konvergensi algoritma dan mengurangi jumlah iterasi yang diperlukan untuk mencapai solusi yang baik (Coşar et al., 2022).
