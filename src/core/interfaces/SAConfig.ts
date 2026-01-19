@@ -111,10 +111,23 @@ export interface SAConfig<TState> {
    * Reheating helps escape local minima by temporarily increasing exploration.
    * Typical values: 1000 to 5000
    */
-  reheatingThreshold?: number;
+   reheatingThreshold?: number;
 
-  /**
-   * Factor to multiply temperature by when reheating.
+   /**
+    * Maximum number of reheating events allowed.
+    *
+    * Prevents infinite reheating loops.
+    *
+    * @default 3
+    *
+    * @remarks
+    * - Set to 0 to disable reheating entirely
+    * - Higher values allow more escape attempts from local minima
+    */
+   maxReheats?: number;
+
+   /**
+    * Factor to multiply temperature by when reheating.
    *
    * Temperature increases by: `T = T * reheatingFactor`
    *
@@ -123,94 +136,93 @@ export interface SAConfig<TState> {
    * @remarks
    * Typical values: 1.5 to 3.0
    */
-  reheatingFactor?: number;
+   reheatingFactor?: number;
 
-  /**
-   * Maximum number of reheating events allowed.
-   *
-   * Prevents infinite reheating loops.
-   *
-   * @default 3
-   */
-  maxReheats?: number;
+   // ============================================
+   // TABU SEARCH CONFIGURATION
+   // ============================================
 
-  // ============================================
-  // TABU SEARCH CONFIGURATION
-  // ============================================
-  //
-  // Tabu Search prevents the algorithm from revisiting recently explored states,
-  // which helps avoid cycling and escape local minima more effectively.
-  //
-  // How it works:
-  // 1. Each state is assigned a lightweight signature (hash)
-  // 2. Signatures are stored in a tabu list with the iteration they were added
-  // 3. Before accepting a move, check if the new state is in the tabu list
-  // 4. States remain tabu for 'tabuTenure' iterations, then are removed
-  // 5. List is automatically trimmed if it exceeds 'maxTabuListSize'
-  //
-  // When to use:
-  // - Problems with many local minima
-  // - Search gets stuck oscillating between similar solutions
-  // - Complex constraint landscapes
-  //
-  // When to skip:
-  // - Simple, convex problems
-  // - Quick testing/prototyping
-  // - Problems with extremely large state spaces
+   /**
+    * Enable Tabu Search to prevent cycling.
+    *
+    * When enabled, the algorithm tracks recently visited states in a tabu list
+    * and avoids revisiting them for a configurable number of iterations (tabu tenure).
+    *
+    * @default false
+    *
+    * @remarks
+    * - Prevents the algorithm from cycling through the same solutions
+    * - Helps exploration of new areas in the solution space
+    * - Can be combined with aspiration criteria for better results
+    *
+    * @example
+    * ```typescript
+    * const config = {
+    *   tabuSearchEnabled: true,
+    *   tabuTenure: 50,
+    *   aspirationEnabled: true
+    * };
+    * ```
+    */
+   tabuSearchEnabled?: boolean;
 
-  /**
-   * Enable Tabu Search to prevent cycling back to recently visited states.
-   *
-   * When enabled, the algorithm tracks recent states using lightweight signatures
-   * and prevents revisiting the same solutions, which helps escape local minima.
-   *
-   * This is particularly useful when you observe:
-   * - Fitness oscillating between a few values
-   * - Same violations recurring
-   * - Getting stuck despite having good move operators
-   *
-   * @default false
-   */
-  tabuSearchEnabled?: boolean;
+   /**
+    * Number of iterations a state remains in the tabu list.
+    *
+    * After this many iterations, the state is removed from the tabu list
+    * and can be visited again.
+    *
+    * @default 50
+    *
+    * @remarks
+    * - Too short: May allow premature cycling
+    * - Too long: May prevent visiting good solutions
+    * - Typical values: 10 to 100
+    */
+   tabuTenure?: number;
 
-  /**
-   * Number of iterations a state stays in the tabu list (tabu tenure).
-   *
-   * Higher values:
-   * - More diverse search
-   * - Less cycling
-   * - May miss good solutions near tabu states
-   *
-   * Lower values:
-   * - Less diverse search
-   * - Faster convergence
-   * - May still cycle occasionally
-   *
-   * Recommended: 50 for most problems, 100-150 for very complex problems
-   *
-   * @default 50
-   */
-  tabuTenure?: number;
+   /**
+    * Enable aspiration criteria for tabu search.
+    *
+    * If true, tabu states can be accepted if their fitness is better than
+    * the global best solution found so far. This prevents missing exceptional
+    * solutions due to tabu restrictions.
+    *
+    * **How it works:**
+    * - Normally, tabu states are skipped during tabu tenure
+    * - With aspiration, a tabu state is accepted if: fitness < globalBestFitness
+    * - This allows "breakthrough" solutions to be accepted immediately
+    *
+    * **When to enable:**
+    * - Tabu search is enabled
+    * - You want to avoid missing optimal solutions
+    * - Solution space has many local optima
+    *
+    * **When to disable:**
+    * - Tabu search is disabled
+    * - You want strict tabu enforcement (no overrides)
+    *
+    * @default true
+    *
+    * @example
+    * ```typescript
+    * const config = {
+    *   tabuSearchEnabled: true,
+    *   aspirationEnabled: true, // Accept tabu states better than global best
+    *   tabuTenure: 50
+    * };
+    * ```
+    */
+   aspirationEnabled?: boolean;
 
-  /**
-   * Maximum size of the tabu list for memory management.
-   *
-   * When the list exceeds this size, oldest entries are removed automatically.
-   * This prevents unbounded memory usage during long optimization runs.
-   *
-   * Larger values allow:
-   * - Better cycling prevention
-   * - More memory usage (~100 bytes per entry)
-   *
-   * Smaller values use less memory but may allow cycling.
-   *
-   * Memory calculation: maxTabuListSize * 100 bytes
-   * - 1000 entries ≈ 100 KB
-   * - 5000 entries ≈ 500 KB
-   *
-   * @default 1000
-   */
-  maxTabuListSize?: number;
+   /**
+    * Maximum number of entries in the tabu list.
+    *
+    * When exceeded, oldest entries are removed to prevent memory bloat.
+    *
+    * @default 1000
+    */
+   maxTabuListSize?: number;
 
   // ============================================
   // INTENSIFICATION CONFIGURATION

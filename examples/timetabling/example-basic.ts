@@ -141,7 +141,7 @@ const config: SAConfig<TimetableState> = {
   enableIntensification: false, // Enable Phase 1.5 for stubborn hard violations
   intensificationIterations: 2000, // Iterations per intensification attempt
   maxIntensificationAttempts: 3, // Max restart attempts
-
+  operatorSelectionMode: "hybrid",
   // Logging
   logging: {
     enabled: true,

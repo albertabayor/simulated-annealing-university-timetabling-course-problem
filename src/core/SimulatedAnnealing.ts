@@ -8,6 +8,7 @@
  *
  * Features:
  * - Tabu Search: Prevents cycling by tracking recently visited states
+ * - Aspiration Criteria: Overrides tabu status for exceptionally good solutions
  * - Adaptive Operator Selection: Learns which operators work best
  * - Reheating: Escapes local minima by temporarily increasing temperature
  * - Intensification: Focused optimization to eliminate stubborn hard violations
@@ -33,6 +34,7 @@ export class SimulatedAnnealing<TState> {
     tabuSearchEnabled: boolean;
     tabuTenure: number;
     maxTabuListSize: number;
+    aspirationEnabled: boolean;
     enableIntensification: boolean;
     intensificationIterations: number;
     maxIntensificationAttempts: number;
@@ -146,16 +148,16 @@ export class SimulatedAnnealing<TState> {
         break;
       }
 
-      // Tabu Search: Check if this state was recently visited
-      if (this.config.tabuSearchEnabled) {
-        const newSignature = this.getStateSignature(newState);
-        if (this.isTabu(newSignature, iteration)) {
-          // Skip tabu states
-          phase1Iteration++;
-          iteration++;
-          continue;
-        }
-      }
+       // Tabu Search: Check if this state was recently visited (with aspiration criteria)
+       if (this.config.tabuSearchEnabled) {
+         const newSignature = this.getStateSignature(newState);
+         if (this.shouldSkipTabu(newSignature, iteration, currentFitness, bestFitness)) {
+           // Skip tabu states (unless aspiration criteria met)
+           phase1Iteration++;
+           iteration++;
+           continue;
+         }
+       }
 
       this.operatorStats[operatorName]!.attempts++;
 
@@ -392,15 +394,15 @@ export class SimulatedAnnealing<TState> {
         break;
       }
 
-      // Tabu Search: Check if this state was recently visited
-      if (this.config.tabuSearchEnabled) {
-        const newSignature = this.getStateSignature(newState);
-        if (this.isTabu(newSignature, iteration)) {
-          // Skip tabu states
-          iteration++;
-          continue;
-        }
-      }
+       // Tabu Search: Check if this state was recently visited (with aspiration criteria)
+       if (this.config.tabuSearchEnabled) {
+         const newSignature = this.getStateSignature(newState);
+         if (this.shouldSkipTabu(newSignature, iteration, currentFitness, bestFitness)) {
+           // Skip tabu states (unless aspiration criteria met)
+           iteration++;
+           continue;
+         }
+       }
 
       this.operatorStats[operatorName]!.attempts++;
 
@@ -730,22 +732,62 @@ export class SimulatedAnnealing<TState> {
     return assignments.sort().join('|');
   }
 
-  /**
-   * Check if a state is in the tabu list (recently visited)
-   */
-  private isTabu(signature: string, currentIteration: number): boolean {
-    if (!this.config.tabuSearchEnabled) {
-      return false;
-    }
+   /**
+    * Check if a state should be skipped (tabu) with aspiration criteria support.
+    *
+    * **Tabu Search Basic:** A state is skipped if it's in the tabu list within tabu tenure.
+    *
+    * **With Aspiration Criteria:** A tabu state can be accepted if its fitness
+    * is better than the global best solution found so far. This prevents missing
+    * exceptional breakthrough solutions due to tabu restrictions.
+    *
+    * @param signature - Unique signature of the state
+    * @param currentIteration - Current algorithm iteration
+    * @param newFitness - Fitness of the new state
+    * @param globalBestFitness - Best fitness found so far
+    * @returns true if the state should be skipped (tabu and no aspiration met)
+    *
+    * @example
+    * ```typescript
+    * // Without aspiration: skip all tabu states
+    * // With aspiration: accept tabu state if fitness < globalBest
+    * if (this.shouldSkipTabu(signature, iteration, newFitness, bestFitness)) {
+    *   continue; // Skip this state
+    * }
+    * ```
+    */
+   private shouldSkipTabu(
+     signature: string,
+     currentIteration: number,
+     newFitness: number,
+     globalBestFitness: number
+   ): boolean {
+     // Tabu search disabled: never skip
+     if (!this.config.tabuSearchEnabled) {
+       return false;
+     }
 
-    const addedAt = this.tabuList.get(signature);
-    if (addedAt === undefined) {
-      return false;
-    }
+     const addedAt = this.tabuList.get(signature);
+     if (addedAt === undefined) {
+       return false; // Not tabu
+     }
 
-    // Check if still within tabu tenure
-    return (currentIteration - addedAt) < this.config.tabuTenure;
-  }
+     // Check if still within tabu tenure
+     if ((currentIteration - addedAt) >= this.config.tabuTenure) {
+       return false; // Tabu expired, not a tabu anymore
+     }
+
+     // State is tabu - check aspiration criteria
+     if (this.config.aspirationEnabled && newFitness < globalBestFitness) {
+       // Aspiration criteria met: accept this tabu state
+       // This is a breakthrough solution better than global best!
+       this.log('debug', `[Tabu] Aspiration criteria met: fitness=${newFitness.toFixed(2)} < globalBest=${globalBestFitness.toFixed(2)}`);
+       return false; // Don't skip, accept this state
+     }
+
+     // Tabu and no aspiration met: skip this state
+     return true;
+   }
 
   /**
    * Add a state signature to the tabu list
@@ -948,12 +990,13 @@ export class SimulatedAnnealing<TState> {
   /**
    * Merge config with defaults
    */
-  private mergeWithDefaults(config: SAConfig<TState>): SAConfig<TState> & {
+   private mergeWithDefaults(config: SAConfig<TState>): SAConfig<TState> & {
     reheatingFactor: number;
     maxReheats: number;
     tabuSearchEnabled: boolean;
     tabuTenure: number;
     maxTabuListSize: number;
+    aspirationEnabled: boolean;
     enableIntensification: boolean;
     intensificationIterations: number;
     maxIntensificationAttempts: number;
@@ -967,6 +1010,7 @@ export class SimulatedAnnealing<TState> {
       tabuSearchEnabled: config.tabuSearchEnabled ?? false,
       tabuTenure: config.tabuTenure ?? 50,
       maxTabuListSize: config.maxTabuListSize ?? 1000,
+      aspirationEnabled: config.aspirationEnabled ?? true,
       // Intensification defaults
       enableIntensification: config.enableIntensification ?? true,
       intensificationIterations: config.intensificationIterations ?? 2000,
